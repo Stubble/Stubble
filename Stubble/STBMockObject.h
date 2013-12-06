@@ -1,0 +1,4 @@
+
+@interface STBMockObject : NSObject
+
+@end
