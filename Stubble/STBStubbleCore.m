@@ -1,5 +1,4 @@
 #import "STBStubbleCore.h"
-#import "STBOngoingWhen.h"
 
 @interface STBStubbleCore ()
 
@@ -32,7 +31,7 @@
     self.mockForCurrentWhen = mock;
 }
 
-- (id)performWhen {
+- (STBOngoingWhen *)performWhen {
     if (!self.mockForCurrentWhen) {
         NSLog(@"Error: called WHEN without calling a mock method.");
     }

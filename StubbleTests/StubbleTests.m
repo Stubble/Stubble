@@ -45,7 +45,6 @@
     STBFoo *mock = [STBMock mockForClass:STBFoo.class];
 	NSArray *expectedArray = @[@"item3"];
 	
-	
 	[WHEN([mock methodWithArray:@[@"item1", @"item2"]]) thenReturn:expectedArray];
 	
     XCTAssertEqual(([mock methodWithArray:@[@"item1", @"item2"]]), expectedArray);

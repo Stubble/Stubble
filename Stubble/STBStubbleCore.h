@@ -1,4 +1,5 @@
 #import "STBClassMockObject.h"
+#import "STBOngoingWhen.h"
 
 @interface STBStubbleCore : NSObject
 
@@ -8,7 +9,7 @@
 
 - (void)prepareForWhen;
 - (void)whenMethodInvokedForMock:(id<STBMockObject>)mock;
-- (id)performWhen;
+- (STBOngoingWhen *)performWhen;
 
 - (void)returnValueSetForCurrentWhen:(id)value;
 

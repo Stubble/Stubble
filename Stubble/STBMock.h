@@ -1,7 +1,7 @@
 #import "STBStubbleCore.h"
 
-#define WHEN(...) ({ [STBStubbleCore.core prepareForWhen]; (void)__VA_ARGS__; (STBOngoingWhen *)[STBStubbleCore.core performWhen]; })
-// #define VERIFY(__METHOD_CALL) ({ [STBStubbleCore.core prepareForVerify]; __METHOD_CALL; [STBStubbleCore.core performVerify]; })
+#define WHEN(...) ({ [STBStubbleCore.core prepareForWhen]; (void)__VA_ARGS__; [STBStubbleCore.core performWhen]; })
+// #define VERIFY(...) ({ [STBStubbleCore.core prepareForVerify]; (void)__VA_ARGS__; [STBStubbleCore.core performVerify]; })
 
 
 @interface STBMock : NSObject
