@@ -3,30 +3,38 @@
 
 @interface SBLClassMockObject ()
 
-@property (nonatomic) Class mockedClass;
-@property (nonatomic, readwrite) SBLOngoingWhen *currentOngoingWhen;
+@property (nonatomic, readonly) Class mockedClass;
+@property (nonatomic, readonly) NSMutableArray *ongoingWhens;
 
 @end
 
 @implementation SBLClassMockObject
 
 - (id)initWithClass:(Class)class {
-    self.mockedClass = class;
+    _mockedClass = class;
+	_ongoingWhens = [NSMutableArray array];
     return self;
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
 	if (SBLStubbleCore.core.whenInProgress) {
 		[SBLStubbleCore.core whenMethodInvokedForMock:self];
-		self.currentOngoingWhen = [[SBLOngoingWhen alloc] initWithInvocation:invocation];
+		[self.ongoingWhens addObject:[[SBLOngoingWhen alloc] initWithInvocation:invocation]];
 		NSLog(@"captured invocation %@", invocation);
 	} else {
-		if (self.currentOngoingWhen.shouldUnboxReturnValue) {
+		SBLOngoingWhen *matchingWhen = nil;
+		for (SBLOngoingWhen *ongoingWhen in self.ongoingWhens) {
+			if ([ongoingWhen matchesInvocation:invocation]) {
+				matchingWhen = ongoingWhen;
+				break;
+			}
+		}
+		if (matchingWhen.shouldUnboxReturnValue) {
 			void *buffer = malloc([[invocation methodSignature] methodReturnLength]);
-			[self.currentOngoingWhen.returnValue getValue:buffer];
+			[matchingWhen.returnValue getValue:buffer];
 			[invocation setReturnValue:buffer];
 		} else {
-			id returnValue = self.currentOngoingWhen.returnValue;
+			id returnValue = matchingWhen.returnValue;
 			[invocation setReturnValue:&returnValue];
 		}
 		[invocation invokeWithTarget:nil];
@@ -43,6 +51,10 @@
 
 - (BOOL)isKindOfClass:(Class)aClass {
     return [self.mockedClass isSubclassOfClass:aClass];
+}
+
+- (SBLOngoingWhen *)currentOngoingWhen {
+	return [self.ongoingWhens lastObject];
 }
 
 @end

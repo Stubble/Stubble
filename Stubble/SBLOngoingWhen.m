@@ -31,4 +31,9 @@
 	return [self.returnValue isKindOfClass:[NSValue class]] && strcmp([[self.invocation methodSignature] methodReturnType], [self.returnValue objCType]) == 0 ;
 }
 
+- (BOOL)matchesInvocation:(NSInvocation *)invocation {
+	// TODO - check that parameters match
+	return invocation.selector == self.invocation.selector;
+}
+
 @end

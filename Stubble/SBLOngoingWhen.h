@@ -7,5 +7,6 @@
 - (instancetype)initWithInvocation:(NSInvocation *)invocation;
 
 - (SBLOngoingWhen *)thenReturn:(id)returnValue;
+- (BOOL)matchesInvocation:(NSInvocation *)invocation;
 
 @end
