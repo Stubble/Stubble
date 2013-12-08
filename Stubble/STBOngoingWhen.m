@@ -4,7 +4,7 @@
 @interface STBOngoingWhen ()
 
 @property (nonatomic, readonly) NSInvocation *invocation;
-@property (nonatomic, readwrite) void *returnValue;
+@property (nonatomic, readwrite) id returnValue;
 
 @end
 
@@ -18,11 +18,15 @@
 }
 
 - (STBOngoingWhen *)thenReturn:(id)returnValue {
-	self.returnValue = (__bridge void *)returnValue;
+	self.returnValue = returnValue;
 	
     // TODO verify that it makes sense for the current invocation
     // TODO eventually self can be used for some type of chaining
     return self;
+}
+
+- (BOOL)shouldUnboxReturnValue {
+	return [self.returnValue isKindOfClass:[NSValue class]] && strcmp([[self.invocation methodSignature] methodReturnType], [self.returnValue objCType]) == 0;
 }
 
 @end

@@ -21,8 +21,14 @@
 		self.currentOngoingWhen = [[STBOngoingWhen alloc] initWithInvocation:invocation];
 		NSLog(@"captured invocation %@", invocation);
 	} else {
-		id returnValue = self.currentOngoingWhen.returnValue;
-		[invocation setReturnValue:&returnValue];
+		if (self.currentOngoingWhen.shouldUnboxReturnValue) {
+			void *buffer = malloc([[invocation methodSignature] methodReturnLength]);
+			[self.currentOngoingWhen.returnValue getValue:buffer];
+			[invocation setReturnValue:buffer];
+		} else {
+			id returnValue = self.currentOngoingWhen.returnValue;
+			[invocation setReturnValue:&returnValue];
+		}
 		[invocation invokeWithTarget:nil];
 	}
 }
