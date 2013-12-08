@@ -1,7 +1,6 @@
 #import "STBStubbleCore.h"
 
-
-#define WHEN(__METHOD_CALL) ({ [STBStubbleCore.core prepareForWhen]; __METHOD_CALL; [STBStubbleCore.core performWhen]; })
+#define WHEN(...) ({ [STBStubbleCore.core prepareForWhen]; (void)__VA_ARGS__; (STBOngoingWhen *)[STBStubbleCore.core performWhen]; })
 // #define VERIFY(__METHOD_CALL) ({ [STBStubbleCore.core prepareForVerify]; __METHOD_CALL; [STBStubbleCore.core performVerify]; })
 
 

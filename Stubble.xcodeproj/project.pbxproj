@@ -153,15 +153,15 @@
 		74F93DC51852600800214852 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				6313C78CF2CAC79402A27F76 /* STBClassMockObject.h */,
+				6313C67A4149A7B02CC9E46F /* STBClassMockObject.m */,
 				74F93DC61852601C00214852 /* STBMock.h */,
 				74F93DC71852601C00214852 /* STBMock.m */,
-				6313C7BCAFA194BF50DC6C50 /* STBStubbleCore.m */,
-				6313CDEF8A8E8B3BACE5F92B /* STBStubbleCore.h */,
-				6313C67A4149A7B02CC9E46F /* STBClassMockObject.m */,
-				6313C78CF2CAC79402A27F76 /* STBClassMockObject.h */,
-				6313C082B67BDB77399B202D /* STBOngoingWhen.m */,
-				6313CD2DFCBE3162EB6EE10B /* STBOngoingWhen.h */,
 				6313C3E7D5550AC45252B400 /* STBMockObject.h */,
+				6313CD2DFCBE3162EB6EE10B /* STBOngoingWhen.h */,
+				6313C082B67BDB77399B202D /* STBOngoingWhen.m */,
+				6313CDEF8A8E8B3BACE5F92B /* STBStubbleCore.h */,
+				6313C7BCAFA194BF50DC6C50 /* STBStubbleCore.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";

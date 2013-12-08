@@ -3,8 +3,8 @@
 
 @interface STBClassMockObject ()
 
-@property(nonatomic) Class mockedClass;
-@property(nonatomic) NSInvocation *currentWhenInvocation;
+@property (nonatomic) Class mockedClass;
+@property (nonatomic) NSInvocation *currentWhenInvocation;
 
 @end
 
@@ -18,6 +18,7 @@
 - (void)forwardInvocation:(NSInvocation *)invocation {
     [STBStubbleCore.core whenMethodInvokedForMock:self];
     self.currentWhenInvocation = invocation;
+	
     NSLog(@"mock got invocation %@", invocation);
 }
 

@@ -1,5 +1,6 @@
 #import <XCTest/XCTest.h>
 #import "STBMock.h"
+#import "STBOngoingWhen.h"
 
 @interface STBFoo : NSObject
 
@@ -13,6 +14,10 @@
 
 - (NSString *)methodReturningString {
     return @"123";
+}
+
+- (NSArray *)methodWithArray:(NSArray *)array {
+	return array;
 }
 
 - (int)methodReturningInt {
@@ -36,9 +41,19 @@
     [super tearDown];
 }
 
+- (void)testWhenCommaIsPassedToMacroCorrectValueIsReturned {
+    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+	NSArray *expectedArray = @[@"item3"];
+	
+	
+	[WHEN([mock methodWithArray:@[@"item1", @"item2"]]) thenReturn:expectedArray];
+	
+    XCTAssertEqual(([mock methodWithArray:@[@"item1", @"item2"]]), expectedArray);
+}
+
 - (void)testWhenPrimitiveMethodWithNoParametersIsStubbedThenCorrectValueIsReturned {
     STBFoo *mock = [STBMock mockForClass:STBFoo.class];
-
+	
     [WHEN(mock.methodReturningInt) thenReturn:@5];
 
     XCTAssertEqual(mock.methodReturningInt, 5);
