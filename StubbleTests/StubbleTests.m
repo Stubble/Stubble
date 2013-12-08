@@ -20,6 +20,10 @@
 	return array;
 }
 
+- (id)methodWithVariableNumberOfArguments:(id)argument1, ... {
+	return @"";
+}
+
 - (int)methodReturningInt {
     return 123;
 }
@@ -41,15 +45,6 @@
     [super tearDown];
 }
 
-- (void)testWhenCommaIsPassedToMacroCorrectValueIsReturned {
-    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
-	NSArray *expectedArray = @[@"item3"];
-	
-	[WHEN([mock methodWithArray:@[@"item1", @"item2"]]) thenReturn:expectedArray];
-	
-    XCTAssertEqual(([mock methodWithArray:@[@"item1", @"item2"]]), expectedArray);
-}
-
 - (void)testWhenPrimitiveMethodWithNoParametersIsStubbedThenCorrectValueIsReturned {
     STBFoo *mock = [STBMock mockForClass:STBFoo.class];
 	
@@ -63,6 +58,23 @@
 
     [WHEN(mock.methodReturningString) thenReturn:@"alpha"];
 
+    XCTAssertEqualObjects(mock.methodReturningString, @"alpha");
+}
+
+- (void)testWhenCommaIsPassedToMacroCorrectValueIsReturned {
+    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+	NSArray *expectedArray = @[@"item3"];
+	
+	[WHEN([mock methodWithArray:@[@"item1", @"item2"]]) thenReturn:expectedArray];
+	
+    XCTAssertEqual(([mock methodWithArray:@[@"item1", @"item2"]]), expectedArray);
+}
+
+- (void)testWhenVariableArgumentMethodIsStubbedThenCorrectValueIsReturned {
+    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+	
+    [WHEN([mock methodWithVariableNumberOfArguments:@"1", @"2", @"3", @"4", nil]) thenReturn:@"alpha"];
+	
     XCTAssertEqualObjects(mock.methodReturningString, @"alpha");
 }
 
