@@ -26,7 +26,9 @@
 }
 
 - (BOOL)shouldUnboxReturnValue {
-	return [self.returnValue isKindOfClass:[NSValue class]] && strcmp([[self.invocation methodSignature] methodReturnType], [self.returnValue objCType]) == 0;
+//	NSLog(@"NSObject * : %s", [self.returnValue objCType]);
+//	NSLog(@"methodReturnType : %s", [[self.invocation methodSignature] methodReturnType]);
+	return [self.returnValue isKindOfClass:[NSValue class]] && strcmp([[self.invocation methodSignature] methodReturnType], [self.returnValue objCType]) == 0 ;
 }
 
 @end

@@ -28,6 +28,10 @@
     return 123;
 }
 
+- (NSValue *)methodReturningNSValue {
+    return nil;
+}
+
 @end
 
 
@@ -55,10 +59,19 @@
 
 - (void)testWhenObjectMethodWithNoParametersIsStubbedThenCorrectValueIsReturned {
     STBFoo *mock = [STBMock mockForClass:STBFoo.class];
-
+	
     [WHEN(mock.methodReturningString) thenReturn:@"alpha"];
-
+	
     XCTAssertEqualObjects(mock.methodReturningString, @"alpha");
+}
+
+- (void)testWhenObjectMethodReturnsNSValueWithObjectThenCorrectValueIsReturned {
+    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+	NSObject *expectedObject = [[NSObject alloc] init];
+	
+    [WHEN(mock.methodReturningNSValue) thenReturn:[NSValue valueWithNonretainedObject:expectedObject]];
+	
+    XCTAssertEqual([mock.methodReturningNSValue nonretainedObjectValue], expectedObject);
 }
 
 - (void)testWhenCommaIsPassedToMacroCorrectValueIsReturned {
