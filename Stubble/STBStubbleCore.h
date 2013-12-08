@@ -11,6 +11,4 @@
 - (void)whenMethodInvokedForMock:(id<STBMockObject>)mock;
 - (STBOngoingWhen *)performWhen;
 
-- (void)returnValueSetForCurrentWhen:(id)value;
-
 @end

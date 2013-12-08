@@ -1,5 +1,7 @@
+#import "STBOngoingWhen.h"
+
 @protocol STBMockObject <NSObject>
 
-- (void)setReturnValueForCurrentWhen:(id)value;
+@property (nonatomic, readonly) STBOngoingWhen *currentOngoingWhen;
 
 @end

@@ -33,17 +33,13 @@
 
 - (STBOngoingWhen *)performWhen {
     if (!self.mockForCurrentWhen) {
+		// TODO throw exception here?
         NSLog(@"Error: called WHEN without calling a mock method.");
     }
     NSLog(@"performWhen");
 
-    // TODO clear the flag?  We could also do that in the mock itself.
-    return [[STBOngoingWhen alloc] init];
-}
-
-- (void)returnValueSetForCurrentWhen:(id)value {
-    [self.mockForCurrentWhen setReturnValueForCurrentWhen:value];
-    // TODO add the return value for the last invoked mock
+	self.whenInProgress = NO;
+    return self.mockForCurrentWhen.currentOngoingWhen;
 }
 
 @end

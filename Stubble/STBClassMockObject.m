@@ -4,7 +4,7 @@
 @interface STBClassMockObject ()
 
 @property (nonatomic) Class mockedClass;
-@property (nonatomic) NSInvocation *currentWhenInvocation;
+@property (nonatomic, readwrite) STBOngoingWhen *currentOngoingWhen;
 
 @end
 
@@ -16,10 +16,15 @@
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
-    [STBStubbleCore.core whenMethodInvokedForMock:self];
-    self.currentWhenInvocation = invocation;
-	
-    NSLog(@"mock got invocation %@", invocation);
+	if (STBStubbleCore.core.whenInProgress) {
+		[STBStubbleCore.core whenMethodInvokedForMock:self];
+		self.currentOngoingWhen = [[STBOngoingWhen alloc] initWithInvocation:invocation];
+		NSLog(@"captured invocation %@", invocation);
+	} else {
+		id returnValue = self.currentOngoingWhen.returnValue;
+		[invocation setReturnValue:&returnValue];
+		[invocation invokeWithTarget:nil];
+	}
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
@@ -33,11 +38,5 @@
 - (BOOL)isKindOfClass:(Class)aClass {
     return [self.mockedClass isSubclassOfClass:aClass];
 }
-
-- (void)setReturnValueForCurrentWhen:(id)value {
-    // TODO save that value for later return
-    // TODO verify that it makes sense for the current invocation
-}
-
 
 @end
