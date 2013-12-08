@@ -23,7 +23,7 @@
 		NSLog(@"captured invocation %@", invocation);
 	} else {
 		SBLOngoingWhen *matchingWhen = nil;
-		for (SBLOngoingWhen *ongoingWhen in self.ongoingWhens) {
+		for (SBLOngoingWhen *ongoingWhen in self.ongoingWhens.reverseObjectEnumerator) {
 			if ([ongoingWhen matchesInvocation:invocation]) {
 				matchingWhen = ongoingWhen;
 				break;

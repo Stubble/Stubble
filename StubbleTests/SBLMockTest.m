@@ -110,4 +110,14 @@
     XCTAssertEqualObjects([mock methodReturningString], @"alpha");
 }
 
+- (void)testWhenMethodIsStubbedAgainItReturnsNewValue {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+	
+    [WHEN([mock methodReturningString]) thenReturn:@"alpha"];
+    XCTAssertEqualObjects([mock methodReturningString], @"alpha");
+	
+    [WHEN([mock methodReturningString]) thenReturn:@"beta"];
+    XCTAssertEqualObjects([mock methodReturningString], @"beta");
+}
+
 @end
