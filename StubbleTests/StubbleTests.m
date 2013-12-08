@@ -29,7 +29,7 @@
 }
 
 - (NSValue *)methodReturningNSValue {
-    return nil;
+    return @123;
 }
 
 @end
@@ -88,7 +88,34 @@
 	
     [WHEN([mock methodWithVariableNumberOfArguments:@"1", @"2", @"3", @"4", nil]) thenReturn:@"alpha"];
 	
-    XCTAssertEqualObjects(mock.methodReturningString, @"alpha");
+    XCTAssertEqualObjects(([mock methodWithVariableNumberOfArguments:@"1", @"2", @"3", @"4", nil]), @"alpha");
+}
+
+- (void)testWhenMethodIsNotStubbedItReturnsNil {
+    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+	
+    [WHEN([mock methodReturningString]) thenReturn:@"alpha"];
+	
+    XCTAssertNil([mock methodReturningNSValue]);
+}
+
+- (void)testWhenMethodsAreStubbedThenBothReturnCorrectValue {
+    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+	
+    [WHEN([mock methodReturningString]) thenReturn:@"alpha"];
+    [WHEN([mock methodReturningNSValue]) thenReturn:@42];
+	
+    XCTAssertEqualObjects([mock methodReturningNSValue], @42);
+    XCTAssertEqualObjects([mock methodReturningString], @"alpha");
+}
+
+- (void)testWhenMethodIsStubbedItReturnsCorrectValueMultipleTimes {
+    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+	
+    [WHEN([mock methodReturningString]) thenReturn:@"alpha"];
+	
+    XCTAssertEqualObjects([mock methodReturningString], @"alpha");
+    XCTAssertEqualObjects([mock methodReturningString], @"alpha");
 }
 
 @end
