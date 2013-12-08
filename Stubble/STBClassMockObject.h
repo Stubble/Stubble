@@ -1,0 +1,4 @@
+@interface STBClassMockObject : NSProxy
+
+
+@end

@@ -1,12 +1,26 @@
-//
-//  StubbleTests.m
-//  StubbleTests
-//
-//  Created by John Hainline on 12/6/13.
-//  Copyright (c) 2013 Stubble. All rights reserved.
-//
-
 #import <XCTest/XCTest.h>
+#import "STBMockObject.h"
+#import "STBStubbleCore.h"
+
+@interface STBFoo : NSObject
+
+- (NSString *)methodReturningString;
+- (int)methodReturningInt;
+
+@end
+
+@implementation STBFoo
+
+- (NSString *)methodReturningString {
+    return @"123";
+}
+
+- (int)methodReturningInt {
+    return 123;
+}
+
+@end
+
 
 @interface StubbleTests : XCTestCase
 
@@ -14,21 +28,29 @@
 
 @implementation StubbleTests
 
-- (void)setUp
-{
+- (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
-- (void)tearDown
-{
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+- (void)tearDown {
     [super tearDown];
 }
 
-- (void)testExample
-{
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+#define WHEN(__METHOD_CALL) ({ [STBStubbleCore prepareForWhen]; __METHOD_CALL; [STBStubbleCore performWhen]; })
+
+//#define BOX(X) ({__typeof__(X) __x = (X); [NSValue value:__x withObjCType:@encode(__typeof__(X))];})
+
+//#define WHEN(X) ({__typeof__(X) __x = (X); (IS_OBJECT(__x) ? DO_WHEN(__x) : DO_WHEN(@(__x)));})
+//#define WHEN(X) ({__typeof__(X) __x = (X); DO_WHEN(__x);})
+//#define WHEN(X) ({__typeof__(X) __x = (X); DO_WHEN([NSValue value:__x withObjCType:@encode(__typeof__(X))]);})
+
+- (void)testExample {
+     STBFoo *mock = [STBMockObject mockForClass:STBFoo.class];
+
+    [WHEN(mock.methodReturningInt) thenReturn:@5];
+    [WHEN(mock.methodReturningString) thenReturn:@"alpha"];
+//    [[STBStubbleCore when:mock.methodReturningInt] thenReturn:5];
+
 }
 
 @end
