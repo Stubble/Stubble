@@ -1,8 +1,8 @@
 #import <XCTest/XCTest.h>
-#import "STBMock.h"
-#import "STBOngoingWhen.h"
+#import "SBLMock.h"
+#import "SBLOngoingWhen.h"
 
-@interface STBFoo : NSObject
+@interface SBLTestingClass : NSObject
 
 - (NSString *)methodReturningString;
 
@@ -10,7 +10,7 @@
 
 @end
 
-@implementation STBFoo
+@implementation SBLTestingClass
 
 - (NSString *)methodReturningString {
     return @"123";
@@ -35,22 +35,14 @@
 @end
 
 
-@interface StubbleTests : XCTestCase
+@interface SBLMockTest : XCTestCase
 
 @end
 
-@implementation StubbleTests
-
-- (void)setUp {
-    [super setUp];
-}
-
-- (void)tearDown {
-    [super tearDown];
-}
+@implementation SBLMockTest
 
 - (void)testWhenPrimitiveMethodWithNoParametersIsStubbedThenCorrectValueIsReturned {
-    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	
     [WHEN(mock.methodReturningInt) thenReturn:@5];
 
@@ -58,7 +50,7 @@
 }
 
 - (void)testWhenObjectMethodWithNoParametersIsStubbedThenCorrectValueIsReturned {
-    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	
     [WHEN(mock.methodReturningString) thenReturn:@"alpha"];
 	
@@ -66,7 +58,7 @@
 }
 
 - (void)testWhenObjectMethodReturnsNSValueWithObjectThenCorrectValueIsReturned {
-    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	NSObject *expectedObject = [[NSObject alloc] init];
 	
     [WHEN(mock.methodReturningNSValue) thenReturn:[NSValue valueWithNonretainedObject:expectedObject]];
@@ -75,7 +67,7 @@
 }
 
 - (void)testWhenCommaIsPassedToMacroCorrectValueIsReturned {
-    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	NSArray *expectedArray = @[@"item3"];
 	
 	[WHEN([mock methodWithArray:@[@"item1", @"item2"]]) thenReturn:expectedArray];
@@ -84,7 +76,7 @@
 }
 
 - (void)testWhenVariableArgumentMethodIsStubbedThenCorrectValueIsReturned {
-    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	
     [WHEN([mock methodWithVariableNumberOfArguments:@"1", @"2", @"3", @"4", nil]) thenReturn:@"alpha"];
 	
@@ -92,7 +84,7 @@
 }
 
 - (void)testWhenMethodIsNotStubbedItReturnsNil {
-    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	
     [WHEN([mock methodReturningString]) thenReturn:@"alpha"];
 	
@@ -100,7 +92,7 @@
 }
 
 - (void)testWhenMethodsAreStubbedThenBothReturnCorrectValue {
-    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	
     [WHEN([mock methodReturningString]) thenReturn:@"alpha"];
     [WHEN([mock methodReturningNSValue]) thenReturn:@42];
@@ -110,7 +102,7 @@
 }
 
 - (void)testWhenMethodIsStubbedItReturnsCorrectValueMultipleTimes {
-    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	
     [WHEN([mock methodReturningString]) thenReturn:@"alpha"];
 	

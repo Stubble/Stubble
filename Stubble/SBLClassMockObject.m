@@ -1,14 +1,14 @@
-#import "STBClassMockObject.h"
-#import "STBStubbleCore.h"
+#import "SBLClassMockObject.h"
+#import "SBLStubbleCore.h"
 
-@interface STBClassMockObject ()
+@interface SBLClassMockObject ()
 
 @property (nonatomic) Class mockedClass;
-@property (nonatomic, readwrite) STBOngoingWhen *currentOngoingWhen;
+@property (nonatomic, readwrite) SBLOngoingWhen *currentOngoingWhen;
 
 @end
 
-@implementation STBClassMockObject
+@implementation SBLClassMockObject
 
 - (id)initWithClass:(Class)class {
     self.mockedClass = class;
@@ -16,9 +16,9 @@
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
-	if (STBStubbleCore.core.whenInProgress) {
-		[STBStubbleCore.core whenMethodInvokedForMock:self];
-		self.currentOngoingWhen = [[STBOngoingWhen alloc] initWithInvocation:invocation];
+	if (SBLStubbleCore.core.whenInProgress) {
+		[SBLStubbleCore.core whenMethodInvokedForMock:self];
+		self.currentOngoingWhen = [[SBLOngoingWhen alloc] initWithInvocation:invocation];
 		NSLog(@"captured invocation %@", invocation);
 	} else {
 		if (self.currentOngoingWhen.shouldUnboxReturnValue) {

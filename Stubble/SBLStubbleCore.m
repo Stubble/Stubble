@@ -1,17 +1,17 @@
-#import "STBStubbleCore.h"
+#import "SBLStubbleCore.h"
 
-@interface STBStubbleCore ()
+@interface SBLStubbleCore ()
 
 @property(nonatomic, readwrite) BOOL whenInProgress;
-@property(nonatomic) id<STBMockObject> mockForCurrentWhen;
+@property(nonatomic) id<SBLMockObject> mockForCurrentWhen;
 
 @end
 
-@implementation STBStubbleCore
+@implementation SBLStubbleCore
 
 + (id)core {
     static dispatch_once_t once;
-    static STBStubbleCore *sharedInstance;
+    static SBLStubbleCore *sharedInstance;
     dispatch_once(&once, ^{
         sharedInstance = [[self alloc] init];
     });
@@ -27,11 +27,11 @@
     // TODO: set a flag that mocks can read telling them that the next call is actually a stub setup
 }
 
-- (void)whenMethodInvokedForMock:(id<STBMockObject>)mock {
+- (void)whenMethodInvokedForMock:(id<SBLMockObject>)mock {
     self.mockForCurrentWhen = mock;
 }
 
-- (STBOngoingWhen *)performWhen {
+- (SBLOngoingWhen *)performWhen {
     if (!self.mockForCurrentWhen) {
 		// TODO throw exception here?
         NSLog(@"Error: called WHEN without calling a mock method.");

@@ -1,14 +1,14 @@
-#import "STBOngoingWhen.h"
-#import "STBStubbleCore.h"
+#import "SBLOngoingWhen.h"
+#import "SBLStubbleCore.h"
 
-@interface STBOngoingWhen ()
+@interface SBLOngoingWhen ()
 
 @property (nonatomic, readonly) NSInvocation *invocation;
 @property (nonatomic, readwrite) id returnValue;
 
 @end
 
-@implementation STBOngoingWhen
+@implementation SBLOngoingWhen
 
 - (instancetype)initWithInvocation:(NSInvocation *)invocation {
 	if (self = [super init]) {
@@ -17,7 +17,7 @@
 	return self;
 }
 
-- (STBOngoingWhen *)thenReturn:(id)returnValue {
+- (SBLOngoingWhen *)thenReturn:(id)returnValue {
 	self.returnValue = returnValue;
 	
     // TODO verify that it makes sense for the current invocation

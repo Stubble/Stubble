@@ -1,10 +1,10 @@
-#import "STBStubbleCore.h"
+#import "SBLStubbleCore.h"
 
-#define WHEN(...) ({ [STBStubbleCore.core prepareForWhen]; (void)__VA_ARGS__; [STBStubbleCore.core performWhen]; })
-// #define VERIFY(...) ({ [STBStubbleCore.core prepareForVerify]; (void)__VA_ARGS__; [STBStubbleCore.core performVerify]; })
+#define WHEN(...) ({ [SBLStubbleCore.core prepareForWhen]; (void)__VA_ARGS__; [SBLStubbleCore.core performWhen]; })
+// #define VERIFY(...) ({ [SBLStubbleCore.core prepareForVerify]; (void)__VA_ARGS__; [SBLStubbleCore.core performVerify]; })
 
 
-@interface STBMock : NSObject
+@interface SBLMock : NSObject
 
 + (id)mockForClass:(Class)class;
 
@@ -14,9 +14,9 @@
 
 
 
-//STBMockObject *verify(id mock);
+//SBLMockObject *verify(id mock);
 //
-//STBMockObject *when(id mock);
+//SBLMockObject *when(id mock);
 
 // ********************
 // Mockito syntax
