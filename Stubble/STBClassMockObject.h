@@ -1,4 +1,6 @@
-@interface STBClassMockObject : NSProxy
+#import "STBMockObject.h"
+
+@interface STBClassMockObject : NSProxy <STBMockObject>
 
 - (id)initWithClass:(Class)class;
 

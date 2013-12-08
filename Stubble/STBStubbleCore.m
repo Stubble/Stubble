@@ -1,4 +1,12 @@
 #import "STBStubbleCore.h"
+#import "STBOngoingWhen.h"
+
+@interface STBStubbleCore ()
+
+@property(nonatomic, readwrite) BOOL whenInProgress;
+@property(nonatomic) id<STBMockObject> mockForCurrentWhen;
+
+@end
 
 @implementation STBStubbleCore
 
@@ -14,19 +22,29 @@
 - (void)prepareForWhen {
     NSLog(@"prepareForWhen");
 
+    self.mockForCurrentWhen = nil;
+    self.whenInProgress = YES;
+
     // TODO: set a flag that mocks can read telling them that the next call is actually a stub setup
 }
 
+- (void)whenMethodInvokedForMock:(id<STBMockObject>)mock {
+    self.mockForCurrentWhen = mock;
+}
+
 - (id)performWhen {
+    if (!self.mockForCurrentWhen) {
+        NSLog(@"Error: called WHEN without calling a mock method.");
+    }
     NSLog(@"performWhen");
 
     // TODO clear the flag?  We could also do that in the mock itself.
-    return nil;
+    return [[STBOngoingWhen alloc] init];
 }
 
-- (id)thenReturn:(id)returnValue {
-    // TODO this actually probaly belongs on a different speciallized interface that will be returned from the WHEN macro.  Probably from the performWhen method.
-    return nil;
+- (void)returnValueSetForCurrentWhen:(id)value {
+    [self.mockForCurrentWhen setReturnValueForCurrentWhen:value];
+    // TODO add the return value for the last invoked mock
 }
 
 @end

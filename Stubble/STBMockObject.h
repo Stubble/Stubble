@@ -1,6 +1,5 @@
+@protocol STBMockObject <NSObject>
 
-@interface STBMockObject : NSObject
-
-+ (id)mockForClass:(Class)class;
+- (void)setReturnValueForCurrentWhen:(id)value;
 
 @end

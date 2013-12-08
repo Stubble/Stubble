@@ -1,10 +1,10 @@
 #import <XCTest/XCTest.h>
-#import "STBMockObject.h"
 #import "STBMock.h"
 
 @interface STBFoo : NSObject
 
 - (NSString *)methodReturningString;
+
 - (int)methodReturningInt;
 
 @end
@@ -36,18 +36,20 @@
     [super tearDown];
 }
 
-//#define BOX(X) ({__typeof__(X) __x = (X); [NSValue value:__x withObjCType:@encode(__typeof__(X))];})
-
-//#define WHEN(X) ({__typeof__(X) __x = (X); (IS_OBJECT(__x) ? DO_WHEN(__x) : DO_WHEN(@(__x)));})
-//#define WHEN(X) ({__typeof__(X) __x = (X); DO_WHEN(__x);})
-//#define WHEN(X) ({__typeof__(X) __x = (X); DO_WHEN([NSValue value:__x withObjCType:@encode(__typeof__(X))]);})
-
-- (void)testExample {
-     STBFoo *mock = [STBMockObject mockForClass:STBFoo.class];
+- (void)testWhenPrimitiveMethodWithNoParametersIsStubbedThenCorrectValueIsReturned {
+    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
 
     [WHEN(mock.methodReturningInt) thenReturn:@5];
+
+    XCTAssertEqual(mock.methodReturningInt, 5);
+}
+
+- (void)testWhenObjectMethodWithNoParametersIsStubbedThenCorrectValueIsReturned {
+    STBFoo *mock = [STBMock mockForClass:STBFoo.class];
+
     [WHEN(mock.methodReturningString) thenReturn:@"alpha"];
 
+    XCTAssertEqualObjects(mock.methodReturningString, @"alpha");
 }
 
 @end

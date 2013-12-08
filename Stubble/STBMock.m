@@ -1,5 +1,10 @@
 #import "STBMock.h"
+#import "STBClassMockObject.h"
 
-void verify(id object) {
-	
+@implementation STBMock
+
++ (id)mockForClass:(Class)class {
+    return [[STBClassMockObject alloc] initWithClass:class];
 }
+
+@end

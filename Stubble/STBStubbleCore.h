@@ -1,10 +1,15 @@
+#import "STBClassMockObject.h"
+
 @interface STBStubbleCore : NSObject
+
+@property(nonatomic, readonly) BOOL whenInProgress;
 
 + (STBStubbleCore *)core;
 
 - (void)prepareForWhen;
+- (void)whenMethodInvokedForMock:(id<STBMockObject>)mock;
 - (id)performWhen;
 
-- (id)thenReturn:(id)returnValue;
+- (void)returnValueSetForCurrentWhen:(id)value;
 
 @end

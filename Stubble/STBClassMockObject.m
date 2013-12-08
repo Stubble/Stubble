@@ -1,8 +1,10 @@
 #import "STBClassMockObject.h"
+#import "STBStubbleCore.h"
 
 @interface STBClassMockObject ()
 
 @property(nonatomic) Class mockedClass;
+@property(nonatomic) NSInvocation *currentWhenInvocation;
 
 @end
 
@@ -14,6 +16,8 @@
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
+    [STBStubbleCore.core whenMethodInvokedForMock:self];
+    self.currentWhenInvocation = invocation;
     NSLog(@"mock got invocation %@", invocation);
 }
 
@@ -27,6 +31,11 @@
 
 - (BOOL)isKindOfClass:(Class)aClass {
     return [self.mockedClass isSubclassOfClass:aClass];
+}
+
+- (void)setReturnValueForCurrentWhen:(id)value {
+    // TODO save that value for later return
+    // TODO verify that it makes sense for the current invocation
 }
 
 

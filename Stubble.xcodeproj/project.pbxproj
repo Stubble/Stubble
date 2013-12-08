@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6313C94FD69B105F1F84731C /* STBClassMockObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C67A4149A7B02CC9E46F /* STBClassMockObject.m */; };
 		6313CC5D4F8F3FE7947F79FB /* STBStubbleCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C7BCAFA194BF50DC6C50 /* STBStubbleCore.m */; };
+		6313CCCA0E902D6D0B58DAE9 /* STBOngoingWhen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C082B67BDB77399B202D /* STBOngoingWhen.m */; };
 		74F93DA018525FA100214852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F93D9F18525FA100214852 /* Foundation.framework */; };
 		74F93DAE18525FA100214852 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F93DAD18525FA100214852 /* XCTest.framework */; };
 		74F93DAF18525FA100214852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F93D9F18525FA100214852 /* Foundation.framework */; };
@@ -17,7 +18,6 @@
 		74F93DBA18525FA100214852 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74F93DB818525FA100214852 /* InfoPlist.strings */; };
 		74F93DBC18525FA100214852 /* StubbleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74F93DBB18525FA100214852 /* StubbleTests.m */; };
 		74F93DC81852601C00214852 /* STBMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 74F93DC71852601C00214852 /* STBMock.m */; };
-		74F93DCB1852610900214852 /* STBMockObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 74F93DCA1852610900214852 /* STBMockObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,9 +43,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6313C082B67BDB77399B202D /* STBOngoingWhen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STBOngoingWhen.m; sourceTree = "<group>"; };
+		6313C3E7D5550AC45252B400 /* STBMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STBMockObject.h; sourceTree = "<group>"; };
 		6313C67A4149A7B02CC9E46F /* STBClassMockObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STBClassMockObject.m; sourceTree = "<group>"; };
 		6313C78CF2CAC79402A27F76 /* STBClassMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STBClassMockObject.h; sourceTree = "<group>"; };
 		6313C7BCAFA194BF50DC6C50 /* STBStubbleCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STBStubbleCore.m; sourceTree = "<group>"; };
+		6313CD2DFCBE3162EB6EE10B /* STBOngoingWhen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STBOngoingWhen.h; sourceTree = "<group>"; };
 		6313CDEF8A8E8B3BACE5F92B /* STBStubbleCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STBStubbleCore.h; sourceTree = "<group>"; };
 		74F93D9C18525FA100214852 /* libStubble.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStubble.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		74F93D9F18525FA100214852 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -58,8 +61,6 @@
 		74F93DBB18525FA100214852 /* StubbleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StubbleTests.m; sourceTree = "<group>"; };
 		74F93DC61852601C00214852 /* STBMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STBMock.h; sourceTree = "<group>"; };
 		74F93DC71852601C00214852 /* STBMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STBMock.m; sourceTree = "<group>"; };
-		74F93DC91852610900214852 /* STBMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STBMockObject.h; sourceTree = "<group>"; };
-		74F93DCA1852610900214852 /* STBMockObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STBMockObject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,12 +155,13 @@
 			children = (
 				74F93DC61852601C00214852 /* STBMock.h */,
 				74F93DC71852601C00214852 /* STBMock.m */,
-				74F93DC91852610900214852 /* STBMockObject.h */,
-				74F93DCA1852610900214852 /* STBMockObject.m */,
 				6313C7BCAFA194BF50DC6C50 /* STBStubbleCore.m */,
 				6313CDEF8A8E8B3BACE5F92B /* STBStubbleCore.h */,
 				6313C67A4149A7B02CC9E46F /* STBClassMockObject.m */,
 				6313C78CF2CAC79402A27F76 /* STBClassMockObject.h */,
+				6313C082B67BDB77399B202D /* STBOngoingWhen.m */,
+				6313CD2DFCBE3162EB6EE10B /* STBOngoingWhen.h */,
+				6313C3E7D5550AC45252B400 /* STBMockObject.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -246,10 +248,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74F93DCB1852610900214852 /* STBMockObject.m in Sources */,
 				74F93DC81852601C00214852 /* STBMock.m in Sources */,
 				6313CC5D4F8F3FE7947F79FB /* STBStubbleCore.m in Sources */,
 				6313C94FD69B105F1F84731C /* STBClassMockObject.m in Sources */,
+				6313CCCA0E902D6D0B58DAE9 /* STBOngoingWhen.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

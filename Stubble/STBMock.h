@@ -1,9 +1,15 @@
-#import "STBMockObject.h"
 #import "STBStubbleCore.h"
 
 
 #define WHEN(__METHOD_CALL) ({ [STBStubbleCore.core prepareForWhen]; __METHOD_CALL; [STBStubbleCore.core performWhen]; })
 // #define VERIFY(__METHOD_CALL) ({ [STBStubbleCore.core prepareForVerify]; __METHOD_CALL; [STBStubbleCore.core performVerify]; })
+
+
+@interface STBMock : NSObject
+
++ (id)mockForClass:(Class)class;
+
+@end
 
 
 
