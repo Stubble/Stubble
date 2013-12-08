@@ -2,11 +2,24 @@
 
 @implementation STBStubbleCore
 
-+ (void)prepareForWhen {
++ (id)core {
+    static dispatch_once_t once;
+    static STBStubbleCore *sharedInstance;
+    dispatch_once(&once, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
+}
+
+- (void)prepareForWhen {
+    NSLog(@"prepareForWhen");
+
     // TODO: set a flag that mocks can read telling them that the next call is actually a stub setup
 }
 
-+ (id)performWhen {
+- (id)performWhen {
+    NSLog(@"performWhen");
+
     // TODO clear the flag?  We could also do that in the mock itself.
     return nil;
 }

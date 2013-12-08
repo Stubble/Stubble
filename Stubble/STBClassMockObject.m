@@ -14,7 +14,7 @@
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
-
+    NSLog(@"mock got invocation %@", invocation);
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {

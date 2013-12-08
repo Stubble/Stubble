@@ -1,6 +1,6 @@
 #import <XCTest/XCTest.h>
 #import "STBMockObject.h"
-#import "STBStubbleCore.h"
+#import "STBMock.h"
 
 @interface STBFoo : NSObject
 
@@ -36,8 +36,6 @@
     [super tearDown];
 }
 
-#define WHEN(__METHOD_CALL) ({ [STBStubbleCore prepareForWhen]; __METHOD_CALL; [STBStubbleCore performWhen]; })
-
 //#define BOX(X) ({__typeof__(X) __x = (X); [NSValue value:__x withObjCType:@encode(__typeof__(X))];})
 
 //#define WHEN(X) ({__typeof__(X) __x = (X); (IS_OBJECT(__x) ? DO_WHEN(__x) : DO_WHEN(@(__x)));})
@@ -49,7 +47,6 @@
 
     [WHEN(mock.methodReturningInt) thenReturn:@5];
     [WHEN(mock.methodReturningString) thenReturn:@"alpha"];
-//    [[STBStubbleCore when:mock.methodReturningInt] thenReturn:5];
 
 }
 
