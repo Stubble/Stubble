@@ -32,6 +32,10 @@
     return @123;
 }
 
+- (NSString *)methodWithManyArguments:(NSString *)argument1 primitive:(NSInteger)argument2 number:(NSNumber *)number {
+	return @"123";
+}
+
 @end
 
 
@@ -128,6 +132,26 @@
 	
     XCTAssertEqualObjects([mock methodWithArray:@[@"1"]], @"alpha");
     XCTAssertEqualObjects([mock methodWithArray:@[@"2"]], @"beta");
+}
+
+- (void)testWhenMethodStubbedWithDifferentValuesInOtherArgumentReturnsCorrectValueForBoth {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+	
+    [WHEN([mock methodWithManyArguments:@"1" primitive:2 number:@3]) thenReturn:@"alpha"];
+    [WHEN([mock methodWithManyArguments:@"1" primitive:2 number:@4]) thenReturn:@"beta"];
+	
+    XCTAssertEqualObjects([mock methodWithManyArguments:@"1" primitive:2 number:@3], @"alpha");
+    XCTAssertEqualObjects([mock methodWithManyArguments:@"1" primitive:2 number:@4], @"beta");
+}
+
+- (void)testWhenMethodStubbedWithDifferentNSIntegersThenCorrectValueIsReturned {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+	
+    [WHEN([mock methodWithManyArguments:@"1" primitive:5 number:@3]) thenReturn:@"alpha"];
+    [WHEN([mock methodWithManyArguments:@"1" primitive:8 number:@3]) thenReturn:@"beta"];
+	
+    XCTAssertEqualObjects([mock methodWithManyArguments:@"1" primitive:5 number:@3], @"alpha");
+    XCTAssertEqualObjects([mock methodWithManyArguments:@"1" primitive:8 number:@3], @"beta");
 }
 
 @end
