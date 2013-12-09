@@ -120,4 +120,14 @@
     XCTAssertEqualObjects([mock methodReturningString], @"beta");
 }
 
+- (void)testWhenMethodStubbedWithDifferentValuesReturnsCorrectValueForBoth {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+	
+    [WHEN([mock methodWithArray:@[@"1"]]) thenReturn:@"alpha"];
+    [WHEN([mock methodWithArray:@[@"2"]]) thenReturn:@"beta"];
+	
+    XCTAssertEqualObjects([mock methodWithArray:@[@"1"]], @"alpha");
+    XCTAssertEqualObjects([mock methodWithArray:@[@"2"]], @"beta");
+}
+
 @end
