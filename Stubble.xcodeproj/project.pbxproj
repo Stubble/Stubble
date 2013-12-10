@@ -10,13 +10,15 @@
 		6313C94FD69B105F1F84731C /* SBLClassMockObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C67A4149A7B02CC9E46F /* SBLClassMockObject.m */; };
 		6313CC5D4F8F3FE7947F79FB /* SBLStubbleCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C7BCAFA194BF50DC6C50 /* SBLStubbleCore.m */; };
 		6313CCCA0E902D6D0B58DAE9 /* SBLOngoingWhen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C082B67BDB77399B202D /* SBLOngoingWhen.m */; };
+		74678C411857D5AD00BD75E3 /* SBLVerifyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 74678C401857D5AD00BD75E3 /* SBLVerifyTest.m */; };
+		74678C441857D5E900BD75E3 /* SBLTestingClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 74678C431857D5E900BD75E3 /* SBLTestingClass.m */; };
 		74F93DA018525FA100214852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F93D9F18525FA100214852 /* Foundation.framework */; };
 		74F93DAE18525FA100214852 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F93DAD18525FA100214852 /* XCTest.framework */; };
 		74F93DAF18525FA100214852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F93D9F18525FA100214852 /* Foundation.framework */; };
 		74F93DB118525FA100214852 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F93DB018525FA100214852 /* UIKit.framework */; };
 		74F93DB418525FA100214852 /* libStubble.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F93D9C18525FA100214852 /* libStubble.a */; };
 		74F93DBA18525FA100214852 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74F93DB818525FA100214852 /* InfoPlist.strings */; };
-		74F93DBC18525FA100214852 /* SBLMockTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 74F93DBB18525FA100214852 /* SBLMockTest.m */; };
+		74F93DBC18525FA100214852 /* SBLStubTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 74F93DBB18525FA100214852 /* SBLStubTest.m */; };
 		74F93DC81852601C00214852 /* SBLMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 74F93DC71852601C00214852 /* SBLMock.m */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +52,9 @@
 		6313C7BCAFA194BF50DC6C50 /* SBLStubbleCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLStubbleCore.m; sourceTree = "<group>"; };
 		6313CD2DFCBE3162EB6EE10B /* SBLOngoingWhen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLOngoingWhen.h; sourceTree = "<group>"; };
 		6313CDEF8A8E8B3BACE5F92B /* SBLStubbleCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLStubbleCore.h; sourceTree = "<group>"; };
+		74678C401857D5AD00BD75E3 /* SBLVerifyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLVerifyTest.m; sourceTree = "<group>"; };
+		74678C421857D5E900BD75E3 /* SBLTestingClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLTestingClass.h; sourceTree = "<group>"; };
+		74678C431857D5E900BD75E3 /* SBLTestingClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLTestingClass.m; sourceTree = "<group>"; };
 		74F93D9C18525FA100214852 /* libStubble.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStubble.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		74F93D9F18525FA100214852 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		74F93DA318525FA100214852 /* Stubble-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Stubble-Prefix.pch"; sourceTree = "<group>"; };
@@ -58,7 +63,7 @@
 		74F93DB018525FA100214852 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		74F93DB718525FA100214852 /* StubbleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StubbleTests-Info.plist"; sourceTree = "<group>"; };
 		74F93DB918525FA100214852 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		74F93DBB18525FA100214852 /* SBLMockTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBLMockTest.m; sourceTree = "<group>"; };
+		74F93DBB18525FA100214852 /* SBLStubTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBLStubTest.m; sourceTree = "<group>"; };
 		74F93DC61852601C00214852 /* SBLMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLMock.h; sourceTree = "<group>"; };
 		74F93DC71852601C00214852 /* SBLMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLMock.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -135,8 +140,11 @@
 		74F93DB518525FA100214852 /* StubbleTests */ = {
 			isa = PBXGroup;
 			children = (
-				74F93DBB18525FA100214852 /* SBLMockTest.m */,
+				74678C401857D5AD00BD75E3 /* SBLVerifyTest.m */,
+				74F93DBB18525FA100214852 /* SBLStubTest.m */,
 				74F93DB618525FA100214852 /* Supporting Files */,
+				74678C421857D5E900BD75E3 /* SBLTestingClass.h */,
+				74678C431857D5E900BD75E3 /* SBLTestingClass.m */,
 			);
 			path = StubbleTests;
 			sourceTree = "<group>";
@@ -259,7 +267,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74F93DBC18525FA100214852 /* SBLMockTest.m in Sources */,
+				74678C441857D5E900BD75E3 /* SBLTestingClass.m in Sources */,
+				74678C411857D5AD00BD75E3 /* SBLVerifyTest.m in Sources */,
+				74F93DBC18525FA100214852 /* SBLStubTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

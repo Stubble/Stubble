@@ -11,4 +11,8 @@
 - (void)whenMethodInvokedForMock:(id<SBLMockObject>)mock;
 - (SBLOngoingWhen *)performWhen;
 
+- (void)prepareForVerify;
+- (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock;
+- (void)performVerify; // throws exception if verify fails
+
 @end

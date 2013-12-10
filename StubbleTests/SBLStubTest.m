@@ -1,49 +1,13 @@
 #import <XCTest/XCTest.h>
 #import "SBLMock.h"
 #import "SBLOngoingWhen.h"
+#import "SBLTestingClass.h"
 
-@interface SBLTestingClass : NSObject
-
-- (NSString *)methodReturningString;
-
-- (int)methodReturningInt;
+@interface SBLStubTest : XCTestCase
 
 @end
 
-@implementation SBLTestingClass
-
-- (NSString *)methodReturningString {
-    return @"123";
-}
-
-- (NSArray *)methodWithArray:(NSArray *)array {
-	return array;
-}
-
-- (id)methodWithVariableNumberOfArguments:(id)argument1, ... {
-	return @"";
-}
-
-- (int)methodReturningInt {
-    return 123;
-}
-
-- (NSValue *)methodReturningNSValue {
-    return @123;
-}
-
-- (NSString *)methodWithManyArguments:(NSString *)argument1 primitive:(NSInteger)argument2 number:(NSNumber *)number {
-	return @"123";
-}
-
-@end
-
-
-@interface SBLMockTest : XCTestCase
-
-@end
-
-@implementation SBLMockTest
+@implementation SBLStubTest
 
 - (void)testWhenPrimitiveMethodWithNoParametersIsStubbedThenCorrectValueIsReturned {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
