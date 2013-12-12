@@ -5,6 +5,8 @@
 
 @property (nonatomic, readonly) Class mockedClass;
 @property (nonatomic, readonly) NSMutableArray *ongoingWhens;
+@property (nonatomic, readonly) NSMutableArray *actualInvocationsArray;
+@property (nonatomic) NSInvocation *lastVerifyInvocation;
 
 @end
 
@@ -13,6 +15,7 @@
 - (id)initWithClass:(Class)class {
     _mockedClass = class;
 	_ongoingWhens = [NSMutableArray array];
+    _actualInvocationsArray = [NSMutableArray array];
     return self;
 }
 
@@ -20,8 +23,10 @@
 	if (SBLStubbleCore.core.whenInProgress) {
 		[SBLStubbleCore.core whenMethodInvokedForMock:self];
 		[self.ongoingWhens addObject:[[SBLOngoingWhen alloc] initWithInvocation:invocation]];
-		NSLog(@"captured invocation %@", invocation);
-	} else {
+	} else if (SBLStubbleCore.core.verifyInProgress) {
+        [SBLStubbleCore.core verifyMethodInvokedForMock:self];
+        self.lastVerifyInvocation = invocation;
+    } else {
 		SBLOngoingWhen *matchingWhen = nil;
 		for (SBLOngoingWhen *ongoingWhen in self.ongoingWhens.reverseObjectEnumerator) {
 			if ([ongoingWhen matchesInvocation:invocation]) {
@@ -38,7 +43,12 @@
 			[invocation setReturnValue:&returnValue];
 		}
 		[invocation invokeWithTarget:nil];
+        [self.actualInvocationsArray addObject:invocation];
 	}
+}
+
+- (NSArray *)actualInvocations {
+    return self.actualInvocationsArray;
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {

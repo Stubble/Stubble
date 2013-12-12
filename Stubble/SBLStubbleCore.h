@@ -4,6 +4,7 @@
 @interface SBLStubbleCore : NSObject
 
 @property(nonatomic, readonly) BOOL whenInProgress;
+@property(nonatomic, readonly) BOOL verifyInProgress;
 
 + (SBLStubbleCore *)core;
 
@@ -14,5 +15,7 @@
 - (void)prepareForVerify;
 - (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock;
 - (void)performVerify; // throws exception if verify fails
+
++ (BOOL)actualInvocation:(NSInvocation *)actual matchesMockInvocation:(NSInvocation *)mock;
 
 @end

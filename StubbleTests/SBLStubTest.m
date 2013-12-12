@@ -1,6 +1,5 @@
 #import <XCTest/XCTest.h>
 #import "SBLMock.h"
-#import "SBLOngoingWhen.h"
 #import "SBLTestingClass.h"
 
 @interface SBLStubTest : XCTestCase

@@ -26,10 +26,6 @@
     return self;
 }
 
-- (BOOL)typeIsObject:(const char *)type {
-	return strcmp(type, "@") == 0;
-}
-
 - (BOOL)shouldUnboxReturnValue {
 	//	NSLog(@"NSObject * : %s", [self.returnValue objCType]);
 	//	NSLog(@"methodReturnType : %s", [[self.invocation methodSignature] methodReturnType]);
@@ -38,22 +34,9 @@
 
 - (BOOL)matchesInvocation:(NSInvocation *)invocation {
 	// TODO - check that parameters match
-	BOOL matchingInvocation = invocation.selector == self.invocation.selector;
-	for (int i = 2; i < invocation.methodSignature.numberOfArguments; i++) {
-		// Need unsafe unretained here - http://stackoverflow.com/questions/11874056/nsinvocation-getreturnvalue-called-inside-forwardinvocation-makes-the-returned
-		__unsafe_unretained id argumentMatcher = nil;
-		__unsafe_unretained id argument = nil;
-		[self.invocation getArgument:&argumentMatcher atIndex:i];
-		[invocation getArgument:&argument atIndex:i];
-		
-		if ([self typeIsObject:[self.invocation.methodSignature getArgumentTypeAtIndex:i]]) {
-			matchingInvocation &= [argumentMatcher isEqual:argument];
-		} else {
-			matchingInvocation &= argumentMatcher == argument;
-		}
-	}
-	
-	return matchingInvocation;
+    return [SBLStubbleCore actualInvocation:invocation matchesMockInvocation:self.invocation];
 }
+
+
 
 @end
