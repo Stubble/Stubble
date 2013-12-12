@@ -40,6 +40,7 @@
 }
 
 - (void)prepareForVerify {
+    NSLog(@"prepareForVerify");
     self.mockForCurrentVerify = nil;
     self.verifyInProgress = YES;
 }
@@ -49,6 +50,7 @@
 }
 
 - (void)performVerify {
+    NSLog(@"performVerify");
     if (!self.mockForCurrentVerify) {
 		// TODO throw exception here
         NSLog(@"Error: called VERIFY without calling a mock method.");
@@ -62,13 +64,10 @@
         }
     }
 
+    self.verifyInProgress = NO;
     if (!invocationCount) {
         [NSException raise:@"SBLVerifyFailed" format:@"Expected %@", NSStringFromSelector(mockInvocation.selector)];
     }
-
-    NSLog(@"performWhen");
-
-	self.verifyInProgress = NO;
 }
 
 + (BOOL)actualInvocation:(NSInvocation *)actual matchesMockInvocation:(NSInvocation *)mock {
@@ -86,6 +85,8 @@
             matchingInvocation &= argumentMatcher == argument;
         }
     }
+
+    NSLog(@"actualInvocation:matchesMockInvocation: returned %d", matchingInvocation);
     return matchingInvocation;
 }
 
