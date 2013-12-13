@@ -117,4 +117,10 @@
     XCTAssertEqualObjects([mock methodWithManyArguments:@"1" primitive:8 number:@3], @"beta");
 }
 
+- (void)testWhenWhenIsNotCalledOnAMockMethodThenAnExceptionIsThrown {
+    NSString *string = @"string";
+
+    XCTAssertThrows([WHEN(string.length) thenReturn:@1]);
+}
+
 @end

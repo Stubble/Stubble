@@ -52,4 +52,10 @@
     XCTAssertThrows(VERIFY([mock methodWithManyArguments:@"1" primitive:2 number:@1]));
 }
 
+- (void)testWhenVerifyIsNotCalledOnAMockMethodThenAnExceptionIsThrown {
+    NSString *string = @"string";
+
+    XCTAssertThrows(VERIFY(string.length));
+}
+
 @end

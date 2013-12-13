@@ -1,5 +1,7 @@
 #import "SBLStubbleCore.h"
 
+#define SBLBadUsage @"SBLBadUsage"
+
 @interface SBLStubbleCore ()
 
 @property(nonatomic, readwrite) SBLStubbleCoreState state;
@@ -30,8 +32,7 @@
 - (SBLOngoingWhen *)performWhen {
     self.state = SBLStubbleCoreStateAtRest;
     if (!self.currentMock) {
-		// TODO throw exception here
-        NSLog(@"Error: called WHEN without calling a mock method.");
+        [NSException raise:SBLBadUsage format:@"called WHEN without specifying a method call on a mock"];
     }
 	return self.currentMock.currentOngoingWhen;
 }
@@ -48,8 +49,7 @@
 - (void)performVerify {
     self.state = SBLStubbleCoreStateAtRest;
     if (!self.currentMock) {
-		// TODO throw exception here
-        NSLog(@"Error: called VERIFY without calling a mock method.");
+        [NSException raise:SBLBadUsage format:@"called VERIFY without specifying a method call on a mock"];
     }
 
     NSInteger invocationCount = 0;
@@ -61,6 +61,9 @@
     }
 
     if (!invocationCount) {
+        // TODO get the line numbers in the exception
+        // TODO tell them if it was the parameters that were wrong, or if the method simply wasn't called
+        // TODO tell them what the expected parameters are
         [NSException raise:@"SBLVerifyFailed" format:@"Expected %@", NSStringFromSelector(mockInvocation.selector)];
     }
 }

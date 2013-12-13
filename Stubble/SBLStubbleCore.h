@@ -19,7 +19,7 @@ typedef enum {
 
 - (void)prepareForVerify;
 - (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock;
-- (void)performVerify; // throws exception if verify fails
+- (void)performVerify;
 
 + (BOOL)actualInvocation:(NSInvocation *)actual matchesMockInvocation:(NSInvocation *)mock;
 
