@@ -117,18 +117,4 @@
     XCTAssertEqualObjects([mock methodWithManyArguments:@"1" primitive:8 number:@3], @"beta");
 }
 
-- (void)testWhenWhenIsNotCalledOnAMockMethodThenAnExceptionIsThrown {
-    NSString *string = @"string";
-    @try {
-        [WHEN(string.length) thenReturn:@1];
-        XCTFail(@"Should have thrown NSException!");
-    } @catch (NSException *e) {
-        [self verifyException:e hasMessage:BadWhenErrorMessage];
-    }
-}
-
-- (void)verifyException:(NSException *)theException hasMessage:(NSString *)message {
-    XCTAssertEqualObjects(theException.reason, message);
-}
-
 @end

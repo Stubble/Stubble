@@ -67,8 +67,6 @@
 	return [self.stubbedInvocations lastObject];
 }
 
-#define SBLVerifyFailed @"SBLVerifyFailed"
-
 - (void)verifyLastInvocation {
 	NSInteger invocationCount = 0;
     for (NSInvocation *actualInvocation in self.actualInvocations) {

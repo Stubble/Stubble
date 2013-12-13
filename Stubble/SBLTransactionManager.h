@@ -9,6 +9,8 @@ typedef enum {
 } SBLTransactionManagerState;
 
 #define BadWhenErrorMessage @"called WHEN without specifying a method call on a mock"
+#define BadVerifyErrorMessage @"called VERIFY without specifying a method call on a mock"
+#define SBLBadUsage @"SBLBadUsage"
 
 @interface SBLTransactionManager : NSObject
 

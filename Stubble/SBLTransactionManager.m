@@ -1,7 +1,5 @@
 #import "SBLTransactionManager.h"
 
-#define SBLBadUsage @"SBLBadUsage"
-
 @interface SBLTransactionManager ()
 
 @property (nonatomic, readwrite) SBLTransactionManagerState state;
@@ -72,7 +70,7 @@
 
 - (void)performVerify {
     [self verifyState:SBLTransactionManagerStateVerifyInProgress];
-    [self verifyMockCalled:@"called VERIFY without specifying a method call on a mock"];
+    [self verifyMockCalled:BadVerifyErrorMessage];
 	@try {
 		[self.currentMock verifyLastInvocation];
 	}
