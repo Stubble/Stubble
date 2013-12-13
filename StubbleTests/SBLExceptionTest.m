@@ -34,17 +34,6 @@
     }
 }
 
-- (void)testWhenVerifyingForMethodWithCorrectParametersThenNoExceptionThrown {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
-
-    @try {
-        VERIFY([mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
-        XCTFail(@"Should have thrown NSException!");
-    } @catch (NSException *e){
-        [self verifyException:e ofName:SBLVerifyFailed reason:@"Expected methodWithManyArguments:primitive:number:"];
-    }
-}
-
 - (void)testWhenVerifyingForMethodWithDifferentParametersThenExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
