@@ -1,5 +1,5 @@
 #import "SBLStubbedInvocation.h"
-#import "SBLStubbleCore.h"
+#import "SBLTransactionManager.h"
 
 @interface SBLStubbedInvocation ()
 

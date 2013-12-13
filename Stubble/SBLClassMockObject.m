@@ -1,5 +1,5 @@
 #import "SBLClassMockObject.h"
-#import "SBLStubbleCore.h"
+#import "SBLTransactionManager.h"
 
 @interface SBLClassMockObject ()
 
@@ -20,12 +20,12 @@
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
-	if (SBLStubbleCore.core.state == SBLStubbleCoreStateOngoingWhen) {
+	if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateStubInProgress) {
 		[self.stubbedInvocations addObject:[[SBLStubbedInvocation alloc] initWithInvocation:invocation]];
-		[SBLStubbleCore.core whenMethodInvokedForMock:self];
-	} else if (SBLStubbleCore.core.state == SBLStubbleCoreStateOngoingVerify) {
+		[SBLTransactionManager.currentTransactionManager whenMethodInvokedForMock:self];
+	} else if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateVerifyInProgress) {
         self.lastVerifyInvocation = [[SBLInvocationRecord alloc] initWithInvocation:invocation];
-        [SBLStubbleCore.core verifyMethodInvokedForMock:self];
+        [SBLTransactionManager.currentTransactionManager verifyMethodInvokedForMock:self];
     } else {
 		SBLStubbedInvocation *matchingWhen = nil;
 		for (SBLStubbedInvocation *ongoingWhen in self.stubbedInvocations.reverseObjectEnumerator) {

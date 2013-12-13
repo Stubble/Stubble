@@ -3,16 +3,16 @@
 #import "SBLMatcher.h"
 
 typedef enum {
-    SBLStubbleCoreStateAtRest,
-    SBLStubbleCoreStateOngoingWhen,
-    SBLStubbleCoreStateOngoingVerify,
-} SBLStubbleCoreState;
+    SBLTransactionManagerStateAtRest,
+    SBLTransactionManagerStateStubInProgress,
+    SBLTransactionManagerStateVerifyInProgress,
+} SBLTransactionManagerState;
 
-@interface SBLStubbleCore : NSObject
+@interface SBLTransactionManager : NSObject
 
-@property (nonatomic, readonly) SBLStubbleCoreState state;
+@property (nonatomic, readonly) SBLTransactionManagerState state;
 
-+ (instancetype)core;
++ (instancetype)currentTransactionManager;
 
 - (void)clear;
 

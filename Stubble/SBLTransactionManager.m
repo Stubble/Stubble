@@ -1,21 +1,21 @@
-#import "SBLStubbleCore.h"
+#import "SBLTransactionManager.h"
 
 #define SBLBadUsage @"SBLBadUsage"
 
-@interface SBLStubbleCore ()
+@interface SBLTransactionManager ()
 
-@property (nonatomic, readwrite) SBLStubbleCoreState state;
+@property (nonatomic, readwrite) SBLTransactionManagerState state;
 @property (nonatomic) id<SBLMockObject> currentMock;
 @property (nonatomic, readonly) NSMutableArray *matchers;
 
 @end
 
-@implementation SBLStubbleCore
+@implementation SBLTransactionManager
 
-+ (instancetype)core {
++ (instancetype)currentTransactionManager {
 	NSString *key = NSStringFromClass([self class]);
 	NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
-	SBLStubbleCore *core = threadDictionary[key];
+	SBLTransactionManager *core = threadDictionary[key];
 	if (!core) {
 		core = [[self alloc] init];
 		threadDictionary[key] = core;
@@ -33,7 +33,7 @@
 - (void)clear {
     self.currentMock = nil;
 	[self.matchers removeAllObjects];
-    self.state = SBLStubbleCoreStateAtRest;
+    self.state = SBLTransactionManagerStateAtRest;
 }
 
 - (void)addMatcher:(SBLMatcher *)matcher {
@@ -41,18 +41,18 @@
 }
 
 - (void)prepareForWhen {
-    [self verifyState:SBLStubbleCoreStateAtRest];
-    self.state = SBLStubbleCoreStateOngoingWhen;
+    [self verifyState:SBLTransactionManagerStateAtRest];
+    self.state = SBLTransactionManagerStateStubInProgress;
 }
 
 - (void)whenMethodInvokedForMock:(id<SBLMockObject>)mock {
-    [self verifyState:SBLStubbleCoreStateOngoingWhen];
+    [self verifyState:SBLTransactionManagerStateStubInProgress];
     self.currentMock = mock;
 	[self.currentMock.currentStubbedInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }
 
 - (SBLStubbedInvocation *)performWhen {
-    [self verifyState:SBLStubbleCoreStateOngoingWhen];
+    [self verifyState:SBLTransactionManagerStateStubInProgress];
     [self verifyMockCalled:@"called WHEN without specifying a method call on a mock"];
 
     SBLStubbedInvocation *when = self.currentMock.currentStubbedInvocation;
@@ -61,9 +61,9 @@
 }
 
 - (void)prepareForVerify {
-    [self verifyState:SBLStubbleCoreStateAtRest];
+    [self verifyState:SBLTransactionManagerStateAtRest];
 
-    self.state = SBLStubbleCoreStateOngoingVerify;
+    self.state = SBLTransactionManagerStateVerifyInProgress;
 }
 
 - (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock {
@@ -71,7 +71,7 @@
 }
 
 - (void)performVerify {
-    [self verifyState:SBLStubbleCoreStateOngoingVerify];
+    [self verifyState:SBLTransactionManagerStateVerifyInProgress];
     [self verifyMockCalled:@"called VERIFY without specifying a method call on a mock"];
 	@try {
 		[self.currentMock verifyLastInvocation];
@@ -90,19 +90,19 @@
     }
 }
 
-- (void)verifyState:(SBLStubbleCoreState)expectedState {
+- (void)verifyState:(SBLTransactionManagerState)expectedState {
     if (self.state != expectedState) {
         [self throwUsage:[NSString stringWithFormat:@"Expected state %@ but was %@.  Do not use the SBLStubbleCore class directly.", [self descriptionFromState:expectedState], [self descriptionFromState:self.state]]];
     }
 }
 
-- (NSString *)descriptionFromState:(SBLStubbleCoreState)state {
+- (NSString *)descriptionFromState:(SBLTransactionManagerState)state {
     NSString *description;
-    if (state == SBLStubbleCoreStateAtRest) {
+    if (state == SBLTransactionManagerStateAtRest) {
         description = @"SBLStubbleCoreStateAtRest";
-    } else if (state == SBLStubbleCoreStateOngoingWhen) {
+    } else if (state == SBLTransactionManagerStateStubInProgress) {
         description = @"SBLStubbleCoreStateOngoingWhen";
-    } else if (state == SBLStubbleCoreStateOngoingVerify) {
+    } else if (state == SBLTransactionManagerStateVerifyInProgress) {
         description = @"SBLStubbleCoreStateOngoingVerify";
     } else {
         description = @"UNKNOWN";

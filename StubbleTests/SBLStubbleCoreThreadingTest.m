@@ -1,5 +1,5 @@
 #import <XCTest/XCTest.h>
-#import "SBLStubbleCore.h"
+#import "SBLTransactionManager.h"
 
 @interface SBLStubbleCoreThreadingTest : XCTestCase
 
@@ -8,30 +8,30 @@
 @implementation SBLStubbleCoreThreadingTest
 
 - (void)testStubbleCoreIsSharedInstanceOnMainThread {
-	SBLStubbleCore *core1 = [SBLStubbleCore core];
-	SBLStubbleCore *core2 = [SBLStubbleCore core];
+	SBLTransactionManager *core1 = [SBLTransactionManager currentTransactionManager];
+	SBLTransactionManager *core2 = [SBLTransactionManager currentTransactionManager];
 	
 	XCTAssertEqual(core1, core2);
 }
 
 - (void)testStubbleCoreIsSharedInstanceOnBackgroundThread {
-	__block SBLStubbleCore *core1 = nil;
-	__block SBLStubbleCore *core2 = nil;
+	__block SBLTransactionManager *core1 = nil;
+	__block SBLTransactionManager *core2 = nil;
 	
 	dispatch_barrier_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-		core1 = [SBLStubbleCore core];
-		core2 = [SBLStubbleCore core];
+		core1 = [SBLTransactionManager currentTransactionManager];
+		core2 = [SBLTransactionManager currentTransactionManager];
 	});
 	
 	XCTAssertEqual(core1, core2);
 }
 
 - (void)testStubbleCoreIsDifferentInstanceOnOtherThread {
-	SBLStubbleCore *core1 = [SBLStubbleCore core];
-	__block SBLStubbleCore *core2 = nil;
+	SBLTransactionManager *core1 = [SBLTransactionManager currentTransactionManager];
+	__block SBLTransactionManager *core2 = nil;
 	
 	dispatch_barrier_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-		core2 = [SBLStubbleCore core];
+		core2 = [SBLTransactionManager currentTransactionManager];
 	});
 	
 	XCTAssertNotEqual(core1, core2);
