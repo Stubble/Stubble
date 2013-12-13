@@ -2,11 +2,8 @@
 
 @interface SBLStubbleCore ()
 
-@property(nonatomic, readwrite) BOOL whenInProgress;
-@property(nonatomic) id<SBLMockObject> mockForCurrentWhen;
-
-@property(nonatomic, readwrite) BOOL verifyInProgress;
-@property(nonatomic) id<SBLMockObject> mockForCurrentVerify;
+@property(nonatomic, readwrite) SBLStubbleCoreState state;
+@property(nonatomic) id<SBLMockObject> currentMock;
 
 @end
 
@@ -22,49 +19,47 @@
 }
 
 - (void)prepareForWhen {
-    self.mockForCurrentWhen = nil;
-    self.whenInProgress = YES;
+    self.currentMock = nil;
+    self.state = SBLStubbleCoreStateOngoingWhen;
 }
 
 - (void)whenMethodInvokedForMock:(id<SBLMockObject>)mock {
-    self.mockForCurrentWhen = mock;
+    self.currentMock = mock;
 }
 
 - (SBLOngoingWhen *)performWhen {
-    if (!self.mockForCurrentWhen) {
+    self.state = SBLStubbleCoreStateAtRest;
+    if (!self.currentMock) {
 		// TODO throw exception here
         NSLog(@"Error: called WHEN without calling a mock method.");
     }
-	self.whenInProgress = NO;
-    return self.mockForCurrentWhen.currentOngoingWhen;
+	return self.currentMock.currentOngoingWhen;
 }
 
 - (void)prepareForVerify {
-    NSLog(@"prepareForVerify");
-    self.mockForCurrentVerify = nil;
-    self.verifyInProgress = YES;
+    self.currentMock = nil;
+    self.state = SBLStubbleCoreStateOngoingVerify;
 }
 
 - (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock {
-	self.mockForCurrentVerify = mock;
+	self.currentMock = mock;
 }
 
 - (void)performVerify {
-    NSLog(@"performVerify");
-    if (!self.mockForCurrentVerify) {
+    self.state = SBLStubbleCoreStateAtRest;
+    if (!self.currentMock) {
 		// TODO throw exception here
         NSLog(@"Error: called VERIFY without calling a mock method.");
     }
 
     NSInteger invocationCount = 0;
-    NSInvocation *mockInvocation = self.mockForCurrentVerify.lastVerifyInvocation;
-    for (NSInvocation *actualInvocation in self.mockForCurrentVerify.actualInvocations) {
+    NSInvocation *mockInvocation = self.currentMock.lastVerifyInvocation;
+    for (NSInvocation *actualInvocation in self.currentMock.actualInvocations) {
         if ([self.class actualInvocation:actualInvocation matchesMockInvocation:mockInvocation]) {
             invocationCount++;
         }
     }
 
-    self.verifyInProgress = NO;
     if (!invocationCount) {
         [NSException raise:@"SBLVerifyFailed" format:@"Expected %@", NSStringFromSelector(mockInvocation.selector)];
     }
@@ -85,8 +80,6 @@
             matchingInvocation &= argumentMatcher == argument;
         }
     }
-
-    NSLog(@"actualInvocation:matchesMockInvocation: returned %d", matchingInvocation);
     return matchingInvocation;
 }
 

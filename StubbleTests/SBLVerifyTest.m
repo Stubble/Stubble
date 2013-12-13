@@ -26,7 +26,7 @@
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	
 	[mock methodReturningInt];
-	
+
 	XCTAssertNoThrow(VERIFY([mock methodReturningInt]));
 }
 

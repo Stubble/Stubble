@@ -20,10 +20,10 @@
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
-	if (SBLStubbleCore.core.whenInProgress) {
+	if (SBLStubbleCore.core.state == SBLStubbleCoreStateOngoingWhen) {
 		[SBLStubbleCore.core whenMethodInvokedForMock:self];
 		[self.ongoingWhens addObject:[[SBLOngoingWhen alloc] initWithInvocation:invocation]];
-	} else if (SBLStubbleCore.core.verifyInProgress) {
+	} else if (SBLStubbleCore.core.state == SBLStubbleCoreStateOngoingVerify) {
         [SBLStubbleCore.core verifyMethodInvokedForMock:self];
         self.lastVerifyInvocation = invocation;
     } else {

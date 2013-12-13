@@ -1,10 +1,15 @@
 #import "SBLClassMockObject.h"
 #import "SBLOngoingWhen.h"
 
+typedef enum {
+    SBLStubbleCoreStateAtRest,
+    SBLStubbleCoreStateOngoingWhen,
+    SBLStubbleCoreStateOngoingVerify,
+} SBLStubbleCoreState;
+
 @interface SBLStubbleCore : NSObject
 
-@property(nonatomic, readonly) BOOL whenInProgress;
-@property(nonatomic, readonly) BOOL verifyInProgress;
+@property(nonatomic, readonly) SBLStubbleCoreState state;
 
 + (SBLStubbleCore *)core;
 
