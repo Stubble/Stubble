@@ -9,9 +9,9 @@ typedef enum {
 
 @interface SBLStubbleCore : NSObject
 
-@property(nonatomic, readonly) SBLStubbleCoreState state;
+@property (nonatomic, readonly) SBLStubbleCoreState state;
 
-+ (SBLStubbleCore *)core;
++ (instancetype)core;
 
 - (void)clear;
 

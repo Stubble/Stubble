@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4DF0042F185AB833003171E5 /* SBLStubbleCoreThreadingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0042E185AB833003171E5 /* SBLStubbleCoreThreadingTest.m */; };
 		6313C94FD69B105F1F84731C /* SBLClassMockObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C67A4149A7B02CC9E46F /* SBLClassMockObject.m */; };
 		6313CC5D4F8F3FE7947F79FB /* SBLStubbleCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C7BCAFA194BF50DC6C50 /* SBLStubbleCore.m */; };
 		6313CCCA0E902D6D0B58DAE9 /* SBLOngoingWhen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C082B67BDB77399B202D /* SBLOngoingWhen.m */; };
@@ -45,6 +46,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4DF0042E185AB833003171E5 /* SBLStubbleCoreThreadingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLStubbleCoreThreadingTest.m; sourceTree = "<group>"; };
 		6313C082B67BDB77399B202D /* SBLOngoingWhen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLOngoingWhen.m; sourceTree = "<group>"; };
 		6313C3E7D5550AC45252B400 /* SBLMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLMockObject.h; sourceTree = "<group>"; };
 		6313C67A4149A7B02CC9E46F /* SBLClassMockObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLClassMockObject.m; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				74F93DB618525FA100214852 /* Supporting Files */,
 				74678C421857D5E900BD75E3 /* SBLTestingClass.h */,
 				74678C431857D5E900BD75E3 /* SBLTestingClass.m */,
+				4DF0042E185AB833003171E5 /* SBLStubbleCoreThreadingTest.m */,
 			);
 			path = StubbleTests;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				74678C441857D5E900BD75E3 /* SBLTestingClass.m in Sources */,
+				4DF0042F185AB833003171E5 /* SBLStubbleCoreThreadingTest.m in Sources */,
 				74678C411857D5AD00BD75E3 /* SBLVerifyTest.m in Sources */,
 				74F93DBC18525FA100214852 /* SBLStubTest.m in Sources */,
 			);

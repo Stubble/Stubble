@@ -13,4 +13,6 @@
 
 - (NSString *)methodWithManyArguments:(NSString *)argument1 primitive:(NSInteger)argument2 number:(NSNumber *)number;
 
+- (void)methodWithBool:(BOOL)argument;
+
 @end

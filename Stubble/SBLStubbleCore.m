@@ -12,13 +12,15 @@
 
 @implementation SBLStubbleCore
 
-+ (id)core {
-    static dispatch_once_t once;
-    static SBLStubbleCore *sharedInstance;
-    dispatch_once(&once, ^{
-        sharedInstance = [[self alloc] init];
-    });
-    return sharedInstance;
++ (instancetype)core {
+	NSString *key = NSStringFromClass([self class]);
+	NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
+	SBLStubbleCore *core = threadDictionary[key];
+	if (!core) {
+		core = [[self alloc] init];
+		threadDictionary[key] = core;
+	}
+    return core;
 }
 
 - (void)clear {
@@ -127,7 +129,7 @@
 
 - (void)throwUsage:(NSString *)message {
     [self clear];
-    [NSException raise:SBLBadUsage format:message];
+    [NSException raise:SBLBadUsage format:@"%@", message];
 }
 
 @end

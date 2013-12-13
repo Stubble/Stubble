@@ -26,4 +26,8 @@
 	return @"123";
 }
 
+- (void)methodWithBool:(BOOL)argument {
+	
+}
+
 @end
