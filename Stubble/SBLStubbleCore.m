@@ -1,6 +1,7 @@
 #import "SBLStubbleCore.h"
 
 #define SBLBadUsage @"SBLBadUsage"
+#define SBLVerifyFailed @"SBLVerifyFailed"
 
 @interface SBLStubbleCore ()
 
@@ -20,25 +21,33 @@
     return sharedInstance;
 }
 
-- (void)prepareForWhen {
+- (void)clear {
     self.currentMock = nil;
+    self.state = SBLStubbleCoreStateAtRest;
+}
+
+- (void)prepareForWhen {
+    [self verifyState:SBLStubbleCoreStateAtRest];
     self.state = SBLStubbleCoreStateOngoingWhen;
 }
 
 - (void)whenMethodInvokedForMock:(id<SBLMockObject>)mock {
+    [self verifyState:SBLStubbleCoreStateOngoingWhen];
     self.currentMock = mock;
 }
 
 - (SBLOngoingWhen *)performWhen {
-    self.state = SBLStubbleCoreStateAtRest;
-    if (!self.currentMock) {
-        [NSException raise:SBLBadUsage format:@"called WHEN without specifying a method call on a mock"];
-    }
-	return self.currentMock.currentOngoingWhen;
+    [self verifyState:SBLStubbleCoreStateOngoingWhen];
+    [self verifyMockCalled:@"called WHEN without specifying a method call on a mock"];
+
+    SBLOngoingWhen *when = self.currentMock.currentOngoingWhen;
+    [self clear];
+    return when;
 }
 
 - (void)prepareForVerify {
-    self.currentMock = nil;
+    [self verifyState:SBLStubbleCoreStateAtRest];
+
     self.state = SBLStubbleCoreStateOngoingVerify;
 }
 
@@ -47,10 +56,8 @@
 }
 
 - (void)performVerify {
-    self.state = SBLStubbleCoreStateAtRest;
-    if (!self.currentMock) {
-        [NSException raise:SBLBadUsage format:@"called VERIFY without specifying a method call on a mock"];
-    }
+    [self verifyState:SBLStubbleCoreStateOngoingVerify];
+    [self verifyMockCalled:@"called VERIFY without specifying a method call on a mock"];
 
     NSInteger invocationCount = 0;
     NSInvocation *mockInvocation = self.currentMock.lastVerifyInvocation;
@@ -60,11 +67,12 @@
         }
     }
 
+    [self clear];
     if (!invocationCount) {
         // TODO get the line numbers in the exception
         // TODO tell them if it was the parameters that were wrong, or if the method simply wasn't called
         // TODO tell them what the expected parameters are
-        [NSException raise:@"SBLVerifyFailed" format:@"Expected %@", NSStringFromSelector(mockInvocation.selector)];
+        [NSException raise:SBLVerifyFailed format:@"Expected %@", NSStringFromSelector(mockInvocation.selector)];
     }
 }
 
@@ -88,6 +96,38 @@
 
 + (BOOL)typeIsObject:(const char *)type {
     return strcmp(type, "@") == 0;
+}
+
+
+- (void)verifyMockCalled:(NSString *)message {
+    if (!self.currentMock) {
+        [self throwUsage:message];
+    }
+}
+
+- (void)verifyState:(SBLStubbleCoreState)expectedState {
+    if (self.state != expectedState) {
+        [self throwUsage:[NSString stringWithFormat:@"Expected state %@ but was %@.  Do not use the SBLStubbleCore class directly.", [self descriptionFromState:expectedState], [self descriptionFromState:self.state]]];
+    }
+}
+
+- (NSString *)descriptionFromState:(SBLStubbleCoreState)state {
+    NSString *description;
+    if (state == SBLStubbleCoreStateAtRest) {
+        description = @"SBLStubbleCoreStateAtRest";
+    } else if (state == SBLStubbleCoreStateOngoingWhen) {
+        description = @"SBLStubbleCoreStateOngoingWhen";
+    } else if (state == SBLStubbleCoreStateOngoingVerify) {
+        description = @"SBLStubbleCoreStateOngoingVerify";
+    } else {
+        description = @"UNKNOWN";
+    }
+    return description;
+}
+
+- (void)throwUsage:(NSString *)message {
+    [self clear];
+    [NSException raise:SBLBadUsage format:message];
 }
 
 @end

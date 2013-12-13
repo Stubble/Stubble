@@ -13,6 +13,8 @@ typedef enum {
 
 + (SBLStubbleCore *)core;
 
+- (void)clear;
+
 - (void)prepareForWhen;
 - (void)whenMethodInvokedForMock:(id<SBLMockObject>)mock;
 - (SBLOngoingWhen *)performWhen;
