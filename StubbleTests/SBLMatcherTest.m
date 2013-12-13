@@ -23,4 +23,19 @@
 	XCTAssertEqualObjects([mock methodWithInteger:0], @"two");
 }
 
+- (void)testWhenMultipleArgumentMethodHasMatcherForOneArgumentThenOtherArgumentIsUsedForMatching {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+	
+	[WHEN([mock methodWithArgument1:@"arg1" argument2:any()]) thenReturn:@"one"];
+	[WHEN([mock methodWithArgument1:@"arg2" argument2:any()]) thenReturn:@"two"];
+	[WHEN([mock methodWithArgument1:any() argument2:@"arg3"]) thenReturn:@"three"];
+	[WHEN([mock methodWithArgument1:any() argument2:@"arg4"]) thenReturn:@"four"];
+	
+	XCTAssertEqualObjects([mock methodWithArgument1:@"arg1" argument2:@"other stuff"], @"one");
+	XCTAssertEqualObjects([mock methodWithArgument1:@"arg2" argument2:@"other stuff"], @"two");
+	XCTAssertEqualObjects([mock methodWithArgument1:@"stuff" argument2:@"arg3"], @"three");
+	XCTAssertEqualObjects([mock methodWithArgument1:@"stuff" argument2:@"arg4"], @"four");
+	XCTAssertNil([mock methodWithArgument1:@"stuff" argument2:@"other stuff"]);
+}
+
 @end

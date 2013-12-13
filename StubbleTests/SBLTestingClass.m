@@ -38,4 +38,8 @@
 	return @"123";
 }
 
+- (NSString *)methodWithArgument1:(NSString *)argument1 argument2:(NSString *)argument2 {
+	return @"123";
+}
+
 @end
