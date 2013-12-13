@@ -18,4 +18,6 @@
 - (NSString *)methodWithInteger:(NSInteger)integer;
 - (NSString *)methodWithObject:(NSNumber *)number;
 
+- (NSString *)methodWithArgument1:(NSString *)argument1 argument2:(NSString *)argument2;
+
 @end
