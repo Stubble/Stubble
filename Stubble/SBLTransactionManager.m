@@ -53,7 +53,7 @@
 
 - (SBLStubbedInvocation *)performWhen {
     [self verifyState:SBLTransactionManagerStateStubInProgress];
-    [self verifyMockCalled:@"called WHEN without specifying a method call on a mock"];
+    [self verifyMockCalled:BadWhenErrorMessage];
 
     SBLStubbedInvocation *when = self.currentMock.currentStubbedInvocation;
     [self clear];
@@ -84,9 +84,9 @@
 	}
 }
 
-- (void)verifyMockCalled:(NSString *)message {
+- (void)verifyMockCalled:(NSString *)errorMessage {
     if (!self.currentMock) {
-        [self throwUsage:message];
+        [self throwUsage:errorMessage];
     }
 }
 

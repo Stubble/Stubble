@@ -119,8 +119,16 @@
 
 - (void)testWhenWhenIsNotCalledOnAMockMethodThenAnExceptionIsThrown {
     NSString *string = @"string";
+    @try {
+        [WHEN(string.length) thenReturn:@1];
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e) {
+        [self verifyException:e hasMessage:BadWhenErrorMessage];
+    }
+}
 
-    XCTAssertThrows([WHEN(string.length) thenReturn:@1]);
+- (void)verifyException:(NSException *)theException hasMessage:(NSString *)message {
+    XCTAssertEqualObjects(theException.reason, message);
 }
 
 @end

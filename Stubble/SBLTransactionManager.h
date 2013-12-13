@@ -8,6 +8,8 @@ typedef enum {
     SBLTransactionManagerStateVerifyInProgress,
 } SBLTransactionManagerState;
 
+#define BadWhenErrorMessage @"called WHEN without specifying a method call on a mock"
+
 @interface SBLTransactionManager : NSObject
 
 @property (nonatomic, readonly) SBLTransactionManagerState state;
