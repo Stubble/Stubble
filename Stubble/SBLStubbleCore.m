@@ -1,12 +1,12 @@
 #import "SBLStubbleCore.h"
 
 #define SBLBadUsage @"SBLBadUsage"
-#define SBLVerifyFailed @"SBLVerifyFailed"
 
 @interface SBLStubbleCore ()
 
-@property(nonatomic, readwrite) SBLStubbleCoreState state;
-@property(nonatomic) id<SBLMockObject> currentMock;
+@property (nonatomic, readwrite) SBLStubbleCoreState state;
+@property (nonatomic) id<SBLMockObject> currentMock;
+@property (nonatomic, readonly) NSMutableArray *matchers;
 
 @end
 
@@ -23,9 +23,21 @@
     return core;
 }
 
+- (id)init {
+	if (self = [super init]) {
+		_matchers = [NSMutableArray array];
+	}
+	return self;
+}
+
 - (void)clear {
     self.currentMock = nil;
+	[self.matchers removeAllObjects];
     self.state = SBLStubbleCoreStateAtRest;
+}
+
+- (void)addMatcher:(SBLMatcher *)matcher {
+	[self.matchers addObject:matcher];
 }
 
 - (void)prepareForWhen {
@@ -36,13 +48,14 @@
 - (void)whenMethodInvokedForMock:(id<SBLMockObject>)mock {
     [self verifyState:SBLStubbleCoreStateOngoingWhen];
     self.currentMock = mock;
+	[self.currentMock.currentStubbedInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }
 
-- (SBLOngoingWhen *)performWhen {
+- (SBLStubbedInvocation *)performWhen {
     [self verifyState:SBLStubbleCoreStateOngoingWhen];
     [self verifyMockCalled:@"called WHEN without specifying a method call on a mock"];
 
-    SBLOngoingWhen *when = self.currentMock.currentOngoingWhen;
+    SBLStubbedInvocation *when = self.currentMock.currentStubbedInvocation;
     [self clear];
     return when;
 }
@@ -60,46 +73,16 @@
 - (void)performVerify {
     [self verifyState:SBLStubbleCoreStateOngoingVerify];
     [self verifyMockCalled:@"called VERIFY without specifying a method call on a mock"];
-
-    NSInteger invocationCount = 0;
-    NSInvocation *mockInvocation = self.currentMock.lastVerifyInvocation;
-    for (NSInvocation *actualInvocation in self.currentMock.actualInvocations) {
-        if ([self.class actualInvocation:actualInvocation matchesMockInvocation:mockInvocation]) {
-            invocationCount++;
-        }
-    }
-
-    [self clear];
-    if (!invocationCount) {
-        // TODO get the line numbers in the exception
-        // TODO tell them if it was the parameters that were wrong, or if the method simply wasn't called
-        // TODO tell them what the expected parameters are
-        [NSException raise:SBLVerifyFailed format:@"Expected %@", NSStringFromSelector(mockInvocation.selector)];
-    }
+	@try {
+		[self.currentMock verifyLastInvocation];
+	}
+	@catch (NSException *exception) {
+		@throw exception;
+	}
+	@finally {
+		[self clear];
+	}
 }
-
-+ (BOOL)actualInvocation:(NSInvocation *)actual matchesMockInvocation:(NSInvocation *)mock {
-    BOOL matchingInvocation = actual.selector == mock.selector;
-    for (int i = 2; i < actual.methodSignature.numberOfArguments; i++) {
-        // Need unsafe unretained here - http://stackoverflow.com/questions/11874056/nsinvocation-getreturnvalue-called-inside-forwardinvocation-makes-the-returned
-        __unsafe_unretained id argumentMatcher = nil;
-        __unsafe_unretained id argument = nil;
-        [mock getArgument:&argumentMatcher atIndex:i];
-        [actual getArgument:&argument atIndex:i];
-
-        if ([self typeIsObject:[mock.methodSignature getArgumentTypeAtIndex:i]]) {
-            matchingInvocation &= [argumentMatcher isEqual:argument];
-        } else {
-            matchingInvocation &= argumentMatcher == argument;
-        }
-    }
-    return matchingInvocation;
-}
-
-+ (BOOL)typeIsObject:(const char *)type {
-    return strcmp(type, "@") == 0;
-}
-
 
 - (void)verifyMockCalled:(NSString *)message {
     if (!self.currentMock) {

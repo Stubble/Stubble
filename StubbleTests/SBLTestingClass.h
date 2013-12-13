@@ -15,4 +15,7 @@
 
 - (void)methodWithBool:(BOOL)argument;
 
+- (NSString *)methodWithInteger:(NSInteger)integer;
+- (NSString *)methodWithObject:(NSNumber *)number;
+
 @end

@@ -30,4 +30,12 @@
 	
 }
 
+- (NSString *)methodWithInteger:(NSInteger)integer {
+	return @"123";
+}
+
+- (NSString *)methodWithObject:(NSNumber *)number {
+	return @"123";
+}
+
 @end

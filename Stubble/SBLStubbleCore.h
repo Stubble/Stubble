@@ -1,5 +1,6 @@
 #import "SBLClassMockObject.h"
-#import "SBLOngoingWhen.h"
+#import "SBLStubbedInvocation.h"
+#import "SBLMatcher.h"
 
 typedef enum {
     SBLStubbleCoreStateAtRest,
@@ -17,12 +18,12 @@ typedef enum {
 
 - (void)prepareForWhen;
 - (void)whenMethodInvokedForMock:(id<SBLMockObject>)mock;
-- (SBLOngoingWhen *)performWhen;
+- (SBLStubbedInvocation *)performWhen;
 
 - (void)prepareForVerify;
 - (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock;
 - (void)performVerify;
 
-+ (BOOL)actualInvocation:(NSInvocation *)actual matchesMockInvocation:(NSInvocation *)mock;
+- (void)addMatcher:(SBLMatcher *)matcher;
 
 @end
