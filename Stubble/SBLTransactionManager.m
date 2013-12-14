@@ -1,4 +1,5 @@
 #import "SBLTransactionManager.h"
+#import "SBLErrors.h"
 
 @interface SBLTransactionManager ()
 

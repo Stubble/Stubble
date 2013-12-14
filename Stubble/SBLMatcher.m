@@ -9,8 +9,14 @@
 @implementation SBLMatcher
 
 + (instancetype)any {
-	return [SBLMatcher matcherWithBlock:^BOOL(void *argument) {
+	return [SBLMatcher matcherWithBlock:^BOOL(id argument) {
 		return YES;
+	}];
+}
+
++ (instancetype)objectIsEqualMatcher:(id)object {
+	return [SBLMatcher matcherWithBlock:^BOOL(id argument) {
+		return [object isEqual:argument];
 	}];
 }
 
@@ -20,7 +26,7 @@
 	return matcher;
 }
 
-- (BOOL)matchesArgument:(void *)argument {
+- (BOOL)matchesArgument:(id)argument {
 	return self.matcherBlock(argument);
 }
 

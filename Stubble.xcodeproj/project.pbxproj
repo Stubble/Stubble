@@ -51,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		4D0E754E185BBD3B00C681BE /* SBLMatcherTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLMatcherTest.m; sourceTree = "<group>"; };
+		4D0E7550185D09B200C681BE /* SBLErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLErrors.h; sourceTree = "<group>"; };
 		4DF0042E185AB833003171E5 /* SBLStubbleCoreThreadingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLStubbleCoreThreadingTest.m; sourceTree = "<group>"; };
 		4DF00430185ACB53003171E5 /* SBLInvocationRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLInvocationRecord.h; sourceTree = "<group>"; };
 		4DF00431185ACB53003171E5 /* SBLInvocationRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLInvocationRecord.m; sourceTree = "<group>"; };
@@ -189,6 +190,7 @@
 				4DF00431185ACB53003171E5 /* SBLInvocationRecord.m */,
 				4DF00433185AD2AC003171E5 /* SBLMatcher.h */,
 				4DF00434185AD2AC003171E5 /* SBLMatcher.m */,
+				4D0E7550185D09B200C681BE /* SBLErrors.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";

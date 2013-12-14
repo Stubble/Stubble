@@ -1,0 +1,5 @@
+#define SBLBadWhenErrorMessage @"called WHEN without specifying a method call on a mock"
+#define SBLBadVerifyErrorMessage @"called VERIFY without specifying a method call on a mock"
+#define SBLBadUsage @"SBLBadUsage"
+#define SBLBadTimesProvided @"Number of times must be 0 or more"
+#define SBLBadMatchersProvided @"If one non-object parameter is given a matcher, all non-object parameters must be given matchers"

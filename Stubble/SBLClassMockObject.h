@@ -1,7 +1,7 @@
 #import "SBLMockObject.h"
 
 #define SBLVerifyFailed @"SBLVerifyFailed"
-#define SBLVerifyCalledWrongNumberOfTimes @"Expected %@ to be called %f times, but was called %f times"
+#define SBLVerifyCalledWrongNumberOfTimes @"Expected %@ to be called %d times, but was called %d times"
 
 @interface SBLClassMockObject : NSProxy <SBLMockObject>
 

@@ -1,5 +1,6 @@
 #import "SBLClassMockObject.h"
 #import "SBLTransactionManager.h"
+#import "SBLErrors.h"
 
 @interface SBLClassMockObject ()
 

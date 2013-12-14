@@ -1,6 +1,7 @@
 #import <XCTest/XCTest.h>
 #import "SBLMock.h"
 #import "SBLTestingClass.h"
+#import "SBLErrors.h"
 
 @interface SBLExceptionTest : XCTestCase
 
@@ -94,7 +95,7 @@
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
-                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", @(2), @(1)]];
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", 2, 1]];
     }
 }
 
@@ -123,7 +124,7 @@
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
-                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", @(2), @(3)]];
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", 2, 3]];
     }
 }
 - (void)testWhenVerifyingForMethodWithVoidReturnTypeThenNoExceptionThrown {
