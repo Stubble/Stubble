@@ -98,6 +98,19 @@
     }
 }
 
+- (void)testWhenVerifyIsCalledWithNegativeNumberThenAnExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodReturningInt];
+
+    @try {
+        VERIFY_TIMES(-1, [mock methodReturningInt]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLBadUsage reason:SBLBadTimesProvided];
+    }
+}
+
 - (void)testWhenVerifyTimesIsCalledTooManyTimesThenAnExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
