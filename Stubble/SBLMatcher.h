@@ -1,11 +1,13 @@
-typedef BOOL(^SBLMatcherBlock)(void *argument);
+typedef BOOL(^SBLMatcherBlock)(id argument);
 
 @interface SBLMatcher : NSObject
 
 + (instancetype)any;
++ (instancetype)eq:(id)obj;
++ (instancetype)refEq:(void *)obj;
 
 + (instancetype)matcherWithBlock:(SBLMatcherBlock)matcher;
 
-- (BOOL)matchesArgument:(void *)argument;
+- (BOOL)matchesArgument:(id)argument;
 
 @end

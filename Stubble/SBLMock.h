@@ -5,7 +5,7 @@
 
 #define any() _Pragma("clang diagnostic push") \
 _Pragma("clang diagnostic ignored \"-Wconversion\"") \
-({ [SBLTransactionManager.currentTransactionManager addMatcher:[SBLMatcher any]]; (id)0; }) \
+({ SBLMatcher *m = [SBLMatcher any]; [SBLTransactionManager.currentTransactionManager addMatcher:m]; (id)m; }) \
 _Pragma ("clang diagnostic pop") \
 
 @interface SBLMock : NSObject

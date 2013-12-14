@@ -9,8 +9,24 @@
 @implementation SBLMatcher
 
 + (instancetype)any {
-	return [SBLMatcher matcherWithBlock:^BOOL(void *argument) {
+	return [SBLMatcher matcherWithBlock:^BOOL(id argument) {
 		return YES;
+	}];
+}
+
++ (instancetype)eq:(id)obj {
+	SBLMatcherBlock block = nil;
+	if ([obj isKindOfClass:NSObject.class]) {
+		block = ^BOOL(id argument) {return [obj isEqual:argument];};
+	} else {
+		block = ^BOOL(id argument) {return obj == argument;};
+	}
+	return [self matcherWithBlock:block];
+}
+
++ (instancetype)refEq:(void *)obj {
+	return [SBLMatcher matcherWithBlock:^BOOL(id argument) {
+		return obj == (__bridge void *)argument;
 	}];
 }
 
@@ -20,7 +36,7 @@
 	return matcher;
 }
 
-- (BOOL)matchesArgument:(void *)argument {
+- (BOOL)matchesArgument:(id)argument {
 	return self.matcherBlock(argument);
 }
 
