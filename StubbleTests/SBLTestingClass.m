@@ -42,4 +42,12 @@
 	return @"123";
 }
 
+- (NSString *)methodWithArgument1:(NSString *)argument1
+						argument2:(NSInteger)argument2
+						argument3:(NSInteger)argument3
+						argument4:(NSString *)argument4
+						argument5:(BOOL)argument5 {
+	return @"123";
+}
+
 @end
