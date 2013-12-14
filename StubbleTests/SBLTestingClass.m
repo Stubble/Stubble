@@ -2,6 +2,10 @@
 
 @implementation SBLTestingClass
 
+- (void)methodWithNoReturn {
+
+}
+
 - (NSString *)methodReturningString {
     return @"123";
 }

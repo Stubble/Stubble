@@ -39,8 +39,14 @@
 			[matchingWhen.returnValue getValue:buffer];
 			[invocation setReturnValue:buffer];
 		} else {
-			id returnValue = matchingWhen.returnValue;
-			[invocation setReturnValue:&returnValue];
+            NSUInteger methodReturnLength = [[invocation methodSignature] methodReturnLength];
+            if (!methodReturnLength){
+                // no-op
+                // TODO: This represents a void return type. Is there something to do here?
+            } else {
+                id returnValue = matchingWhen.returnValue;
+                [invocation setReturnValue:&returnValue];
+            }
 		}
 		[invocation invokeWithTarget:nil];
         [self.actualInvocationsArray addObject:invocation];

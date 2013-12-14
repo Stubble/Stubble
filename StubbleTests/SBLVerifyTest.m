@@ -26,6 +26,30 @@
     XCTAssertNoThrow(VERIFY([mock methodReturningInt]));
 }
 
+- (void)testWhenVerifyingForMultipleMethodCallsThenNoExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodReturningString];
+    [mock methodReturningInt];
+    [mock methodReturningString];
+    [mock methodWithNoReturn];
+    [mock methodReturningString];
+    [mock methodReturningInt];
+
+    XCTAssertNoThrow(VERIFY([mock methodWithNoReturn]));
+    XCTAssertNoThrow(VERIFY_TIMES(2, [mock methodReturningInt]));
+    XCTAssertNoThrow(VERIFY_TIMES(3, [mock methodReturningString]));
+    XCTAssertNoThrow(VERIFY_NEVER([mock methodReturningNSValue]));
+}
+
+- (void)testWhenVerifyingForMethodWithVoidReturnTypeThenNoExceptionThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodWithNoReturn];
+
+    XCTAssertNoThrow(VERIFY([mock methodWithNoReturn]));
+}
+
 - (void)testWhenVerifyingForMethodWithCorrectParametersThenNoExceptionThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 

@@ -68,10 +68,6 @@
 	self.currentMock = mock;
 }
 
-- (void)performVerify {
-    [self performVerifyNumberOfTimes:1];
-}
-
 - (void)performVerifyNumberOfTimes:(int)times {
     [self verifyState:SBLTransactionManagerStateVerifyInProgress];
     [self verifyMockCalled:SBLBadVerifyErrorMessage];
