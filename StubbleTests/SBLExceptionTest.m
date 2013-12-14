@@ -17,7 +17,7 @@
         [WHEN(string.length) thenReturn:@1];
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e) {
-        [self verifyException:e ofName:SBLBadUsage reason:BadWhenErrorMessage];
+        [self verifyException:e ofName:SBLBadUsage reason:SBLBadWhenErrorMessage];
     }
 }
 
@@ -68,9 +68,52 @@
         VERIFY(string.length);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
-        [self verifyException:e ofName:SBLBadUsage reason:BadVerifyErrorMessage];
+        [self verifyException:e ofName:SBLBadUsage reason:SBLBadVerifyErrorMessage];
     }
 }
+
+- (void)testWhenVerifyIsCalledZeroTimesThenAnExpectedExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    @try {
+        VERIFY_TIMES(1, [mock methodReturningInt]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLVerifyFailed
+                       reason:@"Expected methodReturningInt"];
+    }
+}
+
+- (void)testWhenVerifyIsCalledTooFewTimesThenAnExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodReturningInt];
+
+    @try {
+        VERIFY_TIMES(2, [mock methodReturningInt]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLVerifyFailed
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", @(2), @(1)]];
+    }
+}
+
+- (void)testWhenVerifyTimesIsCalledTooManyTimesThenAnExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodReturningInt];
+    [mock methodReturningInt];
+    [mock methodReturningInt];
+
+    @try {
+        VERIFY_TIMES(2, [mock methodReturningInt]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLVerifyFailed
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", @(2), @(3)]];
+    }
+}
+
 
 #pragma mark - Utility methods
 

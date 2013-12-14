@@ -51,7 +51,7 @@
 
 - (SBLStubbedInvocation *)performWhen {
     [self verifyState:SBLTransactionManagerStateStubInProgress];
-    [self verifyMockCalled:BadWhenErrorMessage];
+    [self verifyMockCalled:SBLBadWhenErrorMessage];
 
     SBLStubbedInvocation *when = self.currentMock.currentStubbedInvocation;
     [self clear];
@@ -69,17 +69,21 @@
 }
 
 - (void)performVerify {
+    [self performVerifyNumberOfTimes:1];
+}
+
+- (void)performVerifyNumberOfTimes:(int)times {
     [self verifyState:SBLTransactionManagerStateVerifyInProgress];
-    [self verifyMockCalled:BadVerifyErrorMessage];
-	@try {
-		[self.currentMock verifyLastInvocation];
-	}
-	@catch (NSException *exception) {
-		@throw exception;
-	}
-	@finally {
-		[self clear];
-	}
+    [self verifyMockCalled:SBLBadVerifyErrorMessage];
+    @try {
+        [self.currentMock verifyInvocationOccurredNumberOfTimes:times];
+    }
+    @catch (NSException *exception) {
+        @throw exception;
+    }
+    @finally {
+        [self clear];
+    }
 }
 
 - (void)verifyMockCalled:(NSString *)errorMessage {

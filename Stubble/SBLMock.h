@@ -2,6 +2,7 @@
 
 #define WHEN(...) ({ [SBLTransactionManager.currentTransactionManager prepareForWhen]; (void)__VA_ARGS__; [SBLTransactionManager.currentTransactionManager performWhen]; })
 #define VERIFY(...) ({ [SBLTransactionManager.currentTransactionManager prepareForVerify]; (void)__VA_ARGS__; [SBLTransactionManager.currentTransactionManager performVerify]; })
+#define VERIFY_TIMES(times, ...) ({ [SBLTransactionManager.currentTransactionManager prepareForVerify]; (void)__VA_ARGS__; [SBLTransactionManager.currentTransactionManager performVerifyNumberOfTimes:times]; })
 
 #define any() _Pragma("clang diagnostic push") \
 _Pragma("clang diagnostic ignored \"-Wconversion\"") \

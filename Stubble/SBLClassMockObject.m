@@ -6,7 +6,7 @@
 @property (nonatomic, readonly) Class mockedClass;
 @property (nonatomic, readonly) NSMutableArray *stubbedInvocations;
 @property (nonatomic, readonly) NSMutableArray *actualInvocationsArray;
-@property (nonatomic, readwrite) SBLInvocationRecord *lastVerifyInvocation;
+@property (nonatomic, readwrite) SBLInvocationRecord *verifyInvocation;
 
 @end
 
@@ -24,7 +24,7 @@
 		[self.stubbedInvocations addObject:[[SBLStubbedInvocation alloc] initWithInvocation:invocation]];
 		[SBLTransactionManager.currentTransactionManager whenMethodInvokedForMock:self];
 	} else if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateVerifyInProgress) {
-        self.lastVerifyInvocation = [[SBLInvocationRecord alloc] initWithInvocation:invocation];
+        self.verifyInvocation = [[SBLInvocationRecord alloc] initWithInvocation:invocation];
         [SBLTransactionManager.currentTransactionManager verifyMethodInvokedForMock:self];
     } else {
 		SBLStubbedInvocation *matchingWhen = nil;
@@ -67,20 +67,26 @@
 	return [self.stubbedInvocations lastObject];
 }
 
-- (void)verifyLastInvocation {
-	NSInteger invocationCount = 0;
+- (void)verifyInvocationOccurredNumberOfTimes:(NSUInteger *)times {
+    NSInteger invocationCount = 0;
     for (NSInvocation *actualInvocation in self.actualInvocations) {
-        if ([self.lastVerifyInvocation matchesInvocation:actualInvocation]) {
+        if ([self.verifyInvocation matchesInvocation:actualInvocation]) {
             invocationCount++;
         }
     }
-	
-    if (!invocationCount) {
+
+    if (!invocationCount){
         // TODO get the line numbers in the exception
         // TODO tell them if it was the parameters that were wrong, or if the method simply wasn't called
         // TODO tell them what the expected parameters are
-        [NSException raise:SBLVerifyFailed format:@"Expected %@", self.lastVerifyInvocation];
+        [NSException raise:SBLVerifyFailed format:@"Expected %@", self.verifyInvocation];
+    } else if (invocationCount != times) {
+        [NSException raise:SBLVerifyFailed format:SBLVerifyCalledWrongNumberOfTimes, self.verifyInvocation, times, invocationCount];
     }
+}
+
+- (void)verifyInvocationOccurred {
+    [self verifyInvocationOccurredNumberOfTimes:1];
 }
 
 @end

@@ -8,8 +8,8 @@ typedef enum {
     SBLTransactionManagerStateVerifyInProgress,
 } SBLTransactionManagerState;
 
-#define BadWhenErrorMessage @"called WHEN without specifying a method call on a mock"
-#define BadVerifyErrorMessage @"called VERIFY without specifying a method call on a mock"
+#define SBLBadWhenErrorMessage @"called WHEN without specifying a method call on a mock"
+#define SBLBadVerifyErrorMessage @"called VERIFY without specifying a method call on a mock"
 #define SBLBadUsage @"SBLBadUsage"
 
 @interface SBLTransactionManager : NSObject
@@ -27,6 +27,7 @@ typedef enum {
 - (void)prepareForVerify;
 - (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock;
 - (void)performVerify;
+- (void)performVerifyNumberOfTimes:(int)times;
 
 - (void)addMatcher:(SBLMatcher *)matcher;
 
