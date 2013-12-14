@@ -1,11 +1,10 @@
 #import "SBLTransactionManager.h"
 
 #define WHEN(...) ({ [SBLTransactionManager.currentTransactionManager prepareForWhen]; (void)__VA_ARGS__; [SBLTransactionManager.currentTransactionManager performWhen]; })
-#define VERIFY(...) ({ [SBLTransactionManager.currentTransactionManager prepareForVerify]; (void)__VA_ARGS__; [SBLTransactionManager.currentTransactionManager performVerify]; })
+#define VERIFY(args) VERIFY_TIMES(1, args)
 // TODO: Better name. Possibly chained like VERIFY(...).TIMES()
 #define VERIFY_TIMES(times, ...) ({ [SBLTransactionManager.currentTransactionManager prepareForVerify]; (void)__VA_ARGS__; [SBLTransactionManager.currentTransactionManager performVerifyNumberOfTimes:times]; })
-// TODO: Macro calling macro? This is just VERIFY_TIMES with 0
-#define VERIFY_NEVER(...) ({ [SBLTransactionManager.currentTransactionManager prepareForVerify]; (void)__VA_ARGS__; [SBLTransactionManager.currentTransactionManager performVerifyNumberOfTimes:0]; })
+#define VERIFY_NEVER(args) VERIFY_TIMES(0, args)
 
 #define any() _Pragma("clang diagnostic push") \
 _Pragma("clang diagnostic ignored \"-Wconversion\"") \
