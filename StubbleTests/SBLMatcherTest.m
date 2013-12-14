@@ -11,19 +11,6 @@
 - (void)testWhenMethodStubbedWithAnyMatcherThenCorrectValueIsReturned {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	
-	({ void *matcher = (__bridge void *)([SBLMatcher any]); [SBLTransactionManager.currentTransactionManager addMatcher:CFBridgingRelease(matcher)]; matcher; });
-	
-	NSNumber *number = ({ SBLMatcher *matcher = [SBLMatcher any]; __unsafe_unretained SBLMatcher *unretainedMatcher = matcher; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; (id)unretainedMatcher; });
-	NSInteger integer = ({ \
-		_Pragma("clang diagnostic push") \
-		_Pragma("clang diagnostic ignored \"-Wconversion\"") \
-		SBLMatcher *matcher = [SBLMatcher any]; \
-		id unretainedMatcher = matcher; \
-		[SBLTransactionManager.currentTransactionManager addMatcher:matcher]; \
-		unretainedMatcher; \
-		_Pragma("clang diagnostic pop") \
-	});
-	
 	[WHEN([mock methodWithObject:any()]) thenReturn:@"one"];
 	[WHEN([mock methodWithInteger:any()]) thenReturn:@"two"];
 	
