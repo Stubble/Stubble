@@ -42,13 +42,25 @@
     XCTAssertNoThrow(VERIFY_TIMES(1, [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
 }
 
-- (void)testWhenVerifyingForMethodTwoTime_WhenCalledTwoTimes_ThenNoExceptionIsThrown {
+- (void)testWhenVerifyingForMethodTwoTimes_WhenCalledTwoTimes_ThenNoExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
 
     XCTAssertNoThrow(VERIFY_TIMES(2, [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
+}
+
+- (void)testWhenVerifyingNever_WhenNotCalled_ThenNoExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    XCTAssertNoThrow(VERIFY_NEVER([mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
+}
+
+- (void)testWhenVerifyingZeroTimes_WhenNotCalled_ThenNoExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    XCTAssertNoThrow(VERIFY_TIMES(0, [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
 }
 
 @end

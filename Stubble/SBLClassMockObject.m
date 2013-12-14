@@ -67,7 +67,11 @@
 	return [self.stubbedInvocations lastObject];
 }
 
-- (void)verifyInvocationOccurredNumberOfTimes:(NSUInteger *)times {
+- (void)verifyInvocationOccurredNumberOfTimes:(int)times {
+    if (times < 0){
+        [NSException raise:SBLBadUsage format:SBLBadTimesProvided];
+    }
+
     NSInteger invocationCount = 0;
     for (NSInvocation *actualInvocation in self.actualInvocations) {
         if ([self.verifyInvocation matchesInvocation:actualInvocation]) {
@@ -75,7 +79,7 @@
         }
     }
 
-    if (!invocationCount){
+    if (!invocationCount && times > 0){
         // TODO get the line numbers in the exception
         // TODO tell them if it was the parameters that were wrong, or if the method simply wasn't called
         // TODO tell them what the expected parameters are
