@@ -7,6 +7,6 @@
 @property (nonatomic, readonly) NSArray *actualInvocations;
 
 - (void)verifyInvocationOccurred;
-- (void)verifyInvocationOccurredNumberOfTimes:(NSUInteger *)times;
+- (void)verifyInvocationOccurredNumberOfTimes:(NSInteger *)times;
 
 @end

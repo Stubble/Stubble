@@ -67,7 +67,7 @@
 	return [self.stubbedInvocations lastObject];
 }
 
-- (void)verifyInvocationOccurredNumberOfTimes:(NSUInteger *)times {
+- (void)verifyInvocationOccurredNumberOfTimes:(NSInteger *)times {
     NSInteger invocationCount = 0;
     for (NSInvocation *actualInvocation in self.actualInvocations) {
         if ([self.verifyInvocation matchesInvocation:actualInvocation]) {
@@ -79,9 +79,9 @@
         // TODO get the line numbers in the exception
         // TODO tell them if it was the parameters that were wrong, or if the method simply wasn't called
         // TODO tell them what the expected parameters are
-        [NSException raise:SBLVerifyFailed format:@"Expected %@", self.verifyInvocation];
+        [NSException raise:SBLVerifyFailed format:@"Expected %@", NSStringFromSelector(self.verifyInvocation.selector)];
     } else if (invocationCount != times) {
-        [NSException raise:SBLVerifyFailed format:SBLVerifyCalledWrongNumberOfTimes, self.verifyInvocation, times, invocationCount];
+        [NSException raise:SBLVerifyFailed format:SBLVerifyCalledWrongNumberOfTimes, NSStringFromSelector(self.verifyInvocation.selector), times, invocationCount];
     }
 }
 
