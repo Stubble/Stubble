@@ -126,7 +126,16 @@
                        reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", @(2), @(3)]];
     }
 }
+- (void)testWhenVerifyingForMethodWithVoidReturnTypeThenNoExceptionThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
+    @try {
+        VERIFY([mock methodWithNoReturn]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLVerifyFailed reason: @"Expected methodWithNoReturn"];
+    }
+}
 
 #pragma mark - Utility methods
 

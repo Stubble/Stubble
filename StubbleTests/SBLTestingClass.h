@@ -31,6 +31,7 @@ typedef struct SBLTestingStruct {
 
 #pragma mark - Single Parameter Methods
 
+- (void)methodWithNoReturn;
 - (NSString *)methodWithBool:(BOOL)argument;
 - (NSString *)methodWithInteger:(NSInteger)integer;
 - (NSString *)methodWithSelector:(SEL)selector;

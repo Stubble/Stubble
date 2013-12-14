@@ -26,6 +26,14 @@
     XCTAssertNoThrow(VERIFY([mock methodReturningInt]));
 }
 
+- (void)testWhenVerifyingForMethodWithVoidReturnTypeThenNoExceptionThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodWithNoReturn];
+
+    XCTAssertNoThrow(VERIFY([mock methodWithNoReturn]));
+}
+
 - (void)testWhenVerifyingForMethodWithCorrectParametersThenNoExceptionThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
