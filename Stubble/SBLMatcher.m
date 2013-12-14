@@ -24,4 +24,8 @@
 	return self.matcherBlock(argument);
 }
 
+- (void *)placeholder {
+	return (__bridge void *)self;
+}
+
 @end

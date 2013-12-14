@@ -7,5 +7,6 @@ typedef BOOL(^SBLMatcherBlock)(void *argument);
 + (instancetype)matcherWithBlock:(SBLMatcherBlock)matcher;
 
 - (BOOL)matchesArgument:(void *)argument;
+- (void *)placeholder;
 
 @end
