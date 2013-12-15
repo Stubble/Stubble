@@ -39,6 +39,7 @@
 			void *buffer = malloc([[invocation methodSignature] methodReturnLength]);
 			[matchingWhen.returnValue getValue:buffer];
 			[invocation setReturnValue:buffer];
+			free(buffer);
 		} else {
             NSUInteger methodReturnLength = [[invocation methodSignature] methodReturnLength];
             if (!methodReturnLength){

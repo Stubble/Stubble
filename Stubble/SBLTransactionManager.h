@@ -22,7 +22,7 @@ typedef enum {
 
 - (void)prepareForVerify;
 - (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock;
-- (void)performVerify;
+//- (void)performVerify;
 - (void)performVerifyNumberOfTimes:(int)times;
 
 - (void)addMatcher:(SBLMatcher *)matcher;

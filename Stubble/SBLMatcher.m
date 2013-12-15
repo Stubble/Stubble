@@ -26,6 +26,12 @@
 	return matcher;
 }
 
++ (instancetype)valueIsEqualMatcher:(NSValue *)value {
+	return [SBLMatcher matcherWithBlock:^BOOL(NSValue *argument) {
+		return [value isEqual:argument];
+	}];
+}
+
 - (BOOL)matchesArgument:(id)argument {
 	return self.matcherBlock(argument);
 }

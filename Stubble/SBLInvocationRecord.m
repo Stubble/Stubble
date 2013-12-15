@@ -35,10 +35,12 @@
 		NSGetSizeAndAlignment(argumentType, &typeSize, NULL);
 		argument = malloc(typeSize);
 	}
-
-	[invocation getArgument:&argument atIndex:index];
+	
 	NSValue *boxedArgument = nil;
-	[NSValue valueWithBytes:&argument objCType:argumentType];
+	//if (!isStruct) {
+		[invocation getArgument:&argument atIndex:index];
+		[NSValue valueWithBytes:&argument objCType:argumentType];
+	//}
 	if (isStruct) {
 		free(argument);
 	}
@@ -100,7 +102,7 @@
 	if (matchingInvocation) {
 		for (int i = 2; i < recordedInvocation.methodSignature.numberOfArguments; i++) {
 			const char *argumentType = [self.invocation.methodSignature getArgumentTypeAtIndex:i];
-			id argument = nil;
+			__unsafe_unretained id argument = nil;
 			if ([self isObjectType:argumentType]) {
 				[invocation getArgument:&argument atIndex:i];
 			} else {
