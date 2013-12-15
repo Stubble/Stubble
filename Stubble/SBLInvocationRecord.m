@@ -29,19 +29,19 @@
 - (NSValue *)boxedValueForArgumentIndex:(NSInteger)index inInvocation:(NSInvocation *)invocation {
 	const char *argumentType = [invocation.methodSignature getArgumentTypeAtIndex:index];
 	BOOL isStruct = argumentType[0] == '{';
-	void *argument;
+	NSValue *boxedArgument = nil;
 	if (isStruct) {
 		NSUInteger typeSize = 0;
 		NSGetSizeAndAlignment(argumentType, &typeSize, NULL);
-		argument = malloc(typeSize);
+		NSMutableData *argumentData = [[NSMutableData alloc] initWithLength:typeSize];
+		[invocation getArgument:[argumentData mutableBytes] atIndex:index];
+		boxedArgument = [NSValue valueWithBytes:[argumentData bytes] objCType:argumentType];
+	} else {
+		__unsafe_unretained id argument = nil;
+		[invocation getArgument:&argument atIndex:index];
+		boxedArgument = [NSValue valueWithBytes:&argument objCType:argumentType];
 	}
 	
-	[invocation getArgument:&argument atIndex:index];
-	NSValue *boxedArgument = [NSValue valueWithBytes:&argument objCType:argumentType];
-	
-	if (isStruct) {
-		free(argument);
-	}
 	return boxedArgument;
 }
 

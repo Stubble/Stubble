@@ -10,6 +10,10 @@
     return @"123";
 }
 
+- (NSString *)methodWithBlock:(SBLTestingBlock)block {
+    return @"123";
+}
+
 - (NSArray *)methodWithArray:(NSArray *)array {
 	return array;
 }

@@ -14,12 +14,13 @@ struct SBLTestStructB {
 };
 
 typedef struct SBLTestingStruct *SBLTestingStructRef;
-
 typedef struct SBLTestingStruct {
 	NSInteger integer;
 	BOOL boolean;
 	char * characters;
 } SBLTestingStruct;
+
+typedef void(^SBLTestingBlock)(int integer, NSObject *object);
 
 @interface SBLTestingClass : NSObject
 
@@ -43,6 +44,7 @@ typedef struct SBLTestingStruct {
 - (NSString *)methodWithPrimitiveReference:(NSInteger *)integerReference;
 - (NSString *)methodWithReference:(NSString **)stringReference;
 
+- (NSArray *)methodWithBlock:(SBLTestingBlock)block;
 - (NSArray *)methodWithArray:(NSArray *)array;
 - (NSString *)methodWithObject:(NSNumber *)number;
 

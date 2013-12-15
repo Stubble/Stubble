@@ -48,11 +48,15 @@
 	// TODO make object references (ie: (NSString * __autoreleasing *)) work somehow too...
 	//[WHEN([mock methodWithReference:any()]) thenReturn:@"return"];
 	[WHEN([mock methodWithSelector:any()]) thenReturn:@"return"];
-//	[WHEN([mock methodWithCGRect:anyCGRect()]) thenReturn:@"return"];
+	[WHEN([mock methodWithCGRect:anyCGRect()]) thenReturn:@"return"];
 	SBLTestingStruct validStruct = { 1, YES, NULL };
 	[WHEN([mock methodWithStruct:anyWithPlaceholder(validStruct)]) thenReturn:@"return"];
 	[WHEN([mock methodWithStructReference:any()]) thenReturn:@"return"];
 	[WHEN([mock methodWithClass:any()]) thenReturn:@"return"];
+	SBLTestingBlock block = ^(int integer, NSObject *object) {
+		NSLog(@"block");
+	};
+	[WHEN([mock methodWithBlock:block]) thenReturn:@"return"];
 	
 	XCTAssertEqualObjects([mock methodWithBool:YES], @"return");
 	NSInteger integer = 42;
@@ -60,10 +64,11 @@
 	//NSString *string = @"42";
 	//XCTAssertEqualObjects([mock methodWithReference:&string], @"return");
 	XCTAssertEqualObjects([mock methodWithSelector:@selector(testMatcherWorksForManyArgumentTypes)], @"return");
-//	XCTAssertEqualObjects([mock methodWithCGRect:CGRectMake(10, 1, 30, 50)], @"return");
+	XCTAssertEqualObjects([mock methodWithCGRect:CGRectMake(10, 1, 30, 50)], @"return");
 	SBLTestingStruct testingStruct = { 1, YES, "other stuff" };
 	XCTAssertEqualObjects([mock methodWithStruct:testingStruct], @"return");
 	XCTAssertEqualObjects([mock methodWithStructReference:&testingStruct], @"return");
+	XCTAssertEqualObjects([mock methodWithClass:[NSArray class]], @"return");
 	XCTAssertEqualObjects([mock methodWithClass:[NSArray class]], @"return");
 }
 
