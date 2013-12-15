@@ -36,11 +36,9 @@
 		argument = malloc(typeSize);
 	}
 	
-	NSValue *boxedArgument = nil;
-	//if (!isStruct) {
-		[invocation getArgument:&argument atIndex:index];
-		[NSValue valueWithBytes:&argument objCType:argumentType];
-	//}
+	[invocation getArgument:&argument atIndex:index];
+	NSValue *boxedArgument = [NSValue valueWithBytes:&argument objCType:argumentType];
+	
 	if (isStruct) {
 		free(argument);
 	}
@@ -83,8 +81,10 @@
 		const char *argumentType = [self.invocation.methodSignature getArgumentTypeAtIndex:i];
 		if ([self isObjectType:argumentType]) {
 			[allMatchers addObject:objectMatchers[0]];
+			[objectMatchers removeObjectAtIndex:0];
 		} else if (useMatchersForNonObjects) {
 			[allMatchers addObject:nonObjectMatchers[0]];
+			[nonObjectMatchers removeObjectAtIndex:0];
 		} else {
 			NSValue *boxedValue = [self boxedValueForArgumentIndex:i inInvocation:self.invocation];
 			[allMatchers addObject:[SBLMatcher valueIsEqualMatcher:boxedValue]];
@@ -102,7 +102,7 @@
 	if (matchingInvocation) {
 		for (int i = 2; i < recordedInvocation.methodSignature.numberOfArguments; i++) {
 			const char *argumentType = [self.invocation.methodSignature getArgumentTypeAtIndex:i];
-			__unsafe_unretained id argument = nil;
+			__unsafe_unretained id argument = nil; // Need unsafe unretained here - http://stackoverflow.com/questions/11874056/nsinvocation-getreturnvalue-called-inside-forwardinvocation-makes-the-returned
 			if ([self isObjectType:argumentType]) {
 				[invocation getArgument:&argument atIndex:i];
 			} else {
@@ -110,32 +110,6 @@
 			}
 			SBLMatcher *matcher = self.matchers[i-2];
 			matchingInvocation &= [matcher matchesArgument:argument];
-			
-//			// Need unsafe unretained here - http://stackoverflow.com/questions/11874056/nsinvocation-getreturnvalue-called-inside-forwardinvocation-makes-the-returned
-//			__unsafe_unretained id argumentMatcher = nil;
-//			__unsafe_unretained id argument = nil;
-//			const char *argumentType = [recordedInvocation.methodSignature getArgumentTypeAtIndex:i];
-//			if (argumentType[0] == '{') {
-//				// struct handling is special case
-//				// TODO - refactor and allow for comparing/matching structs (this just keeps it from crashing and works with the any matcher)
-//				NSUInteger typeSize = 0;
-//				NSGetSizeAndAlignment(argumentType, &typeSize, NULL);
-//				void *structMatcher = malloc(typeSize);
-//				void *structArgument = malloc(typeSize);
-//				[recordedInvocation getArgument:&structMatcher atIndex:i];
-//				[invocation getArgument:&structArgument atIndex:i];
-//			} else {
-//				[recordedInvocation getArgument:&argumentMatcher atIndex:i];
-//				[invocation getArgument:&argument atIndex:i];
-//			}
-//			
-//			if ([self.matchers lastObject]) {
-//				matchingInvocation &= [self.matchers[0] matchesArgument:&argument];
-//			} else if ([self typeIsObject:[recordedInvocation.methodSignature getArgumentTypeAtIndex:i]]) {
-//				matchingInvocation &= [argumentMatcher isEqual:argument];
-//			} else {
-//				matchingInvocation &= argumentMatcher == argument;
-//			}
 		}
 	}
     return matchingInvocation;
