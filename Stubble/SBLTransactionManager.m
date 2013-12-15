@@ -67,6 +67,7 @@
 
 - (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock {
 	self.currentMock = mock;
+	[self.currentMock.verifyInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }
 
 - (void)performVerifyNumberOfTimes:(int)times {
@@ -74,11 +75,7 @@
     [self verifyMockCalled:SBLBadVerifyErrorMessage];
     @try {
         [self.currentMock verifyInvocationOccurredNumberOfTimes:times];
-    }
-    @catch (NSException *exception) {
-        @throw exception;
-    }
-    @finally {
+    } @finally {
         [self clear];
     }
 }

@@ -90,13 +90,14 @@
 			[allMatchers addObject:[SBLMatcher valueIsEqualMatcher:boxedValue]];
 		}
 	}
+	NSLog(@"allMatchers: %p %@", self, allMatchers);
 	
 	_matchers = allMatchers;
 }
 
 - (BOOL)matchesInvocation:(NSInvocation *)invocation {
-	NSLog(@"matchesInvocation: %@", invocation);
-	NSLog(@"matchers: %p %@", self, self.matchers);
+	NSLog(@"matchesInvocation: %p %@", self, invocation);
+	//NSLog(@"matchers: %p %@", self, self.matchers);
 	NSInvocation *recordedInvocation = self.invocation;
 	BOOL matchingInvocation = recordedInvocation.selector == invocation.selector;
 	if (matchingInvocation) {
