@@ -31,7 +31,7 @@
         VERIFY([mock methodReturningInt]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
-        [self verifyException:e ofName:SBLVerifyFailed reason:@"Expected methodReturningInt"];
+        [self verifyException:e ofName:SBLVerifyFailed reason:@"Expected methodReturningInt, but method was not called"];
     }
 }
 
@@ -44,21 +44,21 @@
         VERIFY([mock methodWithManyArguments:@"2" primitive:2 number:@3]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
-        [self verifyException:e ofName:SBLVerifyFailed reason:@"Expected methodWithManyArguments:primitive:number:"];
+        [self verifyException:e ofName:SBLVerifyFailed reason:@"Expected methodWithManyArguments:primitive:number:, but method was called with differing parameters"];
     }
 
     @try {
         VERIFY([mock methodWithManyArguments:@"1" primitive:1 number:@3]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
-        [self verifyException:e ofName:SBLVerifyFailed reason:@"Expected methodWithManyArguments:primitive:number:"];
+        [self verifyException:e ofName:SBLVerifyFailed reason:@"Expected methodWithManyArguments:primitive:number:, but method was called with differing parameters"];
     }
 
     @try {
         VERIFY([mock methodWithManyArguments:@"1" primitive:2 number:@1]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
-        [self verifyException:e ofName:SBLVerifyFailed reason:@"Expected methodWithManyArguments:primitive:number:"];
+        [self verifyException:e ofName:SBLVerifyFailed reason:@"Expected methodWithManyArguments:primitive:number:, but method was called with differing parameters"];
     }
 }
 
@@ -81,7 +81,7 @@
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
-                       reason:@"Expected methodReturningInt"];
+                       reason:@"Expected methodReturningInt, but method was not called"];
     }
 }
 
@@ -127,14 +127,14 @@
                        reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", 2, 3]];
     }
 }
-- (void)testWhenVerifyingForMethodWithVoidReturnTypeThenNoExceptionThrown {
+- (void)testWhenVerifyingForMethodWithVoidReturnTypeNotCalledThenAnExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
     @try {
         VERIFY([mock methodWithNoReturn]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
-        [self verifyException:e ofName:SBLVerifyFailed reason: @"Expected methodWithNoReturn"];
+        [self verifyException:e ofName:SBLVerifyFailed reason: @"Expected methodWithNoReturn, but method was not called"];
     }
 }
 

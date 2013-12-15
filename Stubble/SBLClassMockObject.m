@@ -81,17 +81,22 @@
     }
 
     NSInteger invocationCount = 0;
+    BOOL methodWithMatchingSignatureCalled = NO;
     for (NSInvocation *actualInvocation in self.actualInvocations) {
         if ([self.verifyInvocation matchesInvocation:actualInvocation]) {
             invocationCount++;
+        } else if ([actualInvocation selector] == [self.verifyInvocation selector]){
+            methodWithMatchingSignatureCalled = YES;
         }
     }
 
     if (!invocationCount && times > 0){
         // TODO get the line numbers in the exception
-        // TODO tell them if it was the parameters that were wrong, or if the method simply wasn't called
         // TODO tell them what the expected parameters are
-        [NSException raise:SBLVerifyFailed format:@"Expected %@", NSStringFromSelector(self.verifyInvocation.selector)];
+        if (methodWithMatchingSignatureCalled) {
+            [NSException raise:SBLVerifyFailed format:@"Expected %@, but method was called with differing parameters", NSStringFromSelector(self.verifyInvocation.selector)];
+        }
+        [NSException raise:SBLVerifyFailed format:@"Expected %@, but method was not called", NSStringFromSelector(self.verifyInvocation.selector)];
     } else if (invocationCount != times) {
         [NSException raise:SBLVerifyFailed format:SBLVerifyCalledWrongNumberOfTimes, NSStringFromSelector(self.verifyInvocation.selector), times, invocationCount];
     }
