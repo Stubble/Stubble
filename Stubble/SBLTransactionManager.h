@@ -2,6 +2,8 @@
 #import "SBLStubbedInvocation.h"
 #import "SBLMatcher.h"
 
+typedef void(^InvokeMethodBlock)();
+
 typedef enum {
     SBLTransactionManagerStateAtRest,
     SBLTransactionManagerStateStubInProgress,
@@ -16,9 +18,8 @@ typedef enum {
 
 - (void)clear;
 
-- (void)prepareForWhen;
+- (SBLStubbedInvocation *)invokeWhenMethodForObjectInBlock:(InvokeMethodBlock)block;
 - (void)whenMethodInvokedForMock:(id<SBLMockObject>)mock;
-- (SBLStubbedInvocation *)performWhen;
 
 - (void)prepareForVerify;
 - (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock;
