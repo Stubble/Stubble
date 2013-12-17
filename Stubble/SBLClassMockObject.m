@@ -1,6 +1,7 @@
 #import "SBLClassMockObject.h"
 #import "SBLTransactionManager.h"
 #import "SBLErrors.h"
+#import "SBLTimesMatcher.h"
 
 @interface SBLClassMockObject ()
 
@@ -75,8 +76,9 @@
 	return [self.stubbedInvocations lastObject];
 }
 
-- (void)verifyInvocationOccurredNumberOfTimes:(int)times {
-    if (times < 0){
+- (void)verifyInvocationOccurredNumberOfTimes:(SBLTimesMatcher *)timesMatcher {
+    int atLeastTimes = [timesMatcher atLeast];
+    if (atLeastTimes < 0){
         [NSException raise:SBLBadUsage format:SBLBadTimesProvided];
     }
 
@@ -90,15 +92,15 @@
         }
     }
 
-    if (!invocationCount && times > 0){
+    if (!invocationCount && atLeastTimes > 0){
         // TODO get the line numbers in the exception
         // TODO tell them what the expected parameters are
         if (methodWithMatchingSignatureCalled) {
             [NSException raise:SBLVerifyFailed format:@"Expected %@, but method was called with differing parameters", NSStringFromSelector(self.verifyInvocation.selector)];
         }
         [NSException raise:SBLVerifyFailed format:@"Expected %@, but method was not called", NSStringFromSelector(self.verifyInvocation.selector)];
-    } else if (invocationCount != times) {
-        [NSException raise:SBLVerifyFailed format:SBLVerifyCalledWrongNumberOfTimes, NSStringFromSelector(self.verifyInvocation.selector), times, invocationCount];
+    } else if (invocationCount != atLeastTimes) {
+        [NSException raise:SBLVerifyFailed format:SBLVerifyCalledWrongNumberOfTimes, NSStringFromSelector(self.verifyInvocation.selector), atLeastTimes, invocationCount];
     }
 }
 

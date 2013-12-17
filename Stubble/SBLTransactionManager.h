@@ -2,6 +2,8 @@
 #import "SBLStubbedInvocation.h"
 #import "SBLMatcher.h"
 
+@class SBLTimesMatcher;
+
 typedef void(^InvokeMethodBlock)();
 
 typedef enum {
@@ -21,8 +23,7 @@ typedef enum {
 - (SBLStubbedInvocation *)invokeWhenMethodForObjectInBlock:(InvokeMethodBlock)block;
 - (void)whenMethodInvokedForMock:(id<SBLMockObject>)mock;
 
-
-- (void)invokeVerifyMethodForObjectInBlock:(InvokeMethodBlock)block numberOfTimes:(int)times;
+- (void)invokeVerifyMethodForObjectInBlock:(InvokeMethodBlock)block times:(SBLTimesMatcher *)timesMatcher;
 - (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock;
 
 - (void)addMatcher:(SBLMatcher *)matcher;

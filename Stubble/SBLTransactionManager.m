@@ -1,5 +1,6 @@
 #import "SBLTransactionManager.h"
 #import "SBLErrors.h"
+#import "SBLTimesMatcher.h"
 
 @interface SBLTransactionManager ()
 
@@ -63,19 +64,19 @@
 	[self.currentMock.currentStubbedInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }
 
-- (void)invokeVerifyMethodForObjectInBlock:(InvokeMethodBlock)block numberOfTimes:(int)times {
-	// Prepare
+- (void)invokeVerifyMethodForObjectInBlock:(InvokeMethodBlock)block times:(SBLTimesMatcher *)timesMatcher {
+    // Prepare
     [self verifyState:SBLTransactionManagerStateAtRest];
     self.state = SBLTransactionManagerStateVerifyInProgress;
-	
-	// Run
-	block();
-	
-	// Finish
+
+    // Run
+    block();
+
+    // Finish
     [self verifyState:SBLTransactionManagerStateVerifyInProgress];
     [self verifyMockCalled:SBLBadVerifyErrorMessage];
     @try {
-        [self.currentMock verifyInvocationOccurredNumberOfTimes:times];
+        [self.currentMock verifyInvocationOccurredNumberOfTimes:timesMatcher];
     } @finally {
         [self clear];
     }

@@ -24,6 +24,7 @@
 		74F93DBA18525FA100214852 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74F93DB818525FA100214852 /* InfoPlist.strings */; };
 		74F93DBC18525FA100214852 /* SBLStubTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 74F93DBB18525FA100214852 /* SBLStubTest.m */; };
 		74F93DC81852601C00214852 /* SBLMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 74F93DC71852601C00214852 /* SBLMock.m */; };
+		AAFD4BCD39B355447029F235 /* SBLTimesMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD431560AC3BD461C4B3D1 /* SBLTimesMatcher.m */; };
 		AAFD4E581C8800002923FDEC /* SBLExceptionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD4746845E28C0CBF4683E /* SBLExceptionTest.m */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +79,8 @@
 		74F93DBB18525FA100214852 /* SBLStubTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBLStubTest.m; sourceTree = "<group>"; };
 		74F93DC61852601C00214852 /* SBLMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLMock.h; sourceTree = "<group>"; };
 		74F93DC71852601C00214852 /* SBLMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLMock.m; sourceTree = "<group>"; };
+		AAFD431560AC3BD461C4B3D1 /* SBLTimesMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLTimesMatcher.m; sourceTree = "<group>"; };
+		AAFD46DFB029A6FC17A48B0D /* SBLTimesMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLTimesMatcher.h; sourceTree = "<group>"; };
 		AAFD4746845E28C0CBF4683E /* SBLExceptionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLExceptionTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -191,6 +194,8 @@
 				4DF00433185AD2AC003171E5 /* SBLMatcher.h */,
 				4DF00434185AD2AC003171E5 /* SBLMatcher.m */,
 				4D0E7550185D09B200C681BE /* SBLErrors.h */,
+				AAFD431560AC3BD461C4B3D1 /* SBLTimesMatcher.m */,
+				AAFD46DFB029A6FC17A48B0D /* SBLTimesMatcher.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -283,6 +288,7 @@
 				6313CC5D4F8F3FE7947F79FB /* SBLTransactionManager.m in Sources */,
 				6313C94FD69B105F1F84731C /* SBLClassMockObject.m in Sources */,
 				6313CCCA0E902D6D0B58DAE9 /* SBLStubbedInvocation.m in Sources */,
+				AAFD4BCD39B355447029F235 /* SBLTimesMatcher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
