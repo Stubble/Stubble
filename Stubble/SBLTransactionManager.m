@@ -31,11 +31,11 @@
 
 
 - (SBLStubbedInvocation *)invokeWhenMethodForObjectInBlock:(InvokeMethodBlock)block {
-	// Prepare for when
+	// Prepare
     [self verifyState:SBLTransactionManagerStateAtRest];
     self.state = SBLTransactionManagerStateStubInProgress;
 	
-	// Run method
+	// Run
 	block();
 	
 	// Finish
@@ -63,18 +63,15 @@
 	[self.currentMock.currentStubbedInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }
 
-- (void)prepareForVerify {
+- (void)invokeVerifyMethodForObjectInBlock:(InvokeMethodBlock)block numberOfTimes:(int)times {
+	// Prepare
     [self verifyState:SBLTransactionManagerStateAtRest];
-
     self.state = SBLTransactionManagerStateVerifyInProgress;
-}
-
-- (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock {
-	self.currentMock = mock;
-	[self.currentMock.verifyInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
-}
-
-- (void)performVerifyNumberOfTimes:(int)times {
+	
+	// Run
+	block();
+	
+	// Finish
     [self verifyState:SBLTransactionManagerStateVerifyInProgress];
     [self verifyMockCalled:SBLBadVerifyErrorMessage];
     @try {
@@ -82,6 +79,11 @@
     } @finally {
         [self clear];
     }
+}
+
+- (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock {
+	self.currentMock = mock;
+	[self.currentMock.verifyInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }
 
 - (void)verifyMockCalled:(NSString *)errorMessage {

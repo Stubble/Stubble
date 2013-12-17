@@ -3,7 +3,7 @@
 #define WHEN(...) ({ [SBLTransactionManager.currentTransactionManager invokeWhenMethodForObjectInBlock:^(){ (void)__VA_ARGS__; }]; })
 #define VERIFY(args) VERIFY_TIMES(1, args)
 // TODO: Better name. Possibly chained like VERIFY(...).TIMES()
-#define VERIFY_TIMES(times, ...) ({ [SBLTransactionManager.currentTransactionManager prepareForVerify]; (void)__VA_ARGS__; [SBLTransactionManager.currentTransactionManager performVerifyNumberOfTimes:times]; })
+#define VERIFY_TIMES(times, ...) ({ [SBLTransactionManager.currentTransactionManager invokeVerifyMethodForObjectInBlock:^(){ (void)__VA_ARGS__; } numberOfTimes:times]; })
 #define VERIFY_NEVER(args) VERIFY_TIMES(0, args)
 
 //#define any() _Pragma("clang diagnostic push") \
