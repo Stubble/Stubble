@@ -1,7 +1,7 @@
 #import "SBLTransactionManager.h"
 #import "SBLTimesMatcher.h"
 
-#define WHEN(args...) ({ [SBLTransactionManager.currentTransactionManager invokeWhenMethodForObjectInBlock:^(){ (void)args; }]; })
+#define WHEN(methodCall...) ({ [SBLTransactionManager.currentTransactionManager invokeWhenMethodForObjectInBlock:^(){ (void)methodCall; }]; })
 #define VERIFY(args) VERIFY_TIMES(times(1), args)
 #define times(times) ({ [SBLTimesMatcher exactly:times]; })
 #define atLeast(times) ({ [SBLTimesMatcher atLeast:times]; })
