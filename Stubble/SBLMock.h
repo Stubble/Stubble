@@ -1,12 +1,12 @@
 #import "SBLTransactionManager.h"
 #import "SBLTimesMatcher.h"
 
-#define WHEN(...) ({ [SBLTransactionManager.currentTransactionManager invokeWhenMethodForObjectInBlock:^(){ (void)__VA_ARGS__; }]; })
+#define WHEN(args...) ({ [SBLTransactionManager.currentTransactionManager invokeWhenMethodForObjectInBlock:^(){ (void)args; }]; })
 #define VERIFY(args) VERIFY_TIMES(times(1), args)
 #define times(times) ({ [SBLTimesMatcher exactly:times]; })
 #define never() ({ [SBLTimesMatcher never]; })
 // TODO: Want this to also be VERIFY, not VERIFY_TIMES...
-#define VERIFY_TIMES(timesMatcher, ...)  ({ [SBLTransactionManager.currentTransactionManager invokeVerifyMethodForObjectInBlock:^(){ (void)__VA_ARGS__; } times:timesMatcher]; })
+#define VERIFY_TIMES(timesMatcher, args...)  ({ [SBLTransactionManager.currentTransactionManager invokeVerifyMethodForObjectInBlock:^(){ (void)args; } times:timesMatcher]; })
 #define VERIFY_NEVER(args) VERIFY_TIMES(never(), args)
 
 //#define any() _Pragma("clang diagnostic push") \
