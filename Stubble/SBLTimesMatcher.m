@@ -33,4 +33,8 @@
     return [[SBLTimesMatcher alloc] initWithAtLeast:minTimes upTo:INT_MAX];
 }
 
++ (instancetype)between:(int)minTimes andAtMost:(int)maxTimes {
+    return [[SBLTimesMatcher alloc] initWithAtLeast:minTimes upTo:maxTimes];
+}
+
 @end

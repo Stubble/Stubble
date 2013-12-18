@@ -6,6 +6,7 @@
 #define times(times) ({ [SBLTimesMatcher exactly:times]; })
 #define atLeast(times) ({ [SBLTimesMatcher atLeast:times]; })
 #define never() ({ [SBLTimesMatcher never]; })
+#define between(atLeast, atMost) ({ [SBLTimesMatcher between:atLeast andAtMost:atMost]; })
 // TODO: Want this to also be VERIFY, not VERIFY_TIMES...
 #define VERIFY_TIMES(timesMatcher, args...)  ({ [SBLTransactionManager.currentTransactionManager invokeVerifyMethodForObjectInBlock:^(){ (void)args; } times:timesMatcher]; })
 #define VERIFY_NEVER(args) VERIFY_TIMES(never(), args)

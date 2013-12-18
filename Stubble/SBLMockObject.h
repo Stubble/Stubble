@@ -7,7 +7,6 @@
 @property (nonatomic, readonly) NSArray *actualInvocations;
 @property (nonatomic, readonly) SBLInvocationRecord *verifyInvocation;
 
-- (void)verifyInvocationOccurred;
 - (void)verifyInvocationOccurredNumberOfTimes:(NSInteger)times;
 
 @end

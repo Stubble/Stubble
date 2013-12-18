@@ -9,5 +9,6 @@
 + (instancetype)never;
 + (instancetype)exactly:(int)times;
 + (instancetype)atLeast:(int)minTimes;
++ (instancetype)between:(int)minTimes andAtMost:(int)maxTimes;
 
 @end

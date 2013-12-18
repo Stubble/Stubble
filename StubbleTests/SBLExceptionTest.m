@@ -210,6 +210,46 @@
     }
 }
 
+- (void)testWhenVerifyBetweenIsCalledWithABadMinTimesThenAnExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodReturningString];
+
+    @try {
+        VERIFY_TIMES(between(-1, 2), [mock methodReturningString]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLBadUsage reason:SBLBadTimesProvided];
+    }
+}
+
+- (void)testWhenVerifyBetweenIsCalledWithBadAtMostGreaterThanAtMostTimesThenAnExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodReturningString];
+
+    @try {
+        VERIFY_TIMES(between(1, 0), [mock methodReturningString]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLBadUsage reason:SBLAtLeastCannotBeGreaterThanAtMost];
+    }
+}
+
+- (void)testWhenVerifyBetweenIsCalledWithAtMostTimeLessThanAtLeastTimeThenAnExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodReturningString];
+
+    @try {
+        VERIFY_TIMES(between(2, 1), [mock methodReturningString]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLBadUsage reason:SBLAtLeastCannotBeGreaterThanAtMost];
+    }
+}
+
+
 #pragma mark - Utility methods
 
 - (void)verifyException:(NSException *)theException ofName:(NSString *)name reason:(NSString *)reason {
