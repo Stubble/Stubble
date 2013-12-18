@@ -77,11 +77,10 @@
 }
 
 - (void)verifyInvocationOccurredNumberOfTimes:(SBLTimesMatcher *)timesMatcher {
-    int atLeastTimes = [timesMatcher atLeast];
-    if (atLeastTimes < 0){
-        [NSException raise:SBLBadUsage format:SBLBadTimesProvided];
-    }
+    [self validateTimesMatcherUsage:timesMatcher];
 
+    int atLeastTimes = timesMatcher.atLeast;
+    int atMostTimes = timesMatcher.atMost;
     NSInteger invocationCount = 0;
     BOOL methodWithMatchingSignatureCalled = NO;
     for (NSInvocation *actualInvocation in self.actualInvocations) {
@@ -92,15 +91,24 @@
         }
     }
 
-    if (!invocationCount && atLeastTimes > 0){
+    // TODO: Custom messages for exact vs. atLeast matches? Checking against matcher 'type'? Getting clunky.
+    if (invocationCount == 0 && atLeastTimes > 0){
         // TODO get the line numbers in the exception
         // TODO tell them what the expected parameters are
         if (methodWithMatchingSignatureCalled) {
             [NSException raise:SBLVerifyFailed format:@"Expected %@, but method was called with differing parameters", NSStringFromSelector(self.verifyInvocation.selector)];
         }
         [NSException raise:SBLVerifyFailed format:@"Expected %@, but method was not called", NSStringFromSelector(self.verifyInvocation.selector)];
-    } else if (invocationCount != atLeastTimes) {
+    } else if (invocationCount < atLeastTimes || invocationCount > atMostTimes) {
         [NSException raise:SBLVerifyFailed format:SBLVerifyCalledWrongNumberOfTimes, NSStringFromSelector(self.verifyInvocation.selector), atLeastTimes, invocationCount];
+    }
+}
+
+- (void)validateTimesMatcherUsage:(SBLTimesMatcher *)timesMatcher {
+    if (timesMatcher.atMost == INT_MAX && timesMatcher.atLeast < 1){
+        [NSException raise:SBLBadUsage format:SBLBadAtLeastTimesProvided];
+    } else if(timesMatcher.atLeast < 0){
+        [NSException raise:SBLBadUsage format:SBLBadTimesProvided];
     }
 }
 

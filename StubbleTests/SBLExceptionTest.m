@@ -112,7 +112,7 @@
     }
 }
 
-- (void)testWhenVerifyIsCalledWithNegativeNumberThenAnExceptionIsThrown {
+- (void)testWhenVerifyTimesIsCalledWithNegativeNumberThenAnExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
     [mock methodReturningInt];
@@ -168,6 +168,45 @@
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
                        reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", 0, 3]];
+    }
+}
+
+- (void)testWhenVerifyAtLeastTimesIsCalledWithZeroThenAnExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodReturningInt];
+
+    @try {
+        VERIFY_TIMES(atLeast(0), [mock methodReturningInt]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLBadUsage reason:SBLBadAtLeastTimesProvided];
+    }
+}
+
+- (void)testWhenVerifyAtLeastOneTimeIsNeverCalledThenAnExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    @try {
+        VERIFY_TIMES(atLeast(1), [mock methodReturningString]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLVerifyFailed
+                       reason:@"Expected methodReturningString, but method was not called"];
+    }
+}
+
+- (void)testWhenVerifyAtLeastTwoTimesIsOnlyCalledOneTimeThenAnExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodReturningString];
+
+    @try {
+        VERIFY_TIMES(atLeast(2), [mock methodReturningString]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLVerifyFailed
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningString", 2, 1]];
     }
 }
 

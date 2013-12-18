@@ -8,5 +8,6 @@
 
 + (instancetype)never;
 + (instancetype)exactly:(int)times;
++ (instancetype)atLeast:(int)minTimes;
 
 @end
