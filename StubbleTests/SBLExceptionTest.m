@@ -73,6 +73,19 @@
     }
 }
 
+- (void)testWhenVerifyingForMethodWithVoidReturnTypeNotCalledThenAnExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    @try {
+        VERIFY([mock methodWithNoReturn]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLVerifyFailed reason: @"Expected methodWithNoReturn, but method was not called"];
+    }
+}
+
+#pragma mark - Verify Times Tests
+
 - (void)testWhenVerifyIsCalledZeroTimesThenAnExpectedExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
@@ -127,14 +140,34 @@
                        reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", 2, 3]];
     }
 }
-- (void)testWhenVerifyingForMethodWithVoidReturnTypeNotCalledThenAnExceptionIsThrown {
+
+- (void)testWhenVerifyNeverIsCalledAndMethodIsCalledOnceThenAnExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
+    [mock methodReturningInt];
+
     @try {
-        VERIFY([mock methodWithNoReturn]);
+        VERIFY_TIMES(NEVER(), [mock methodReturningInt]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
-        [self verifyException:e ofName:SBLVerifyFailed reason: @"Expected methodWithNoReturn, but method was not called"];
+        [self verifyException:e ofName:SBLVerifyFailed
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", 0, 1]];
+    }
+}
+
+- (void)testWhenVerifyNeverIsCalledAndMethodIsCalledMultipleTimesThenAnExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodReturningInt];
+    [mock methodReturningInt];
+    [mock methodReturningInt];
+
+    @try {
+        VERIFY_TIMES(NEVER(), [mock methodReturningInt]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLVerifyFailed
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", 0, 3]];
     }
 }
 

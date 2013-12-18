@@ -3,10 +3,11 @@
 
 #define WHEN(...) ({ [SBLTransactionManager.currentTransactionManager invokeWhenMethodForObjectInBlock:^(){ (void)__VA_ARGS__; }]; })
 #define VERIFY(args) VERIFY_TIMES(TIMES(1), args)
-#define TIMES(times) ({ [SBLTimesMatcher atLeast:times]; })
+#define TIMES(times) ({ [SBLTimesMatcher exactly:times]; })
+#define NEVER() ({ [SBLTimesMatcher never]; })
 // TODO: Want this to also be VERIFY, not VERIFY_TIMES...
 #define VERIFY_TIMES(timesMatcher, ...)  ({ [SBLTransactionManager.currentTransactionManager invokeVerifyMethodForObjectInBlock:^(){ (void)__VA_ARGS__; } times:timesMatcher]; })
-#define VERIFY_NEVER(args) VERIFY_TIMES(TIMES(0), args)
+#define VERIFY_NEVER(args) VERIFY_TIMES(NEVER(), args)
 
 //#define any() _Pragma("clang diagnostic push") \
 //_Pragma("clang diagnostic ignored \"-Wconversion\"") \
