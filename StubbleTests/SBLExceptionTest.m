@@ -28,7 +28,7 @@
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
     @try {
-        VERIFY([mock methodReturningInt]);
+        verify([mock methodReturningInt]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed reason:@"Expected methodReturningInt, but method was not called"];
@@ -41,21 +41,21 @@
     [mock methodWithManyArguments:@"1" primitive:2 number:@3];
 
     @try {
-        VERIFY([mock methodWithManyArguments:@"2" primitive:2 number:@3]);
+        verify([mock methodWithManyArguments:@"2" primitive:2 number:@3]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed reason:@"Expected methodWithManyArguments:primitive:number:, but method was called with differing parameters"];
     }
 
     @try {
-        VERIFY([mock methodWithManyArguments:@"1" primitive:1 number:@3]);
+        verify([mock methodWithManyArguments:@"1" primitive:1 number:@3]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed reason:@"Expected methodWithManyArguments:primitive:number:, but method was called with differing parameters"];
     }
 
     @try {
-        VERIFY([mock methodWithManyArguments:@"1" primitive:2 number:@1]);
+        verify([mock methodWithManyArguments:@"1" primitive:2 number:@1]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed reason:@"Expected methodWithManyArguments:primitive:number:, but method was called with differing parameters"];
@@ -66,7 +66,7 @@
     NSString *string = @"string";
 
     @try {
-        VERIFY(string.length);
+        verify(string.length);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLBadUsage reason:SBLBadVerifyErrorMessage];
@@ -77,7 +77,7 @@
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
     @try {
-        VERIFY([mock methodWithNoReturn]);
+        verify([mock methodWithNoReturn]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed reason: @"Expected methodWithNoReturn, but method was not called"];
@@ -90,7 +90,7 @@
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
     @try {
-        VERIFY_TIMES(times(1), [mock methodReturningInt]);
+        verify(times(1), [mock methodReturningInt]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
@@ -104,7 +104,7 @@
     [mock methodReturningInt];
 
     @try {
-        VERIFY_TIMES(times(2), [mock methodReturningInt]);
+        verify(times(2), [mock methodReturningInt]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
@@ -118,7 +118,7 @@
     [mock methodReturningInt];
 
     @try {
-        VERIFY_TIMES(times(-1), [mock methodReturningInt]);
+        verify(times(-1), [mock methodReturningInt]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLBadUsage reason:SBLBadTimesProvided];
@@ -133,7 +133,7 @@
     [mock methodReturningInt];
 
     @try {
-        VERIFY_TIMES(times(2), [mock methodReturningInt]);
+        verify(times(2), [mock methodReturningInt]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
@@ -147,7 +147,7 @@
     [mock methodReturningInt];
 
     @try {
-        VERIFY_TIMES(never(), [mock methodReturningInt]);
+        verify(never(), [mock methodReturningInt]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
@@ -163,7 +163,7 @@
     [mock methodReturningInt];
 
     @try {
-        VERIFY_TIMES(never(), [mock methodReturningInt]);
+        verify(never(), [mock methodReturningInt]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
@@ -177,7 +177,7 @@
     [mock methodReturningInt];
 
     @try {
-        VERIFY_TIMES(atLeast(0), [mock methodReturningInt]);
+        verify(atLeast(0), [mock methodReturningInt]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLBadUsage reason:SBLBadAtLeastTimesProvided];
@@ -188,7 +188,7 @@
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
     @try {
-        VERIFY_TIMES(atLeast(1), [mock methodReturningString]);
+        verify(atLeast(1), [mock methodReturningString]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
@@ -202,7 +202,7 @@
     [mock methodReturningString];
 
     @try {
-        VERIFY_TIMES(atLeast(2), [mock methodReturningString]);
+        verify(atLeast(2), [mock methodReturningString]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
@@ -216,7 +216,7 @@
     [mock methodReturningString];
 
     @try {
-        VERIFY_TIMES(between(-1, 2), [mock methodReturningString]);
+        verify(between(-1, 2), [mock methodReturningString]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLBadUsage reason:SBLBadTimesProvided];
@@ -229,7 +229,7 @@
     [mock methodReturningString];
 
     @try {
-        VERIFY_TIMES(between(2, -1), [mock methodReturningString]);
+        verify(between(2, -1), [mock methodReturningString]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLBadUsage reason:SBLBadTimesProvided];
@@ -242,7 +242,7 @@
     [mock methodReturningString];
 
     @try {
-        VERIFY_TIMES(between(1, 0), [mock methodReturningString]);
+        verify(between(1, 0), [mock methodReturningString]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLBadUsage reason:SBLAtLeastCannotBeGreaterThanAtMost];
@@ -255,7 +255,7 @@
     [mock methodReturningString];
 
     @try {
-        VERIFY_TIMES(between(2, 1), [mock methodReturningString]);
+        verify(between(2, 1), [mock methodReturningString]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLBadUsage reason:SBLAtLeastCannotBeGreaterThanAtMost];
@@ -268,7 +268,7 @@
     [mock methodReturningString];
 
     @try {
-        VERIFY_TIMES(between(2, 3), [mock methodReturningString]);
+        verify(between(2, 3), [mock methodReturningString]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
@@ -284,7 +284,7 @@
     [mock methodReturningString];
 
     @try {
-        VERIFY_TIMES(between(1, 2), [mock methodReturningString]);
+        verify(between(1, 2), [mock methodReturningString]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
