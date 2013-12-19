@@ -3,12 +3,12 @@
 
 @interface SBLTimesMatcher : NSObject
 
-@property (nonatomic, readonly) int atLeast;
-@property (nonatomic, readonly) int atMost;
+@property (nonatomic, readonly) NSInteger atLeast;
+@property (nonatomic, readonly) NSInteger atMost;
 
 + (instancetype)never;
-+ (instancetype)exactly:(int)times;
-+ (instancetype)atLeast:(int)minTimes;
-+ (instancetype)between:(int)minTimes andAtMost:(int)maxTimes;
++ (instancetype)between:(NSInteger)minTimes andAtMost:(NSInteger)maxTimes;
++ (instancetype)exactly:(NSInteger)times;
++ (instancetype)atLeast:(NSInteger)minTimes;
 
 @end

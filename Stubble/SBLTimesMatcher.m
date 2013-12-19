@@ -2,8 +2,8 @@
 
 @interface SBLTimesMatcher ()
 
-@property (nonatomic) int atLeast;
-@property (nonatomic) int atMost;
+@property (nonatomic) NSInteger atLeast;
+@property (nonatomic) NSInteger atMost;
 
 @end
 
@@ -13,8 +13,8 @@
     return [self initWithAtLeast:0 upTo:0];
 }
 
-- (instancetype)initWithAtLeast:(int)minTimes upTo:(int)maxTimes {
-    if (self = [super init]){
+- (instancetype)initWithAtLeast:(NSInteger)minTimes upTo:(NSInteger)maxTimes {
+    if (self = [super init]) {
         _atLeast = minTimes;
         _atMost = maxTimes;
     }
@@ -25,12 +25,12 @@
     return [[SBLTimesMatcher alloc] init];
 }
 
-+ (instancetype)exactly:(int)minTimes {
++ (instancetype)exactly:(NSInteger)minTimes {
     return [[SBLTimesMatcher alloc] initWithAtLeast:minTimes upTo:minTimes];
 }
 
-+ (instancetype)atLeast:(int)minTimes {
-    return [[SBLTimesMatcher alloc] initWithAtLeast:minTimes upTo:INT_MAX];
++ (instancetype)atLeast:(NSInteger)minTimes {
+    return [[SBLTimesMatcher alloc] initWithAtLeast:minTimes upTo:NSIntegerMax];
 }
 
 + (instancetype)between:(int)minTimes andAtMost:(int)maxTimes {

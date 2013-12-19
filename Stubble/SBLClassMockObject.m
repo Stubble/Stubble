@@ -29,6 +29,7 @@
         self.verifyInvocation = [[SBLInvocationRecord alloc] initWithInvocation:invocation];
         [SBLTransactionManager.currentTransactionManager verifyMethodInvokedForMock:self];
     } else {
+		// Find Matching Stub
 		SBLStubbedInvocation *matchingWhen = nil;
 		for (SBLStubbedInvocation *ongoingWhen in self.stubbedInvocations.reverseObjectEnumerator) {
 			if ([ongoingWhen matchesInvocation:invocation]) {
@@ -36,21 +37,12 @@
 				break;
 			}
 		}
-		if (matchingWhen.shouldUnboxReturnValue) {
-			void *buffer = malloc([[invocation methodSignature] methodReturnLength]);
-			[matchingWhen.returnValue getValue:buffer];
-			[invocation setReturnValue:buffer];
-			free(buffer);
-		} else {
-            NSUInteger methodReturnLength = [[invocation methodSignature] methodReturnLength];
-            if (!methodReturnLength){
-                // no-op
-                // TODO: This represents a void return type. Is there something to do here?
-            } else {
-                id returnValue = matchingWhen.returnValue;
-                [invocation setReturnValue:&returnValue];
-            }
+		
+		// Perform Actions
+		for (SBLInvocationActionBlock action in matchingWhen.actionBlocks) {
+			action(invocation);
 		}
+		
 		[invocation invokeWithTarget:nil];
         [self.actualInvocationsArray addObject:invocation];
 	}
@@ -105,7 +97,9 @@
 }
 
 - (void)validateTimesMatcherUsage:(SBLTimesMatcher *)timesMatcher {
-    if(timesMatcher.atLeast < 0){
+    if (timesMatcher.atMost == NSIntegerMax && timesMatcher.atLeast < 1){
+        [NSException raise:SBLBadUsage format:SBLBadAtLeastTimesProvided];
+    } else if(timesMatcher.atLeast < 0){
         [NSException raise:SBLBadUsage format:SBLBadTimesProvided];
     } else if(timesMatcher.atLeast > timesMatcher.atMost) {
         [NSException raise:SBLBadUsage format:SBLAtLeastCannotBeGreaterThanAtMost];
@@ -114,10 +108,6 @@
     }else if (timesMatcher.atMost == INT_MAX && timesMatcher.atLeast < 1){
         [NSException raise:SBLBadUsage format:SBLBadAtLeastTimesProvided];
     }
-}
-
-- (void)verifyInvocationOccurred {
-    [self verifyInvocationOccurredNumberOfTimes:1];
 }
 
 @end
