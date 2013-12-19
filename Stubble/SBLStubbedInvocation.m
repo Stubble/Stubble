@@ -20,13 +20,13 @@
 	BOOL shouldUnboxReturnValue = [returnValue isKindOfClass:[NSValue class]] && strcmp([self returnType], [returnValue objCType]) == 0;
 	
 	[self thenDoWithInvocation:^(NSInvocation *invocation) {
+		NSUInteger methodReturnLength = [[invocation methodSignature] methodReturnLength];
 		if (shouldUnboxReturnValue) {
-			void *buffer = malloc([[invocation methodSignature] methodReturnLength]);
+			void *buffer = malloc(methodReturnLength);
 			[returnValue getValue:buffer];
 			[invocation setReturnValue:buffer];
 			free(buffer);
 		} else {
-            NSUInteger methodReturnLength = [[invocation methodSignature] methodReturnLength];
             if (!methodReturnLength){
                 // Throw Exception?
             } else {
