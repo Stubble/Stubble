@@ -47,8 +47,11 @@
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	
     [WHEN([mock methodWithVariableNumberOfArguments:@"1", @"2", @"3", @"4", nil]) thenReturn:@"alpha"];
+	// TODO - attempt to find a way to match a va_list
+    //[WHEN([mock methodWithVariableNumberOfArguments:@"1", @"2", @"7", @"4", nil]) thenReturn:@"beta"];
 	
     XCTAssertEqualObjects(([mock methodWithVariableNumberOfArguments:@"1", @"2", @"3", @"4", nil]), @"alpha");
+    //XCTAssertEqualObjects(([mock methodWithVariableNumberOfArguments:@"1", @"2", @"7", @"4", nil]), @"beta");
 }
 
 - (void)testWhenMethodIsNotStubbedItReturnsNil {

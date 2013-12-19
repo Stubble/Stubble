@@ -105,15 +105,11 @@
 }
 
 - (void)validateTimesMatcherUsage:(SBLTimesMatcher *)timesMatcher {
-    if (timesMatcher.atMost == INT_MAX && timesMatcher.atLeast < 1){
+    if (timesMatcher.atMost == NSIntegerMax && timesMatcher.atLeast < 1){
         [NSException raise:SBLBadUsage format:SBLBadAtLeastTimesProvided];
     } else if(timesMatcher.atLeast < 0){
         [NSException raise:SBLBadUsage format:SBLBadTimesProvided];
     }
-}
-
-- (void)verifyInvocationOccurred {
-    [self verifyInvocationOccurredNumberOfTimes:1];
 }
 
 @end
