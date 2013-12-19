@@ -91,6 +91,13 @@
     XCTAssertNoThrow(VERIFY_TIMES(atLeast(1), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
 }
 
+// TODO: Possible line to be drawn to only allow at least 1 time for between matches.
+- (void)testWhenVerifyingBetwenZeroAndZeroTimes_WhenCalledZeroTimes_ThenNoExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    XCTAssertNoThrow(VERIFY_TIMES(between(0, 0), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
+}
+
 - (void)testWhenVerifyingBetwenOneAndOneTime_WhenCalledOneTime_ThenNoExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
@@ -99,6 +106,23 @@
     XCTAssertNoThrow(VERIFY_TIMES(between(1, 1), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
 }
 
+- (void)testWhenVerifyingBetwenOneAndThreeTimes_WhenCalledValidNumberOfTimes_ThenNoExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodWithArray:@[@"arg1"]];
+    XCTAssertNoThrow(VERIFY_TIMES(between(1, 3), [mock methodWithArray:@[@"arg1"]]));
+
+    mock = [SBLMock mockForClass:SBLTestingClass.class];
+    [mock methodWithArray:@[@"arg1"]];
+    [mock methodWithArray:@[@"arg1"]];
+    XCTAssertNoThrow(VERIFY_TIMES(between(1, 3), [mock methodWithArray:@[@"arg1"]]));
+
+    mock = [SBLMock mockForClass:SBLTestingClass.class];
+    [mock methodWithArray:@[@"arg1"]];
+    [mock methodWithArray:@[@"arg1"]];
+    [mock methodWithArray:@[@"arg1"]];
+    XCTAssertNoThrow(VERIFY_TIMES(between(1, 3), [mock methodWithArray:@[@"arg1"]]));
+}
 
 - (void)testWhenVerifyingNever_WhenNotCalled_ThenNoExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];

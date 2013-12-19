@@ -249,6 +249,35 @@
     }
 }
 
+- (void)testWhenVerifyBetweenIsCalledWithBadAtMostTimesThenAnExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodReturningString];
+
+    @try {
+        VERIFY_TIMES(between(2, -1), [mock methodReturningString]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLBadUsage reason:SBLBadTimesProvided];
+    }
+}
+
+- (void)testWhenVerifyBetweenIsCalledTooManyTimesThenAnExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodReturningString];
+    [mock methodReturningString];
+    [mock methodReturningString];
+
+    @try {
+        VERIFY_TIMES(between(1, 2), [mock methodReturningString]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLVerifyFailed
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningString", 2, 3]];
+    }
+}
+
 
 #pragma mark - Utility methods
 

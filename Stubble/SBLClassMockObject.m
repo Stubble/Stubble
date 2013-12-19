@@ -91,21 +91,21 @@
             [NSException raise:SBLVerifyFailed format:@"Expected %@, but method was called with differing parameters", NSStringFromSelector(self.verifyInvocation.selector)];
         }
         [NSException raise:SBLVerifyFailed format:@"Expected %@, but method was not called", NSStringFromSelector(self.verifyInvocation.selector)];
-    } else if (invocationCount < atLeastTimes || invocationCount > atMostTimes) {
+    } else if (invocationCount < atLeastTimes) {
         [NSException raise:SBLVerifyFailed format:SBLVerifyCalledWrongNumberOfTimes, NSStringFromSelector(self.verifyInvocation.selector), atLeastTimes, invocationCount];
+    } else if (invocationCount > atMostTimes) {
+        [NSException raise:SBLVerifyFailed format:SBLVerifyCalledWrongNumberOfTimes, NSStringFromSelector(self.verifyInvocation.selector), atMostTimes, invocationCount];
     }
 }
 
 - (void)validateTimesMatcherUsage:(SBLTimesMatcher *)timesMatcher {
-    if (timesMatcher.atMost == NSIntegerMax && timesMatcher.atLeast < 1){
+    if (timesMatcher.atMost == NSIntegerMax && timesMatcher.atLeast < 1) {
         [NSException raise:SBLBadUsage format:SBLBadAtLeastTimesProvided];
-    } else if(timesMatcher.atLeast < 0){
+    } else if (timesMatcher.atLeast < 0 || timesMatcher.atMost < 0) {
         [NSException raise:SBLBadUsage format:SBLBadTimesProvided];
-    } else if(timesMatcher.atLeast > timesMatcher.atMost) {
+    } else if (timesMatcher.atLeast > timesMatcher.atMost || timesMatcher.atMost < timesMatcher.atLeast) {
         [NSException raise:SBLBadUsage format:SBLAtLeastCannotBeGreaterThanAtMost];
-    } if(timesMatcher.atLeast > timesMatcher.atMost || timesMatcher.atMost < timesMatcher.atLeast) {
-        [NSException raise:SBLBadUsage format:SBLAtLeastCannotBeGreaterThanAtMost];
-    }else if (timesMatcher.atMost == INT_MAX && timesMatcher.atLeast < 1){
+    } else if (timesMatcher.atMost == INT_MAX && timesMatcher.atLeast < 1) {
         [NSException raise:SBLBadUsage format:SBLBadAtLeastTimesProvided];
     }
 }

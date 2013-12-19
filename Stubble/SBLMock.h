@@ -2,13 +2,13 @@
 #import "SBLTimesMatcher.h"
 
 #define WHEN(methodCall...) ({ [SBLTransactionManager.currentTransactionManager invokeWhenMethodForObjectInBlock:^(){ (void)methodCall; }]; })
-#define VERIFY(args) VERIFY_TIMES(times(1), args)
+#define VERIFY(methodCall) VERIFY_TIMES(times(1), methodCall)
 #define times(times) ({ [SBLTimesMatcher exactly:times]; })
 #define atLeast(times) ({ [SBLTimesMatcher atLeast:times]; })
 #define never() ({ [SBLTimesMatcher never]; })
 #define between(atLeast, atMost) ({ [SBLTimesMatcher between:atLeast andAtMost:atMost]; })
 // TODO: Want this to also be VERIFY, not VERIFY_TIMES...
-#define VERIFY_TIMES(timesMatcher, args...)  ({ [SBLTransactionManager.currentTransactionManager invokeVerifyMethodForObjectInBlock:^(){ (void)args; } times:timesMatcher]; })
+#define VERIFY_TIMES(timesMatcher, methodCall...)  ({ [SBLTransactionManager.currentTransactionManager invokeVerifyMethodForObjectInBlock:^(){ (void)methodCall; } times:timesMatcher]; })
 #define VERIFY_NEVER(args) VERIFY_TIMES(never(), args)
 
 //#define any() _Pragma("clang diagnostic push") \
