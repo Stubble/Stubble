@@ -223,6 +223,19 @@
     }
 }
 
+- (void)testWhenVerifyBetweenIsCalledWithBadAtMostTimesThenAnExceptionIsThrown {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodReturningString];
+
+    @try {
+        VERIFY_TIMES(between(2, -1), [mock methodReturningString]);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLBadUsage reason:SBLBadTimesProvided];
+    }
+}
+
 - (void)testWhenVerifyBetweenIsCalledWithBadAtMostGreaterThanAtMostTimesThenAnExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
@@ -249,16 +262,17 @@
     }
 }
 
-- (void)testWhenVerifyBetweenIsCalledWithBadAtMostTimesThenAnExceptionIsThrown {
+- (void)testWhenVerifyBetweenIsCalledTooFewTimesThenAnExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
     [mock methodReturningString];
 
     @try {
-        VERIFY_TIMES(between(2, -1), [mock methodReturningString]);
+        VERIFY_TIMES(between(2, 3), [mock methodReturningString]);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
-        [self verifyException:e ofName:SBLBadUsage reason:SBLBadTimesProvided];
+        [self verifyException:e ofName:SBLVerifyFailed
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningString", 2, 1]];
     }
 }
 
