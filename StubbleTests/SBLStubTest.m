@@ -121,4 +121,48 @@
     XCTAssertEqualObjects([mock methodWithManyArguments:@"1" primitive:8 number:@3], @"beta");
 }
 
+- (void)testWhenMethodStubbedWithActionThenActionOccurs {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+	
+	__block NSString *string = nil;
+	[WHEN([mock methodWithNoReturn]) thenDo:^{ string = @"action"; }];
+	
+	[mock methodWithNoReturn];
+	
+	XCTAssertEqualObjects(string, @"action");
+}
+
+- (void)testWhenMethodStubbedWithActionsThenActionsOccurInOrder {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+	
+	__block NSMutableString *string = [NSMutableString string];
+	[[WHEN([mock methodWithNoReturn]) thenDo:^{ [string appendString:@"action1-"]; }] thenDo:^{  [string appendString:@"action2"]; }];
+	
+	[mock methodWithNoReturn];
+	
+	XCTAssertEqualObjects(string, @"action1-action2");
+}
+
+- (void)testWhenMethodStubbedWithInvocationActionThenInvocationIsPassedToActionBlockBeforeInvoke {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+	
+	__block NSInteger counter = 0;
+	__block NSNumber *capturedNumber = nil;
+	[WHEN([mock methodWithObject:any()]) thenDoWithInvocation:^(NSInvocation *invocation) {
+		[invocation getArgument:&capturedNumber atIndex:2];
+		NSString *returnString = [NSString stringWithFormat:@"return %d", counter++];
+		[invocation setReturnValue:&returnString];
+	}];
+	
+	NSString *returnedString = [mock methodWithObject:@(42)];
+	XCTAssertEqualObjects(capturedNumber, @(42));
+	XCTAssertEqualObjects(returnedString, @"return 0");
+	
+	returnedString = [mock methodWithObject:@(13.12)];
+	XCTAssertEqualObjects(capturedNumber, @(13.12));
+	XCTAssertEqualObjects(returnedString, @"return 1");
+}
+
+
+
 @end

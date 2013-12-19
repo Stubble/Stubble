@@ -29,6 +29,7 @@
         self.verifyInvocation = [[SBLInvocationRecord alloc] initWithInvocation:invocation];
         [SBLTransactionManager.currentTransactionManager verifyMethodInvokedForMock:self];
     } else {
+		// Find Matching Stub
 		SBLStubbedInvocation *matchingWhen = nil;
 		for (SBLStubbedInvocation *ongoingWhen in self.stubbedInvocations.reverseObjectEnumerator) {
 			if ([ongoingWhen matchesInvocation:invocation]) {
@@ -36,6 +37,8 @@
 				break;
 			}
 		}
+		
+		// Set Return Value
 		if (matchingWhen.shouldUnboxReturnValue) {
 			void *buffer = malloc([[invocation methodSignature] methodReturnLength]);
 			[matchingWhen.returnValue getValue:buffer];
@@ -51,6 +54,12 @@
                 [invocation setReturnValue:&returnValue];
             }
 		}
+		
+		// Perform Actions
+		for (SBLInvocationActionBlock action in matchingWhen.actionBlocks) {
+			action(invocation);
+		}
+		
 		[invocation invokeWithTarget:nil];
         [self.actualInvocationsArray addObject:invocation];
 	}
