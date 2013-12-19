@@ -3,7 +3,6 @@
 
 @interface SBLStubbedInvocation ()
 
-@property (nonatomic, readwrite) id returnValue;
 @property (nonatomic, readwrite) NSArray *actionBlocks;
 
 @end
@@ -18,7 +17,24 @@
 }
 
 - (SBLStubbedInvocation *)thenReturn:(id)returnValue {
-	self.returnValue = returnValue;
+	BOOL shouldUnboxReturnValue = [returnValue isKindOfClass:[NSValue class]] && strcmp([self returnType], [returnValue objCType]) == 0;
+	
+	[self thenDoWithInvocation:^(NSInvocation *invocation) {
+		if (shouldUnboxReturnValue) {
+			void *buffer = malloc([[invocation methodSignature] methodReturnLength]);
+			[returnValue getValue:buffer];
+			[invocation setReturnValue:buffer];
+			free(buffer);
+		} else {
+            NSUInteger methodReturnLength = [[invocation methodSignature] methodReturnLength];
+            if (!methodReturnLength){
+                // Throw Exception?
+            } else {
+                id invocationReturnValue = returnValue;
+                [invocation setReturnValue:&invocationReturnValue];
+            }
+		}
+	}];
 	
     // TODO verify that it makes sense for the current invocation
     // TODO eventually self can be used for some type of chaining (Should anything be allowed after -thenReturn:?)
@@ -35,12 +51,6 @@
 - (SBLStubbedInvocation *)thenDoWithInvocation:(SBLInvocationActionBlock)actionBlock {
 	self.actionBlocks = [self.actionBlocks arrayByAddingObject:[actionBlock copy]];
 	return self;
-}
-
-- (BOOL)shouldUnboxReturnValue {
-	//	NSLog(@"NSObject * : %s", [self.returnValue objCType]);
-	//	NSLog(@"methodReturnType : %s", [[self.invocation methodSignature] methodReturnType]);
-	return [self.returnValue isKindOfClass:[NSValue class]] && strcmp([self returnType], [self.returnValue objCType]) == 0;
 }
 
 @end

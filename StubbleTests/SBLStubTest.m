@@ -163,6 +163,43 @@
 	XCTAssertEqualObjects(returnedString, @"return 1");
 }
 
-
+- (void)testAllActionsRunInOrderAdded {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+	
+	NSMutableArray *actionOrder = [NSMutableArray array];
+	SBLInvocationActionBlock invocationAction = ^(NSInvocation *invocation) {
+		NSString *returnString = @"invocationActionReturn";
+		[invocation setReturnValue:&returnString];
+		[actionOrder addObject:@"invocationAction"];
+	};
+	SBLActionBlock action = ^{
+		[actionOrder addObject:@"action"];
+	};
+	
+	[[[WHEN([mock methodWithObject:@(1)]) thenDoWithInvocation:invocationAction] thenDo:action] thenReturn:@"returnValue"];
+	[[[WHEN([mock methodWithObject:@(2)]) thenDo:action] thenDoWithInvocation:invocationAction] thenReturn:@"returnValue"];
+	[[[WHEN([mock methodWithObject:@(3)]) thenDoWithInvocation:invocationAction] thenReturn:@"returnValue"] thenDo:action];
+	[[[WHEN([mock methodWithObject:@(4)]) thenDo:action] thenReturn:@"returnValue"] thenDoWithInvocation:invocationAction];
+	
+	NSString *returnedString = [mock methodWithObject:@(1)];
+	XCTAssertEqualObjects(actionOrder, (@[@"invocationAction",  @"action"]));
+	XCTAssertEqualObjects(returnedString, @"returnValue");
+	[actionOrder removeAllObjects];
+	
+	returnedString = [mock methodWithObject:@(2)];
+	XCTAssertEqualObjects(actionOrder, (@[@"action", @"invocationAction"]));
+	XCTAssertEqualObjects(returnedString, @"returnValue");
+	[actionOrder removeAllObjects];
+	
+	returnedString = [mock methodWithObject:@(3)];
+	XCTAssertEqualObjects(actionOrder, (@[@"invocationAction",  @"action"]));
+	XCTAssertEqualObjects(returnedString, @"returnValue");
+	[actionOrder removeAllObjects];
+	
+	returnedString = [mock methodWithObject:@(4)];
+	XCTAssertEqualObjects(actionOrder, (@[@"action",  @"invocationAction"]));
+	XCTAssertEqualObjects(returnedString, @"invocationActionReturn");
+	[actionOrder removeAllObjects];
+}
 
 @end

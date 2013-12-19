@@ -38,23 +38,6 @@
 			}
 		}
 		
-		// Set Return Value
-		if (matchingWhen.shouldUnboxReturnValue) {
-			void *buffer = malloc([[invocation methodSignature] methodReturnLength]);
-			[matchingWhen.returnValue getValue:buffer];
-			[invocation setReturnValue:buffer];
-			free(buffer);
-		} else {
-            NSUInteger methodReturnLength = [[invocation methodSignature] methodReturnLength];
-            if (!methodReturnLength){
-                // no-op
-                // TODO: This represents a void return type. Is there something to do here?
-            } else {
-                id returnValue = matchingWhen.returnValue;
-                [invocation setReturnValue:&returnValue];
-            }
-		}
-		
 		// Perform Actions
 		for (SBLInvocationActionBlock action in matchingWhen.actionBlocks) {
 			action(invocation);
