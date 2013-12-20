@@ -2,10 +2,12 @@
 #import "SBLTransactionManager.h"
 #import "SBLErrors.h"
 #import "SBLTimesMatcher.h"
+#import "SBLProtocolMockObjectBehavior.h"
+#import "SBLClassMockObjectBehavior.h"
 
 @interface SBLClassMockObject ()
 
-@property (nonatomic, readonly) Class mockedClass;
+@property (nonatomic, readonly) id<SBLMockObjectBehavior> behavior;
 @property (nonatomic, readonly) NSMutableArray *stubbedInvocations;
 @property (nonatomic, readonly) NSMutableArray *actualInvocationsArray;
 @property (nonatomic, readwrite) SBLInvocationRecord *verifyInvocation;
@@ -15,10 +17,18 @@
 @implementation SBLClassMockObject
 
 - (id)initWithClass:(Class)class {
-    _mockedClass = class;
+	return [self initWithBehavior:[[SBLClassMockObjectBehavior alloc] initWithClass:class]];
+}
+
+- (id)initWithProtocol:(Protocol *)protocol {
+	return [self initWithBehavior:[[SBLProtocolMockObjectBehavior alloc] initWithProtocol:protocol]];
+}
+
+- (instancetype)initWithBehavior:(id<SBLMockObjectBehavior>)behavior {
+    _behavior = behavior;
 	_stubbedInvocations = [NSMutableArray array];
     _actualInvocationsArray = [NSMutableArray array];
-    return self;
+	return self;
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
@@ -43,6 +53,7 @@
 			action(invocation);
 		}
 		
+		// Invoke and Record Invocation
 		[invocation invokeWithTarget:nil];
         [self.actualInvocationsArray addObject:invocation];
 	}
@@ -53,15 +64,19 @@
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
-    return [self.mockedClass instanceMethodSignatureForSelector:aSelector];
+    return [self.behavior mockObjectMethodSignatureForSelector:aSelector];
 }
 
 - (BOOL)respondsToSelector:(SEL)selector {
-    return [self.mockedClass instancesRespondToSelector:selector];
+    return [self.behavior mockObjectRespondsToSelector:selector];
 }
 
 - (BOOL)isKindOfClass:(Class)aClass {
-    return [self.mockedClass isSubclassOfClass:aClass];
+    return [self.behavior mockObjectIsKindOfClass:aClass];
+}
+
+- (BOOL)conformsToProtocol:(Protocol *)aProtocol {
+	return [self.behavior mockObjectConformsToProtocol:aProtocol];
 }
 
 - (SBLStubbedInvocation *)currentStubbedInvocation {

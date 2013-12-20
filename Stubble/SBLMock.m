@@ -7,4 +7,8 @@
     return [[SBLClassMockObject alloc] initWithClass:class];
 }
 
++ (id)mockForProtocol:(Protocol *)protocol {
+    return [[SBLClassMockObject alloc] initWithProtocol:protocol];
+}
+
 @end

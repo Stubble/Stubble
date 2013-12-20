@@ -153,15 +153,15 @@
     XCTAssertNoThrow(verifyNever([mock methodReturningNSValue]));
 }
 
-- (void)testWhenVerifyCalledWithCommasThen {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
-	
-	[mock methodWithArray:@[@"1", @"2", @"3"]];
-	[mock methodWithArray:@[@"4", @"5", @"6"]];
-	[mock methodWithArray:@[@"4", @"5", @"6"]];
-	
-    XCTAssertNoThrow(verify([mock methodWithArray:@[@"1", @"2", @"3"]]));
-    XCTAssertNoThrow(verify(times(2), [mock methodWithArray:@[@"4", @"5", @"6"]]));
-}
+//- (void)testWhenVerifyCalledWithCommasThen {
+//    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+//	
+//	[mock methodWithArray:@[@"1", @"2", @"3"]];
+//	[mock methodWithArray:@[@"4", @"5", @"6"]];
+//	[mock methodWithArray:@[@"4", @"5", @"6"]];
+//	
+//    XCTAssertNoThrow(verify([mock methodWithArray:@[@"1", @"2", @"3"]]));
+//    XCTAssertNoThrow(verify(times(2), [mock methodWithArray:@[@"4", @"5", @"6"]]));
+//}
 
 @end

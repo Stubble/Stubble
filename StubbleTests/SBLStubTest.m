@@ -1,6 +1,7 @@
 #import <XCTest/XCTest.h>
 #import "SBLMock.h"
 #import "SBLTestingClass.h"
+#import "SBLTestingProtocol.h"
 
 @interface SBLStubTest : XCTestCase
 
@@ -200,6 +201,39 @@
 	XCTAssertEqualObjects(actionOrder, (@[@"action",  @"invocationAction"]));
 	XCTAssertEqualObjects(returnedString, @"invocationActionReturn");
 	[actionOrder removeAllObjects];
+}
+
+- (void)testNilCanBeMatched {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+	
+	[WHEN([mock methodWithObject:nil]) thenReturn:@"return"];
+	
+	XCTAssertEqualObjects([mock methodWithObject:nil], @"return");
+}
+
+- (void)testWhenProtocolIsStubbedThenCorrectValueIsReturned {
+    id<SBLTestingProtocol> mock = [SBLMock mockForProtocol:@protocol(SBLTestingProtocol)];
+	
+	[WHEN([mock protocolMethodWithInteger:42]) thenReturn:@"2"];
+	[WHEN([mock protocolMethodWithInteger:3]) thenReturn:@"1"];
+	[WHEN([mock protocolMethodWithObject:@(71)]) thenReturn:@"3"];
+	[WHEN([mock protocolMethodWithObject:nil]) thenReturn:@"5"];
+	[WHEN([mock protocolMethodWithObject:@(0)]) thenReturn:@"4"];
+	
+	XCTAssertEqualObjects([mock protocolMethodWithObject:nil], @"5");
+	XCTAssertEqualObjects([mock protocolMethodWithObject:@(71)], @"3");
+	XCTAssertEqualObjects([mock protocolMethodWithObject:@(0)], @"4");
+	XCTAssertEqualObjects([mock protocolMethodWithInteger:42], @"2");
+	XCTAssertEqualObjects([mock protocolMethodWithInteger:3], @"1");
+}
+
+- (void)testEncode {
+	const char *encodingClass = @encode(__typeof__([NSObject class]));
+	const char *encodingProtocol = @encode(__typeof__(@protocol(SBLMockObject)));
+	
+	NSLog(@"class: %s", encodingClass);
+	NSLog(@"protocol: %s", encodingProtocol);
+	NSLog(@"protocol class: %@", NSStringFromClass([(id)@protocol(SBLMockObject) class]));
 }
 
 @end

@@ -41,5 +41,6 @@
 @interface SBLMock : NSObject
 
 + (id)mockForClass:(Class)class;
++ (id)mockForProtocol:(Protocol *)protocol;
 
 @end
