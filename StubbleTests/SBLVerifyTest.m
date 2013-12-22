@@ -10,7 +10,7 @@
 
 - (void)testWhenVerifyingForMethodThatWasCalledThatWasMadeThenNoExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
-	
+
 	[mock methodReturningInt];
 
 	XCTAssertNoThrow(verify([mock methodReturningInt]));
@@ -38,7 +38,7 @@
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
-	
+
 	XCTAssertNoThrow(verify([mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
 }
 
@@ -47,7 +47,7 @@
 - (void)testWhenVerifyingExactlyZeroTimes_WhenNotCalled_ThenNoExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
-    XCTAssertNoThrow(verify(times(0), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
+    XCTAssertNoThrow(verifyTimes(times(0), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
 }
 
 - (void)testWhenVerifyingExactlyOneTime_WhenCalledOneTime_ThenNoExceptionIsThrown {
@@ -55,7 +55,7 @@
 
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
 
-    XCTAssertNoThrow(verify(times(1), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
+    XCTAssertNoThrow(verifyTimes(times(1), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
 }
 
 - (void)testWhenVerifyingExactlyTwoTimes_WhenCalledTwoTimes_ThenNoExceptionIsThrown {
@@ -64,7 +64,7 @@
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
 
-    XCTAssertNoThrow(verify(times(2), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
+    XCTAssertNoThrow(verifyTimes(times(2), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
 }
 
 - (void)testWhenVerifyingAtLeastOneTime_WhenCalledTwoTimes_ThenNoExceptionIsThrown {
@@ -73,7 +73,7 @@
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
 
-    XCTAssertNoThrow(verify(atLeast(1), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
+    XCTAssertNoThrow(verifyTimes(atLeast(1), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
 }
 
 - (void)testWhenVerifyingAtLeastOneTime_WhenCalledLotsOfTimes_ThenNoExceptionIsThrown {
@@ -88,14 +88,14 @@
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
 
-    XCTAssertNoThrow(verify(atLeast(1), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
+    XCTAssertNoThrow(verifyTimes(atLeast(1), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
 }
 
 // TODO: Possible line to be drawn to only allow at least 1 time for between matches.
 - (void)testWhenVerifyingBetwenZeroAndZeroTimes_WhenCalledZeroTimes_ThenNoExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
-    XCTAssertNoThrow(verify(between(0, 0), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
+    XCTAssertNoThrow(verifyTimes(between(0, 0), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
 }
 
 - (void)testWhenVerifyingBetwenOneAndOneTime_WhenCalledOneTime_ThenNoExceptionIsThrown {
@@ -103,26 +103,26 @@
 
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
 
-    XCTAssertNoThrow(verify(between(1, 1), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
+    XCTAssertNoThrow(verifyTimes(between(1, 1), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
 }
 
 - (void)testWhenVerifyingBetwenOneAndThreeTimes_WhenCalledValidNumberOfTimes_ThenNoExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
     [mock methodWithArray:@[@"arg1"]];
-    XCTAssertNoThrow(verify(between(1, 3), [mock methodWithArray:@[@"arg1"]]));
+    XCTAssertNoThrow(verifyTimes(between(1, 3), [mock methodWithArray:@[@"arg1"]]));
 
     // TODO: Shouldn't have to recreate mock? Won't work without this currently.
     mock = [SBLMock mockForClass:SBLTestingClass.class];
     [mock methodWithArray:@[@"arg1"]];
     [mock methodWithArray:@[@"arg1"]];
-    XCTAssertNoThrow(verify(between(1, 3), [mock methodWithArray:@[@"arg1"]]));
+    XCTAssertNoThrow(verifyTimes(between(1, 3), [mock methodWithArray:@[@"arg1"]]));
 
     mock = [SBLMock mockForClass:SBLTestingClass.class];
     [mock methodWithArray:@[@"arg1"]];
     [mock methodWithArray:@[@"arg1"]];
     [mock methodWithArray:@[@"arg1"]];
-    XCTAssertNoThrow(verify(between(1, 3), [mock methodWithArray:@[@"arg1"]]));
+    XCTAssertNoThrow(verifyTimes(between(1, 3), [mock methodWithArray:@[@"arg1"]]));
 }
 
 - (void)testWhenVerifyingNever_WhenNotCalled_ThenNoExceptionIsThrown {
@@ -134,7 +134,7 @@
 - (void)testWhenVerifyingNeverTimes_WhenNotCalled_ThenNoExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
-    XCTAssertNoThrow(verify(never(), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
+    XCTAssertNoThrow(verifyTimes(never(), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
 }
 
 - (void)testWhenVerifyingTimesForMultipleMethodCallsThenNoExceptionIsThrown {
@@ -153,15 +153,16 @@
     XCTAssertNoThrow(verifyNever([mock methodReturningNSValue]));
 }
 
-//- (void)testWhenVerifyCalledWithCommasThen {
-//    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
-//	
+- (void)testWhenVerifyCalledWithCommasThen {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
 //	[mock methodWithArray:@[@"1", @"2", @"3"]];
-//	[mock methodWithArray:@[@"4", @"5", @"6"]];
-//	[mock methodWithArray:@[@"4", @"5", @"6"]];
-//	
+//
 //    XCTAssertNoThrow(verify([mock methodWithArray:@[@"1", @"2", @"3"]]));
-//    XCTAssertNoThrow(verify(times(2), [mock methodWithArray:@[@"4", @"5", @"6"]]));
-//}
+    mock = [SBLMock mockForClass:SBLTestingClass.class];
+    [mock methodWithArray:@[@"4", @"5", @"6"]];
+    [mock methodWithArray:@[@"4", @"5", @"6"]];
+    XCTAssertNoThrow(verifyTimes(times(2), [mock methodWithArray:@[@"4", @"5", @"6"]]));
+}
 
 @end
