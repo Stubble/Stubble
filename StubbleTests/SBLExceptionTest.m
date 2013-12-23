@@ -15,7 +15,7 @@
     NSString *string = @"string";
 
     @try {
-        [WHEN(string.length) thenReturn:@1];
+        [when(string.length) thenReturn:@1];
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e) {
         [self verifyException:e ofName:SBLBadUsage reason:SBLBadWhenErrorMessage];

@@ -12,8 +12,8 @@
 - (void)testWhenMethodStubbedWithAnyMatcherThenCorrectValueIsReturned {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	
-	[WHEN([mock methodWithObject:any()]) thenReturn:@"one"];
-	[WHEN([mock methodWithInteger:any()]) thenReturn:@"two"];
+	[when([mock methodWithObject:any()]) thenReturn:@"one"];
+	[when([mock methodWithInteger:any()]) thenReturn:@"two"];
 	
 	XCTAssertEqualObjects([mock methodWithObject:@11], @"one");
 	XCTAssertEqualObjects([mock methodWithObject:@42], @"one");
@@ -28,10 +28,10 @@
 - (void)testWhenMultipleArgumentMethodHasMatcherForOneArgumentThenOtherArgumentIsUsedForMatching {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	
-	[WHEN([mock methodWithArgument1:@"arg1" argument2:any()]) thenReturn:@"one"];
-	[WHEN([mock methodWithArgument1:@"arg2" argument2:any()]) thenReturn:@"two"];
-	[WHEN([mock methodWithArgument1:any() argument2:@"arg3"]) thenReturn:@"three"];
-	[WHEN([mock methodWithArgument1:any() argument2:@"arg4"]) thenReturn:@"four"];
+	[when([mock methodWithArgument1:@"arg1" argument2:any()]) thenReturn:@"one"];
+	[when([mock methodWithArgument1:@"arg2" argument2:any()]) thenReturn:@"two"];
+	[when([mock methodWithArgument1:any() argument2:@"arg3"]) thenReturn:@"three"];
+	[when([mock methodWithArgument1:any() argument2:@"arg4"]) thenReturn:@"four"];
 	
 	XCTAssertEqualObjects([mock methodWithArgument1:@"arg1" argument2:@"other stuff"], @"one");
 	XCTAssertEqualObjects([mock methodWithArgument1:@"arg2" argument2:@"other stuff"], @"two");
@@ -43,20 +43,20 @@
 - (void)testMatcherWorksForManyArgumentTypes {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	
-	[WHEN([mock methodWithBool:any()]) thenReturn:@"return"];
-	[WHEN([mock methodWithPrimitiveReference:any()]) thenReturn:@"return"];
+	[when([mock methodWithBool:any()]) thenReturn:@"return"];
+	[when([mock methodWithPrimitiveReference:any()]) thenReturn:@"return"];
 	// TODO make object references (ie: (NSString * __autoreleasing *)) work somehow too...
-	//[WHEN([mock methodWithReference:any()]) thenReturn:@"return"];
-	[WHEN([mock methodWithSelector:any()]) thenReturn:@"return"];
-	[WHEN([mock methodWithCGRect:anyCGRect()]) thenReturn:@"return"];
+	//[when([mock methodWithReference:any()]) thenReturn:@"return"];
+	[when([mock methodWithSelector:any()]) thenReturn:@"return"];
+	[when([mock methodWithCGRect:anyCGRect()]) thenReturn:@"return"];
 	SBLTestingStruct validStruct = { 1, YES, NULL };
-	[WHEN([mock methodWithStruct:anyWithPlaceholder(validStruct)]) thenReturn:@"return"];
-	[WHEN([mock methodWithStructReference:any()]) thenReturn:@"return"];
-	[WHEN([mock methodWithClass:any()]) thenReturn:@"return"];
+	[when([mock methodWithStruct:anyWithPlaceholder(validStruct)]) thenReturn:@"return"];
+	[when([mock methodWithStructReference:any()]) thenReturn:@"return"];
+	[when([mock methodWithClass:any()]) thenReturn:@"return"];
 	SBLTestingBlock block = ^(int integer, NSObject *object) {
 		NSLog(@"block");
 	};
-	[WHEN([mock methodWithBlock:block]) thenReturn:@"return"];
+	[when([mock methodWithBlock:block]) thenReturn:@"return"];
 	
 	XCTAssertEqualObjects([mock methodWithBool:YES], @"return");
 	NSInteger integer = 42;

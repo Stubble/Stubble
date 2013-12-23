@@ -1,7 +1,7 @@
 #import "SBLTransactionManager.h"
 #import "SBLTimesMatcher.h"
 
-#define WHEN(methodCall...) ({ [SBLTransactionManager.currentTransactionManager invokeWhenMethodForObjectInBlock:^(){ (void)methodCall; }]; })
+#define when(methodCall...) ({ [SBLTransactionManager.currentTransactionManager invokeWhenMethodForObjectInBlock:^(){ (void)methodCall; }]; })
 
 #define verify(methodCall...) verifyTimes(atLeast(1), methodCall)
 // Overloading not yet working with new var args solution.
