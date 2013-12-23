@@ -86,8 +86,8 @@
 - (void)verifyInvocationOccurredNumberOfTimes:(SBLTimesMatcher *)timesMatcher {
     [self validateTimesMatcherUsage:timesMatcher];
 
-    int atLeastTimes = timesMatcher.atLeast;
-    int atMostTimes = timesMatcher.atMost;
+    NSInteger atLeastTimes = timesMatcher.atLeast;
+    NSInteger atMostTimes = timesMatcher.atMost;
     NSInteger invocationCount = 0;
     BOOL methodWithMatchingSignatureCalled = NO;
     for (NSInvocation *actualInvocation in self.actualInvocations) {
@@ -107,9 +107,9 @@
         }
         [NSException raise:SBLVerifyFailed format:@"Expected %@, but method was not called", NSStringFromSelector(self.verifyInvocation.selector)];
     } else if (invocationCount < atLeastTimes) {
-        [NSException raise:SBLVerifyFailed format:SBLVerifyCalledWrongNumberOfTimes, NSStringFromSelector(self.verifyInvocation.selector), atLeastTimes, invocationCount];
+        [NSException raise:SBLVerifyFailed format:SBLVerifyCalledWrongNumberOfTimes, NSStringFromSelector(self.verifyInvocation.selector), (long)atLeastTimes, (long)invocationCount];
     } else if (invocationCount > atMostTimes) {
-        [NSException raise:SBLVerifyFailed format:SBLVerifyCalledWrongNumberOfTimes, NSStringFromSelector(self.verifyInvocation.selector), atMostTimes, invocationCount];
+        [NSException raise:SBLVerifyFailed format:SBLVerifyCalledWrongNumberOfTimes, NSStringFromSelector(self.verifyInvocation.selector), (long)atMostTimes, (long)invocationCount];
     }
 }
 

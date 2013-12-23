@@ -33,7 +33,7 @@
     return [[SBLTimesMatcher alloc] initWithAtLeast:minTimes upTo:NSIntegerMax];
 }
 
-+ (instancetype)between:(int)minTimes andAtMost:(int)maxTimes {
++ (instancetype)between:(NSInteger)minTimes andAtMost:(NSInteger)maxTimes {
     return [[SBLTimesMatcher alloc] initWithAtLeast:minTimes upTo:maxTimes];
 }
 
