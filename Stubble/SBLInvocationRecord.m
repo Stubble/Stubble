@@ -103,14 +103,15 @@
 	if (matchingInvocation) {
 		for (int i = 2; i < recordedInvocation.methodSignature.numberOfArguments; i++) {
 			const char *argumentType = [self.invocation.methodSignature getArgumentTypeAtIndex:i];
+            BOOL isObject = [self isObjectType:argumentType];
 			__unsafe_unretained id argument = nil; // Need unsafe unretained here - http://stackoverflow.com/questions/11874056/nsinvocation-getreturnvalue-called-inside-forwardinvocation-makes-the-returned
-			if ([self isObjectType:argumentType]) {
+			if (isObject) {
 				[invocation getArgument:&argument atIndex:i];
 			} else {
 				argument = [self boxedValueForArgumentIndex:i inInvocation:invocation];
 			}
 			SBLMatcher *matcher = self.matchers[i-2];
-			matchingInvocation &= [matcher matchesArgument:argument];
+			matchingInvocation &= [matcher matchesArgument:argument shouldUnboxArgument:!isObject];
 		}
 	}
     return matchingInvocation;

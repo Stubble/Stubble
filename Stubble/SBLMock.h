@@ -1,7 +1,7 @@
 #import "SBLTransactionManager.h"
 #import "SBLTimesMatcher.h"
 
-#define when(methodCall...) ({ [SBLTransactionManager.currentTransactionManager invokeWhenMethodForObjectInBlock:^(){ (void)methodCall; }]; })
+#define when(methodCall...) ({ [SBLTransactionManager.currentTransactionManager prepareForWhen]; (void)methodCall; [SBLTransactionManager.currentTransactionManager performWhen]; })
 
 #define verify(methodCall...) verifyTimes(atLeast(1), methodCall)
 // Overloading not yet working with new var args solution.
@@ -40,6 +40,11 @@
 #define anyObjectReference(...) anyWithPlaceholder(&@"placeholder")
 #define anyWithPlaceholder(...) ({ [SBLTransactionManager.currentTransactionManager addMatcher:[SBLMatcher any]]; __VA_ARGS__; })
 #define anyCGRect() anyWithPlaceholder(CGRectZero)
+
+#define capture(captorReference) _Pragma("clang diagnostic push") \
+    _Pragma("clang diagnostic ignored \"-Wconversion\"") \
+    ({ SBLMatcher *matcher = [SBLMatcher captor:captorReference]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; [matcher placeholder]; }) \
+    _Pragma("clang diagnostic pop")
 
 @interface SBLMock : NSObject
 

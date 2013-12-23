@@ -10,13 +10,28 @@
 @implementation SBLMatcher
 
 + (instancetype)any {
-	return [SBLMatcher matcherWithBlock:^BOOL(id argument) {
+	return [SBLMatcher matcherWithBlock:^BOOL(id argument, BOOL shouldUnboxArgument) {
+		return YES;
+	}];
+}
+
++ (instancetype)captor:(void *)captor {
+    NSValue *pointerValue = [NSValue valueWithPointer:captor];
+	return [SBLMatcher matcherWithBlock:^BOOL(id argument, BOOL shouldUnboxArgument) {
+        void *captorPointer = [pointerValue pointerValue];
+
+        if (shouldUnboxArgument) {
+            [(NSValue *)argument getValue:captorPointer];
+        } else {
+            __block id __strong *captorId = (id __strong *)captorPointer;
+            *captorId = argument;
+        }
 		return YES;
 	}];
 }
 
 + (instancetype)objectIsEqualMatcher:(id)object {
-	return [SBLMatcher matcherWithBlock:^BOOL(id argument) {
+	return [SBLMatcher matcherWithBlock:^BOOL(id argument, BOOL shouldUnboxArgument) {
 		return [object isEqual:argument] || (!object && !argument);
 	}];
 }
@@ -28,7 +43,7 @@
 }
 
 + (instancetype)valueIsEqualMatcher:(NSValue *)value {
-	return [SBLMatcher matcherWithBlock:^BOOL(NSValue *argument) {
+	return [SBLMatcher matcherWithBlock:^BOOL(NSValue *argument, BOOL shouldUnboxArgument) {
 		return [value isEqual:argument];
 	}];
 }
@@ -44,8 +59,8 @@
     return self;
 }
 
-- (BOOL)matchesArgument:(id)argument {
-	return self.matcherBlock(argument);
+- (BOOL)matchesArgument:(id)argument shouldUnboxArgument:(BOOL)shouldUnboxArgument {
+	return self.matcherBlock(argument, shouldUnboxArgument);
 }
 
 - (void *)placeholder {

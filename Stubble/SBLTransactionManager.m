@@ -30,19 +30,21 @@
 	return self;
 }
 
-
-- (SBLStubbedInvocation *)invokeWhenMethodForObjectInBlock:(InvokeMethodBlock)block {
-	// Prepare
+- (void)prepareForWhen {
     [self verifyState:SBLTransactionManagerStateAtRest];
     self.state = SBLTransactionManagerStateStubInProgress;
-	
-	// Run
-	block();
-	
-	// Finish
+}
+
+- (void)whenMethodInvokedForMock:(id<SBLMockObject>)mock {
+    [self verifyState:SBLTransactionManagerStateStubInProgress];
+    self.currentMock = mock;
+	[self.currentMock.currentStubbedInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
+}
+
+- (SBLStubbedInvocation *)performWhen {
     [self verifyState:SBLTransactionManagerStateStubInProgress];
     [self verifyMockCalled:SBLBadWhenErrorMessage];
-	
+
     SBLStubbedInvocation *when = self.currentMock.currentStubbedInvocation;
     [self clear];
     return when;
@@ -56,12 +58,6 @@
 
 - (void)addMatcher:(SBLMatcher *)matcher {
 	[self.matchers addObject:matcher];
-}
-
-- (void)whenMethodInvokedForMock:(id<SBLMockObject>)mock {
-    [self verifyState:SBLTransactionManagerStateStubInProgress];
-    self.currentMock = mock;
-	[self.currentMock.currentStubbedInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }
 
 - (void)invokeVerifyMethodForObjectInBlock:(InvokeMethodBlock)block times:(SBLTimesMatcher *)timesMatcher {
