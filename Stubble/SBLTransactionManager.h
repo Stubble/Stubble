@@ -24,8 +24,10 @@ typedef enum {
 - (void)whenMethodInvokedForMock:(id<SBLMockObject>)mock;
 - (SBLStubbedInvocation *)performWhen;
 
-- (void)invokeVerifyMethodForObjectInBlock:(InvokeMethodBlock)block times:(SBLTimesMatcher *)timesMatcher;
+- (void)prepareForVerify;
 - (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock;
+//- (void)performVerify;
+- (void)performVerifyNumberOfTimes:(SBLTimesMatcher *)timesMatcher;
 
 - (void)addMatcher:(SBLMatcher *)matcher;
 

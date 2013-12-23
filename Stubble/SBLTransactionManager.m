@@ -60,15 +60,18 @@
 	[self.matchers addObject:matcher];
 }
 
-- (void)invokeVerifyMethodForObjectInBlock:(InvokeMethodBlock)block times:(SBLTimesMatcher *)timesMatcher {
-    // Prepare
+- (void)prepareForVerify {
     [self verifyState:SBLTransactionManagerStateAtRest];
+
     self.state = SBLTransactionManagerStateVerifyInProgress;
+}
 
-    // Run
-    block();
+- (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock {
+	self.currentMock = mock;
+	[self.currentMock.verifyInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
+}
 
-    // Finish
+- (void)performVerifyNumberOfTimes:(SBLTimesMatcher *)timesMatcher {
     [self verifyState:SBLTransactionManagerStateVerifyInProgress];
     [self verifyMockCalled:SBLBadVerifyErrorMessage];
     @try {
@@ -76,11 +79,6 @@
     } @finally {
         [self clear];
     }
-}
-
-- (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock {
-	self.currentMock = mock;
-	[self.currentMock.verifyInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }
 
 - (void)verifyMockCalled:(NSString *)errorMessage {

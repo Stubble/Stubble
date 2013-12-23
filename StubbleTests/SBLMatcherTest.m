@@ -72,7 +72,7 @@
 	XCTAssertEqualObjects([mock methodWithBlock:block], @"return");
 }
 
-- (void)testCaptureCapturesArgument {
+- (void)testCaptureCapturesArgumentInWhen {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
     BOOL capturedBool = NO;
     NSInteger capturedInteger = 0;
@@ -94,6 +94,35 @@
     [mock methodWithBlock:^(int integer, NSObject *object) {
         capturedBlockRun = YES;
     }];
+    if (capturedBlock) {
+        capturedBlock(1, @1);
+    }
+    XCTAssertTrue(capturedBlockRun);
+}
+
+- (void)testCaptureCapturesArgumentInVerify {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    BOOL capturedBool = NO;
+    NSInteger capturedInteger = 0;
+    NSNumber *capturedObject = nil;
+    __block BOOL capturedBlockRun = NO;
+    SBLTestingBlock capturedBlock = nil;
+
+    [mock methodWithBool:YES];
+    [mock methodWithInteger:42];
+    [mock methodWithObject:@42];
+    [mock methodWithBlock:^(int integer, NSObject *object) {
+        capturedBlockRun = YES;
+    }];
+
+	verifyTimes(atLeast(1), [mock methodWithBool:capture(&capturedBool)]);
+	verifyTimes(atLeast(1), [mock methodWithInteger:capture(&capturedInteger)]);
+	verifyTimes(atLeast(1), [mock methodWithObject:capture(&capturedObject)]);
+	verifyTimes(atLeast(1), [mock methodWithBlock:capture(&capturedBlock)]);
+
+    XCTAssertTrue(capturedBool);
+    XCTAssertEqual(capturedInteger, 42);
+    XCTAssertEqualObjects(capturedObject, @42);
     if (capturedBlock) {
         capturedBlock(1, @1);
     }

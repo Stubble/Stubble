@@ -9,7 +9,7 @@
 //#define verify2(timesMatcher, methodCall...) verifyTimes(timesMatcher, methodCall)
 #define verifyNever(args...) verifyTimes(never(), args)
 #define verifyTimes(timesMatcher, methodCall...) verifyTimesImpl(timesMatcher, SINGLE_ARG(methodCall))
-#define verifyTimesImpl(timesMatcher, methodCall) ({ [SBLTransactionManager.currentTransactionManager invokeVerifyMethodForObjectInBlock:^(){ (void)methodCall; } times:timesMatcher]; })
+#define verifyTimesImpl(timesMatcher, methodCall) ({ [SBLTransactionManager.currentTransactionManager prepareForVerify]; (void)methodCall; [SBLTransactionManager.currentTransactionManager performVerifyNumberOfTimes:timesMatcher]; })
 #define SINGLE_ARG(...) __VA_ARGS__
 
 #define times(times) ({ [SBLTimesMatcher exactly:times]; })
