@@ -205,10 +205,21 @@
 
 - (void)testNilCanBeMatched {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
-	
+
 	[when([mock methodWithObject:nil]) thenReturn:@"return"];
-	
+
 	XCTAssertEqualObjects([mock methodWithObject:nil], @"return");
+}
+
+- (void)testBlockCanBeMatched {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    
+	SBLTestingBlock block = ^(int integer, NSObject *object) {
+		NSLog(@"block");
+	};
+	[when([mock methodWithBlock:block]) thenReturn:@"return"];
+
+	XCTAssertEqualObjects([mock methodWithBlock:block], @"return");
 }
 
 - (void)testWhenProtocolIsStubbedThenCorrectValueIsReturned {

@@ -108,7 +108,7 @@
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
-                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", 2, 1]];
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", (long)2, (long)1]];
     }
 }
 
@@ -137,7 +137,7 @@
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
-                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", 2, 3]];
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", (long)2, (long)3]];
     }
 }
 
@@ -151,7 +151,7 @@
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
-                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", 0, 1]];
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", (long)0, (long)1]];
     }
 }
 
@@ -167,7 +167,7 @@
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
-                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", 0, 3]];
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningInt", (long)0, (long)3]];
     }
 }
 
@@ -206,7 +206,7 @@
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
-                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningString", 2, 1]];
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningString", (long)2, (long)1]];
     }
 }
 
@@ -272,7 +272,7 @@
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
-                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningString", 2, 1]];
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningString", (long)2, (long)1]];
     }
 }
 
@@ -288,7 +288,7 @@
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLVerifyFailed
-                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningString", 2, 3]];
+                       reason:[NSString stringWithFormat:SBLVerifyCalledWrongNumberOfTimes, @"methodReturningString", (long)2, (long)3]];
     }
 }
 

@@ -53,10 +53,7 @@
 	[when([mock methodWithStruct:anyWithPlaceholder(validStruct)]) thenReturn:@"return"];
 	[when([mock methodWithStructReference:any()]) thenReturn:@"return"];
 	[when([mock methodWithClass:any()]) thenReturn:@"return"];
-	SBLTestingBlock block = ^(int integer, NSObject *object) {
-		NSLog(@"block");
-	};
-	[when([mock methodWithBlock:block]) thenReturn:@"return"];
+	[when([mock methodWithBlock:any()]) thenReturn:@"return"];
 	
 	XCTAssertEqualObjects([mock methodWithBool:YES], @"return");
 	NSInteger integer = 42;
@@ -69,7 +66,10 @@
 	XCTAssertEqualObjects([mock methodWithStruct:testingStruct], @"return");
 	XCTAssertEqualObjects([mock methodWithStructReference:&testingStruct], @"return");
 	XCTAssertEqualObjects([mock methodWithClass:[NSArray class]], @"return");
-	XCTAssertEqualObjects([mock methodWithClass:[NSArray class]], @"return");
+	SBLTestingBlock block = ^(int integer, NSObject *object) {
+		NSLog(@"block");
+	};
+	XCTAssertEqualObjects([mock methodWithBlock:block], @"return");
 }
 
 @end
