@@ -2,7 +2,37 @@
 #import "SBLMock.h"
 #import "SBLTestingClass.h"
 
+@interface SBLMatcherTestBlockRunner : NSObject
+
+- (id)initAndPassBlockToMock:(SBLTestingClass *)mock;
+
+@property (nonatomic, readonly) SBLTestingClass *mock;
+@property (nonatomic) NSObject *objectPassedToBlock;
+
+@end
+
+@implementation SBLMatcherTestBlockRunner
+
+- (id)initAndPassBlockToMock:(SBLTestingClass *)mock {
+    if (self = [super init]) {
+        _mock = mock;
+        [self passBlockToMock];
+    }
+    return self;
+}
+
+- (void)passBlockToMock {
+    __weak SBLMatcherTestBlockRunner *weakSelf = self;
+    [self.mock methodWithBlock:^(int integer, NSObject *object) {
+        weakSelf.objectPassedToBlock = object;
+    }];
+}
+
+@end
+
 @interface SBLMatcherTest : XCTestCase
+
+@property (nonatomic) NSObject *capturedObject;
 
 @end
 
@@ -127,6 +157,21 @@
         capturedBlock(1, @1);
     }
     XCTAssertTrue(capturedBlockRun);
+}
+
+- (void)testBlockCaptureWorksWhenWeakReferenceIsUsedInBlock {
+    SBLTestingBlock capturedBlock = nil;
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    SBLMatcherTestBlockRunner *runner = [[SBLMatcherTestBlockRunner alloc] initAndPassBlockToMock:mock];
+
+	verifyTimes(atLeast(1), [mock methodWithBlock:capture(&capturedBlock)]);
+
+    if (capturedBlock) {
+        capturedBlock(1, @(42));
+    }
+
+    XCTAssertEqualObjects(runner.objectPassedToBlock, @(42));
 }
 
 @end

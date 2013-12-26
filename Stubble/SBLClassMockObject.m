@@ -55,6 +55,7 @@
 		
 		// Invoke and Record Invocation
 		[invocation invokeWithTarget:nil];
+        [invocation retainArguments];
         [self.actualInvocationsArray addObject:invocation];
 	}
 }
