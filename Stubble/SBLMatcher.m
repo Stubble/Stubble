@@ -23,6 +23,9 @@
         if (shouldUnboxArgument) {
             [(NSValue *)argument getValue:captorPointer];
         } else {
+            if ([SBLMatcher isBlock:argument]) {
+                argument = [argument copy];
+            }
             __block id __strong *captorId = (id __strong *)captorPointer;
             *captorId = argument;
         }
@@ -46,6 +49,25 @@
 	return [SBLMatcher matcherWithBlock:^BOOL(NSValue *argument, BOOL shouldUnboxArgument) {
 		return [value isEqual:argument];
 	}];
+}
+
++ (BOOL)isBlock:(id)item {
+    BOOL isBlock = NO;
+
+    // find the block class at runtime in case it changes in a different OS version
+    static Class blockClass = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        id block = ^{};
+        blockClass = [block class];
+        while ([blockClass superclass] != [NSObject class]) {
+            blockClass = [blockClass superclass];
+        }
+    });
+
+    isBlock = [item isKindOfClass:blockClass];
+
+    return isBlock;
 }
 
 - (id)init {
