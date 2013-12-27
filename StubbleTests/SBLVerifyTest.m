@@ -8,6 +8,10 @@
 
 @implementation SBLVerifyTest
 
+- (void)setUp {
+    [super setUp];
+}
+
 - (void)testWhenVerifyingForMethodThatWasCalledThatWasMadeThenNoExceptionIsThrown {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 
@@ -147,9 +151,9 @@
     [mock methodReturningString];
     [mock methodReturningInt];
 
-    XCTAssertNoThrow(verify([mock methodWithNoReturn]));
-    XCTAssertNoThrow(verify(times(2), [mock methodReturningInt]));
-    XCTAssertNoThrow(verify(times(3), [mock methodReturningString]));
+    XCTAssertNoThrow(verifyTimes(times(1), [mock methodWithNoReturn]));
+    XCTAssertNoThrow(verifyTimes(times(2), [mock methodReturningInt]));
+    XCTAssertNoThrow(verifyTimes(times(3), [mock methodReturningString]));
     XCTAssertNoThrow(verifyNever([mock methodReturningNSValue]));
 }
 
@@ -163,6 +167,24 @@
     [mock methodWithArray:@[@"4", @"5", @"6"]];
     [mock methodWithArray:@[@"4", @"5", @"6"]];
     XCTAssertNoThrow(verifyTimes(times(2), [mock methodWithArray:@[@"4", @"5", @"6"]]));
+}
+
+- (void)testMultipleVerifiesDoesNotCauseCrash {
+    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+
+    [mock methodWithObject:@(22)];
+
+    @autoreleasepool {
+        verifyTimes(times(1), [mock methodWithObject:any()]);
+    }
+
+    @autoreleasepool {
+        verifyTimes(times(1), [mock methodWithObject:any()]);
+    }
+
+    @autoreleasepool {
+        verifyTimes(times(1), [mock methodWithObject:any()]);
+    }
 }
 
 @end

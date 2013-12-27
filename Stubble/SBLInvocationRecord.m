@@ -57,7 +57,7 @@
 	for (NSInteger i = 2; i < self.invocation.methodSignature.numberOfArguments; i++) {
 		const char *argumentType = [self.invocation.methodSignature getArgumentTypeAtIndex:i];
 		if ([self isObjectType:argumentType]) {
-			id argument = nil;
+			__unsafe_unretained id argument = nil;
 			[self.invocation getArgument:&argument atIndex:i];
 			if ([argument isKindOfClass:[SBLMatcher class]]) {
 				[objectMatchers addObject:argument];
