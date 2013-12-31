@@ -1,10 +1,7 @@
-#import "SBLClassMockObject.h"
 #import "SBLStubbedInvocation.h"
 #import "SBLMatcher.h"
-
-@class SBLTimesMatcher;
-
-typedef void(^InvokeMethodBlock)();
+#import "SBLMockObject.h"
+#import "SBLTimesMatcher.h"
 
 typedef enum {
     SBLTransactionManagerStateAtRest,

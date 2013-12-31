@@ -2,6 +2,9 @@
 #import "SBLInvocationRecord.h"
 #import "SBLTimesMatcher.h"
 
+#define SBLVerifyFailed @"SBLVerifyFailed"
+#define SBLVerifyCalledWrongNumberOfTimes @"Expected %@ to be called %ld times, but was called %ld times"
+
 @protocol SBLMockObject <NSObject>
 
 @property (nonatomic, readonly) SBLStubbedInvocation *currentStubbedInvocation;

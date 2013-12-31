@@ -25,6 +25,7 @@
 		5AA4A97918689FFB0033BAE0 /* SBLMockObjectBehavior.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D80408B186402DB001DE9FE /* SBLMockObjectBehavior.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AA4A97A18689FFB0033BAE0 /* SBLClassMockObjectBehavior.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D80408C186403BE001DE9FE /* SBLClassMockObjectBehavior.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AA4A97B18689FFB0033BAE0 /* SBLProtocolMockObjectBehavior.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D80408F186404F6001DE9FE /* SBLProtocolMockObjectBehavior.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6313C22C11DA068196886771 /* SBLMockCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 6313CEDAAD534F7C448E45DD /* SBLMockCore.h */; };
 		6313C94FD69B105F1F84731C /* SBLClassMockObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C67A4149A7B02CC9E46F /* SBLClassMockObject.m */; };
 		6313CC5D4F8F3FE7947F79FB /* SBLTransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C7BCAFA194BF50DC6C50 /* SBLTransactionManager.m */; };
 		6313CCCA0E902D6D0B58DAE9 /* SBLStubbedInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C082B67BDB77399B202D /* SBLStubbedInvocation.m */; };
@@ -85,6 +86,7 @@
 		6313C7BCAFA194BF50DC6C50 /* SBLTransactionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLTransactionManager.m; sourceTree = "<group>"; };
 		6313CD2DFCBE3162EB6EE10B /* SBLStubbedInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLStubbedInvocation.h; sourceTree = "<group>"; };
 		6313CDEF8A8E8B3BACE5F92B /* SBLTransactionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLTransactionManager.h; sourceTree = "<group>"; };
+		6313CEDAAD534F7C448E45DD /* SBLMockCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLMockCore.h; sourceTree = "<group>"; };
 		74678C401857D5AD00BD75E3 /* SBLVerifyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLVerifyTest.m; sourceTree = "<group>"; };
 		74678C421857D5E900BD75E3 /* SBLTestingClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLTestingClass.h; sourceTree = "<group>"; };
 		74678C431857D5E900BD75E3 /* SBLTestingClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLTestingClass.m; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				4D80408D186403BE001DE9FE /* SBLClassMockObjectBehavior.m */,
 				4D80408F186404F6001DE9FE /* SBLProtocolMockObjectBehavior.h */,
 				4D804090186404F6001DE9FE /* SBLProtocolMockObjectBehavior.m */,
+				6313CEDAAD534F7C448E45DD /* SBLMockCore.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 				5AA4A97918689FFB0033BAE0 /* SBLMockObjectBehavior.h in Headers */,
 				5AA4A97A18689FFB0033BAE0 /* SBLClassMockObjectBehavior.h in Headers */,
 				5AA4A97B18689FFB0033BAE0 /* SBLProtocolMockObjectBehavior.h in Headers */,
+				6313C22C11DA068196886771 /* SBLMockCore.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

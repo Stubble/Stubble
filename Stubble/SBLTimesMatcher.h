@@ -1,6 +1,3 @@
-#import <Foundation/Foundation.h>
-
-
 @interface SBLTimesMatcher : NSObject
 
 @property (nonatomic, readonly) NSInteger atLeast;
