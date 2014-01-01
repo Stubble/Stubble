@@ -1,13 +1,10 @@
-//
-//  SBLVerificationResult.h
-//  Stubble
-//
-//  Created by JARinteractive on 1/1/14.
-//  Copyright (c) 2014 Stubble. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 
 @interface SBLVerificationResult : NSObject
+
+@property (nonatomic, readonly) BOOL successful;
+@property (nonatomic, readonly) NSString *failureDescription;
+
+- (instancetype)initWithSuccess:(BOOL)success failureDescription:(NSString *)failureDescription;
 
 @end

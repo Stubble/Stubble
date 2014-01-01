@@ -1,11 +1,11 @@
-#import "SBLClassMockObject.h"
+#import "SBLStandardMockObject.h"
 #import "SBLTransactionManager.h"
 #import "SBLErrors.h"
 #import "SBLTimesMatcher.h"
 #import "SBLProtocolMockObjectBehavior.h"
 #import "SBLClassMockObjectBehavior.h"
 
-@interface SBLClassMockObject ()
+@interface SBLStandardMockObject ()
 
 @property (nonatomic, readonly) id<SBLMockObjectBehavior> behavior;
 @property (nonatomic, readonly) NSMutableArray *stubbedInvocations;
@@ -14,7 +14,7 @@
 
 @end
 
-@implementation SBLClassMockObject
+@implementation SBLStandardMockObject
 
 - (id)initWithClass:(Class)class {
 	return [self initWithBehavior:[[SBLClassMockObjectBehavior alloc] initWithClass:class]];
@@ -84,7 +84,7 @@
 	return [self.stubbedInvocations lastObject];
 }
 
-- (void)verifyInvocationOccurredNumberOfTimes:(SBLTimesMatcher *)timesMatcher {
+- (SBLVerificationResult *)verifyInvocationOccurredNumberOfTimes:(SBLTimesMatcher *)timesMatcher {
     [self validateTimesMatcherUsage:timesMatcher];
 
     NSInteger atLeastTimes = timesMatcher.atLeast;
@@ -98,20 +98,19 @@
             methodWithMatchingSignatureCalled = YES;
         }
     }
-
-    // TODO: Custom messages for exact vs. atLeast matches? Checking against matcher 'type'? Getting clunky.
-    if (invocationCount == 0 && atLeastTimes > 0){
-        // TODO get the line numbers in the exception
-        // TODO tell them what the expected parameters are
-        if (methodWithMatchingSignatureCalled) {
-            [NSException raise:SBLVerifyFailed format:@"Expected %@, but method was called with differing parameters", NSStringFromSelector(self.verifyInvocation.selector)];
-        }
-        [NSException raise:SBLVerifyFailed format:@"Expected %@, but method was not called", NSStringFromSelector(self.verifyInvocation.selector)];
-    } else if (invocationCount < atLeastTimes) {
-        [NSException raise:SBLVerifyFailed format:SBLVerifyCalledWrongNumberOfTimes, NSStringFromSelector(self.verifyInvocation.selector), (long)atLeastTimes, (long)invocationCount];
-    } else if (invocationCount > atMostTimes) {
-        [NSException raise:SBLVerifyFailed format:SBLVerifyCalledWrongNumberOfTimes, NSStringFromSelector(self.verifyInvocation.selector), (long)atMostTimes, (long)invocationCount];
-    }
+	
+	BOOL success = YES;
+	NSString *failureMessage = nil;
+	// TODO better messaging
+	if (invocationCount < atLeastTimes) {
+		success = NO;
+		failureMessage = [NSString stringWithFormat:@"Method '%@' was not called at least %d times", NSStringFromSelector(self.verifyInvocation.selector), atLeastTimes];
+	} else if (invocationCount > atMostTimes) {
+		success = NO;
+		failureMessage = [NSString stringWithFormat:@"Method '%@' was called more than %d times", NSStringFromSelector(self.verifyInvocation.selector), atMostTimes];
+	}
+	
+	return [[SBLVerificationResult alloc] initWithSuccess:success failureDescription:failureMessage];
 }
 
 - (void)validateTimesMatcherUsage:(SBLTimesMatcher *)timesMatcher {

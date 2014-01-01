@@ -71,14 +71,16 @@
 	[self.currentMock.verifyInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }
 
-- (void)performVerifyNumberOfTimes:(SBLTimesMatcher *)timesMatcher {
+- (SBLVerificationResult *)performVerifyNumberOfTimes:(SBLTimesMatcher *)timesMatcher {
     [self verifyState:SBLTransactionManagerStateVerifyInProgress];
     [self verifyMockCalled:SBLBadVerifyErrorMessage];
-    @try {
-        [self.currentMock verifyInvocationOccurredNumberOfTimes:timesMatcher];
-    } @finally {
-        [self clear];
-    }
+    SBLVerificationResult *result = nil;
+	@try {
+	result = [self.currentMock verifyInvocationOccurredNumberOfTimes:timesMatcher];
+	} @finally {
+		[self clear];
+	}
+	return result;
 }
 
 - (void)verifyMockCalled:(NSString *)errorMessage {

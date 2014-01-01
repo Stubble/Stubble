@@ -1,6 +1,6 @@
 #import "SBLMockObject.h"
 
-@interface SBLClassMockObject : NSProxy <SBLMockObject>
+@interface SBLStandardMockObject : NSProxy <SBLMockObject>
 
 - (id)initWithClass:(Class)class;
 - (id)initWithProtocol:(Protocol *)protocol;

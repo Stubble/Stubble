@@ -1,14 +1,14 @@
 #import "SBLMock.h"
-#import "SBLClassMockObject.h"
+#import "SBLStandardMockObject.h"
 
 @implementation SBLMock
 
 + (id)mockForClass:(Class)class {
-    return [[SBLClassMockObject alloc] initWithClass:class];
+    return [[SBLStandardMockObject alloc] initWithClass:class];
 }
 
 + (id)mockForProtocol:(Protocol *)protocol {
-    return [[SBLClassMockObject alloc] initWithProtocol:protocol];
+    return [[SBLStandardMockObject alloc] initWithProtocol:protocol];
 }
 
 @end
