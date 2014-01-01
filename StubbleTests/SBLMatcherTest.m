@@ -118,7 +118,7 @@
     [mock methodWithBool:YES];
     XCTAssertTrue(capturedBool);
     [mock methodWithInteger:42];
-    XCTAssertEqual(capturedInteger, 42);
+    XCTAssertEqual(capturedInteger, (NSInteger)42);
     [mock methodWithObject:@42];
     XCTAssertEqualObjects(capturedObject, @42);
     [mock methodWithBlock:^(int integer, NSObject *object) {
@@ -151,7 +151,7 @@
 	verifyTimes(atLeast(1), [mock methodWithBlock:capture(&capturedBlock)]);
 
     XCTAssertTrue(capturedBool);
-    XCTAssertEqual(capturedInteger, 42);
+    XCTAssertEqual(capturedInteger, (NSInteger)42);
     XCTAssertEqualObjects(capturedObject, @42);
     if (capturedBlock) {
         capturedBlock(1, @1);
