@@ -9,8 +9,6 @@
 
 @implementation SBLExceptionTest
 
-#pragma mark - When Tests
-
 - (void)testWhenWhenIsNotCalledOnAMockMethodThenAnExceptionIsThrown {
     NSString *string = @"string";
 
@@ -111,6 +109,14 @@
     }
 }
 
+- (void)testWhenMatcherIsRegisteredOusideOfWhenOrVerifyThenExceptionIsThrown {
+    @try {
+		(void)any();
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLBadUsage reason:SBLBadMatcherRegistration];
+    }
+}
 
 #pragma mark - Utility methods
 

@@ -57,6 +57,9 @@
 }
 
 - (void)addMatcher:(SBLMatcher *)matcher {
+	if (self.state == SBLTransactionManagerStateAtRest) {
+		[self throwUsage:SBLBadMatcherRegistration];
+	}
 	[self.matchers addObject:matcher];
 }
 

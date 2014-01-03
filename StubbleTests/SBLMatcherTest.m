@@ -38,7 +38,6 @@
 
 @implementation SBLMatcherTest
 
-// also broken due to literals
 - (void)testWhenMethodStubbedWithAnyMatcherThenCorrectValueIsReturned {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	
@@ -54,7 +53,6 @@
 	XCTAssertEqualObjects([mock methodWithInteger:0], @"two");
 }
 
-// also broken due to literals
 - (void)testWhenMultipleArgumentMethodHasMatcherForOneArgumentThenOtherArgumentIsUsedForMatching {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
 	

@@ -5,4 +5,5 @@
 #define SBLBadAtLeastTimesProvided @"Number of atLeast times must be 1 or more"
 #define SBLBadAtMostTimesProvided @"Number of atMost times must be 1 or more"
 #define SBLBadMatchersProvided @"If one non-object parameter is given a matcher, all non-object parameters must be given matchers"
+#define SBLBadMatcherRegistration @"Matchers should not be used outside of when or verify calls"
 #define SBLAtLeastCannotBeGreaterThanAtMost @"Number of atLeast times must be less than or equal to atMost times"
