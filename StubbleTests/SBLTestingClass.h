@@ -35,6 +35,7 @@ typedef void(^SBLTestingBlock)(int integer, NSObject *object);
 - (void)methodWithNoReturn;
 - (NSString *)methodWithBool:(BOOL)argument;
 - (NSString *)methodWithInteger:(NSInteger)integer;
+- (NSString *)methodWithTimeInterval:(NSTimeInterval)timeInterval;
 - (NSString *)methodWithSelector:(SEL)selector;
 - (NSString *)methodWithClass:(Class)clazz;
 - (NSString *)methodWithCGRect:(CGRect)rect;

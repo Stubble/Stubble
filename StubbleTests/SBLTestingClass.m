@@ -42,6 +42,10 @@
 	return @"123";
 }
 
+- (NSString *)methodWithTimeInterval:(NSTimeInterval)timeInterval {
+	return @"123";
+}
+
 - (NSString *)methodWithObject:(NSNumber *)number {
 	return @"123";
 }

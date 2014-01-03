@@ -70,8 +70,11 @@
 
 - (void)testMatcherWorksForManyArgumentTypes {
     SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
-	
+
 	[when([mock methodWithBool:any()]) thenReturn:@"return"];
+	[when([mock methodWithInteger:any()]) thenReturn:@"return"];
+    // TODO make any() work for double/NSTimeInterval?
+	[when([mock methodWithTimeInterval:anyWithPlaceholder(25.0)]) thenReturn:@"return"];
 	[when([mock methodWithPrimitiveReference:any()]) thenReturn:@"return"];
 	// TODO make object references (ie: (NSString * __autoreleasing *)) work somehow too...
 	//[when([mock methodWithReference:any()]) thenReturn:@"return"];
