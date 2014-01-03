@@ -104,10 +104,10 @@
 	// TODO better messaging
 	if (invocationCount < atLeastTimes) {
 		success = NO;
-		failureMessage = [NSString stringWithFormat:@"Method '%@' was not called at least %d times", NSStringFromSelector(self.verifyInvocation.selector), atLeastTimes];
+		failureMessage = [NSString stringWithFormat:@"Method '%@' was not called at least %ld times", NSStringFromSelector(self.verifyInvocation.selector), (long)atLeastTimes];
 	} else if (invocationCount > atMostTimes) {
 		success = NO;
-		failureMessage = [NSString stringWithFormat:@"Method '%@' was called more than %d times", NSStringFromSelector(self.verifyInvocation.selector), atMostTimes];
+		failureMessage = [NSString stringWithFormat:@"Method '%@' was called more than %ld times", NSStringFromSelector(self.verifyInvocation.selector), (long)atMostTimes];
 	}
 	
 	return [[SBLVerificationResult alloc] initWithSuccess:success failureDescription:failureMessage];
