@@ -1,5 +1,10 @@
 #import "SBLMockCore.h"
 
+// AssertMacros.h defines a legacy macro for verify
+#ifdef verify
+#undef verify
+#endif
+
 #define when(methodCall...) SBLWhen(methodCall)
 #define verify(methodCall...) SBLVerify(methodCall)
 #define verifyNever(args...) SBLVerifyNever(args)
