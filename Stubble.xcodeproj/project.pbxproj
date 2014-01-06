@@ -32,7 +32,7 @@
 		4DF0042F185AB833003171E5 /* SBLStubbleCoreThreadingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0042E185AB833003171E5 /* SBLStubbleCoreThreadingTest.m */; };
 		4DF00432185ACB53003171E5 /* SBLInvocationRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF00431185ACB53003171E5 /* SBLInvocationRecord.m */; };
 		4DF00435185AD2AC003171E5 /* SBLMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF00434185AD2AC003171E5 /* SBLMatcher.m */; };
-		5A5472EC1877290A004A4A04 /* SBLStandardMockObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A5472EA1877290A004A4A04 /* SBLStandardMockObject.h */; };
+		5A5472EC1877290A004A4A04 /* SBLStandardMockObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A5472EA1877290A004A4A04 /* SBLStandardMockObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5A5472ED1877290A004A4A04 /* SBLStandardMockObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5472EB1877290A004A4A04 /* SBLStandardMockObject.m */; };
 		5AA4A97118689FFB0033BAE0 /* SBLMock.h in Headers */ = {isa = PBXBuildFile; fileRef = 74F93DC61852601C00214852 /* SBLMock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AA4A97218689FFB0033BAE0 /* SBLMockObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 6313C3E7D5550AC45252B400 /* SBLMockObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -283,7 +283,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A5472EC1877290A004A4A04 /* SBLStandardMockObject.h in Headers */,
 				75EAF7541873808E00C1FB5F /* Stubble.h in Headers */,
 				5AA4A97118689FFB0033BAE0 /* SBLMock.h in Headers */,
 				5AA4A97218689FFB0033BAE0 /* SBLMockObject.h in Headers */,
@@ -298,6 +297,7 @@
 				4DD1ACB6187462B300A5FEC4 /* SBLVerificationHandler.h in Headers */,
 				4DD1ACBA1874691300A5FEC4 /* SBLVerificationResult.h in Headers */,
 				6313C22C11DA068196886771 /* SBLMockCore.h in Headers */,
+				5A5472EC1877290A004A4A04 /* SBLStandardMockObject.h in Headers */,
 				5AA4A97B18689FFB0033BAE0 /* SBLProtocolMockObjectBehavior.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -490,6 +490,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -521,6 +522,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
