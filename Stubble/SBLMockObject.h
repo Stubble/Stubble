@@ -1,12 +1,14 @@
 #import "SBLStubbedInvocation.h"
-#import "SBLInvocationRecord.h"
 #import "SBLTimesMatcher.h"
 #import "SBLVerificationResult.h"
 
 #define SBLVerifyFailed @"SBLVerifyFailed"
 #define SBLVerifyCalledWrongNumberOfTimes @"Expected %@ to be called %ld times, but was called %ld times"
 
-@protocol SBLMockObject <NSObject>
+@interface SBLMockObject : NSProxy
+
++ (instancetype)mockForClass:(Class)class;
++ (instancetype)mockForProtocol:(Protocol *)protocol;
 
 @property (nonatomic, readonly) SBLStubbedInvocation *currentStubbedInvocation;
 @property (nonatomic, readonly) NSArray *actualInvocations;

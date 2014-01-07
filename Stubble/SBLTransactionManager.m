@@ -5,7 +5,7 @@
 @interface SBLTransactionManager ()
 
 @property (nonatomic, readwrite) SBLTransactionManagerState state;
-@property (nonatomic) id<SBLMockObject> currentMock;
+@property (nonatomic) SBLMockObject * currentMock;
 @property (nonatomic, readonly) NSMutableArray *matchers;
 
 @end
@@ -35,7 +35,7 @@
     self.state = SBLTransactionManagerStateStubInProgress;
 }
 
-- (void)whenMethodInvokedForMock:(id<SBLMockObject>)mock {
+- (void)whenMethodInvokedForMock:(SBLMockObject *)mock {
     [self verifyState:SBLTransactionManagerStateStubInProgress];
     self.currentMock = mock;
 	[self.currentMock.currentStubbedInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
@@ -69,7 +69,7 @@
     self.state = SBLTransactionManagerStateVerifyInProgress;
 }
 
-- (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock {
+- (void)verifyMethodInvokedForMock:(SBLMockObject *)mock {
 	self.currentMock = mock;
 	[self.currentMock.verifyInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }

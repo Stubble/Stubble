@@ -1,5 +1,5 @@
 #import <XCTest/XCTest.h>
-#import "SBLMock.h"
+#import "Stubble.h"
 #import "SBLTestingClass.h"
 #import "SBLErrors.h"
 
@@ -32,7 +32,7 @@
 }
 
 - (void)testWhenVerifyTimesIsCalledWithNegativeNumberThenAnExceptionIsThrown {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodReturningInt];
 
@@ -45,7 +45,7 @@
 }
 
 - (void)testWhenVerifyAtLeastTimesIsCalledWithZeroThenAnExceptionIsThrown {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodReturningInt];
 
@@ -58,7 +58,7 @@
 }
 
 - (void)testWhenVerifyBetweenIsCalledWithABadMinTimesThenAnExceptionIsThrown {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodReturningString];
 
@@ -71,7 +71,7 @@
 }
 
 - (void)testWhenVerifyBetweenIsCalledWithBadAtMostTimesThenAnExceptionIsThrown {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodReturningString];
 
@@ -84,7 +84,7 @@
 }
 
 - (void)testWhenVerifyBetweenIsCalledWithBadAtMostGreaterThanAtMostTimesThenAnExceptionIsThrown {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodReturningString];
 
@@ -97,7 +97,7 @@
 }
 
 - (void)testWhenVerifyBetweenIsCalledWithAtMostTimeLessThanAtLeastTimeThenAnExceptionIsThrown {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodReturningString];
 

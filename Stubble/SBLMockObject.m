@@ -1,11 +1,11 @@
-#import "SBLStandardMockObject.h"
+#import "SBLMockObject.h"
 #import "SBLTransactionManager.h"
 #import "SBLErrors.h"
 #import "SBLTimesMatcher.h"
 #import "SBLProtocolMockObjectBehavior.h"
 #import "SBLClassMockObjectBehavior.h"
 
-@interface SBLStandardMockObject ()
+@interface SBLMockObject ()
 
 @property (nonatomic, readonly) id<SBLMockObjectBehavior> behavior;
 @property (nonatomic, readonly) NSMutableArray *stubbedInvocations;
@@ -14,14 +14,14 @@
 
 @end
 
-@implementation SBLStandardMockObject
+@implementation SBLMockObject
 
-- (id)initWithClass:(Class)class {
-	return [self initWithBehavior:[[SBLClassMockObjectBehavior alloc] initWithClass:class]];
++ (id)mockForClass:(Class)class {
+    return [[SBLMockObject alloc] initWithBehavior:[[SBLClassMockObjectBehavior alloc] initWithClass:class]];
 }
 
-- (id)initWithProtocol:(Protocol *)protocol {
-	return [self initWithBehavior:[[SBLProtocolMockObjectBehavior alloc] initWithProtocol:protocol]];
++ (id)mockForProtocol:(Protocol *)protocol {
+    return [[SBLMockObject alloc] initWithBehavior:[[SBLProtocolMockObjectBehavior alloc] initWithProtocol:protocol]];
 }
 
 - (instancetype)initWithBehavior:(id<SBLMockObjectBehavior>)behavior {

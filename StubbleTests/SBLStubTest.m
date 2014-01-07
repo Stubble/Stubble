@@ -1,5 +1,5 @@
 #import <XCTest/XCTest.h>
-#import "SBLMock.h"
+#import "Stubble.h"
 #import "SBLTestingClass.h"
 #import "SBLTestingProtocol.h"
 
@@ -10,7 +10,7 @@
 @implementation SBLStubTest
 
 - (void)testWhenPrimitiveMethodWithNoParametersIsStubbedThenCorrectValueIsReturned {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [when(mock.methodReturningInt) thenReturn:@5];
 
@@ -18,7 +18,7 @@
 }
 
 - (void)testWhenObjectMethodWithNoParametersIsStubbedThenCorrectValueIsReturned {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [when(mock.methodReturningString) thenReturn:@"alpha"];
 	
@@ -26,7 +26,7 @@
 }
 
 - (void)testWhenObjectMethodReturnsNSValueWithObjectThenCorrectValueIsReturned {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	NSObject *expectedObject = [[NSObject alloc] init];
 	
     [when(mock.methodReturningNSValue) thenReturn:[NSValue valueWithNonretainedObject:expectedObject]];
@@ -35,7 +35,7 @@
 }
 
 - (void)testWhenCommaIsPassedToMacroCorrectValueIsReturned {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	NSArray *expectedArray = @[@"item3"];
 	
 	NSArray *array = @[@"item1", @"item2"];
@@ -45,7 +45,7 @@
 }
 
 - (void)testWhenVariableArgumentMethodIsStubbedThenCorrectValueIsReturned {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [when([mock methodWithVariableNumberOfArguments:@"1", @"2", @"3", @"4", nil]) thenReturn:@"alpha"];
 	// TODO - attempt to find a way to match a va_list
@@ -56,7 +56,7 @@
 }
 
 - (void)testWhenMethodIsNotStubbedItReturnsNil {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [when([mock methodReturningString]) thenReturn:@"alpha"];
 	
@@ -64,7 +64,7 @@
 }
 
 - (void)testWhenMethodsAreStubbedThenBothReturnCorrectValue {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [when([mock methodReturningString]) thenReturn:@"alpha"];
     [when([mock methodReturningNSValue]) thenReturn:@42];
@@ -74,7 +74,7 @@
 }
 
 - (void)testWhenMethodIsStubbedItReturnsCorrectValueMultipleTimes {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [when([mock methodReturningString]) thenReturn:@"alpha"];
 	
@@ -83,7 +83,7 @@
 }
 
 - (void)testWhenMethodIsStubbedAgainItReturnsNewValue {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [when([mock methodReturningString]) thenReturn:@"alpha"];
     XCTAssertEqualObjects([mock methodReturningString], @"alpha");
@@ -93,7 +93,7 @@
 }
 
 - (void)testWhenMethodStubbedWithDifferentValuesReturnsCorrectValueForBoth {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [when([mock methodWithArray:@[@"1"]]) thenReturn:@"alpha"];
     [when([mock methodWithArray:@[@"2"]]) thenReturn:@"beta"];
@@ -103,7 +103,7 @@
 }
 
 - (void)testWhenMethodStubbedWithDifferentValuesInOtherArgumentReturnsCorrectValueForBoth {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [when([mock methodWithManyArguments:@"1" primitive:2 number:@3]) thenReturn:@"alpha"];
     [when([mock methodWithManyArguments:@"1" primitive:2 number:@4]) thenReturn:@"beta"];
@@ -113,7 +113,7 @@
 }
 
 - (void)testWhenMethodStubbedWithDifferentNSIntegersThenCorrectValueIsReturned {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [when([mock methodWithManyArguments:@"1" primitive:5 number:@3]) thenReturn:@"alpha"];
     [when([mock methodWithManyArguments:@"1" primitive:8 number:@3]) thenReturn:@"beta"];
@@ -123,7 +123,7 @@
 }
 
 - (void)testWhenMethodStubbedWithActionThenActionOccurs {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
 	__block NSString *string = nil;
 	[when([mock methodWithNoReturn]) thenDo:^{ string = @"action"; }];
@@ -134,7 +134,7 @@
 }
 
 - (void)testWhenMethodStubbedWithActionsThenActionsOccurInOrder {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
 	__block NSMutableString *string = [NSMutableString string];
 	[[when([mock methodWithNoReturn]) thenDo:^{ [string appendString:@"action1-"]; }] thenDo:^{  [string appendString:@"action2"]; }];
@@ -145,7 +145,7 @@
 }
 
 - (void)testWhenMethodStubbedWithInvocationActionThenInvocationIsPassedToActionBlockBeforeInvoke {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
 	__block NSInteger counter = 0;
 	__block NSNumber *capturedNumber = nil;
@@ -165,7 +165,7 @@
 }
 
 - (void)testAllActionsRunInOrderAdded {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
 	NSMutableArray *actionOrder = [NSMutableArray array];
 	SBLInvocationActionBlock invocationAction = ^(NSInvocation *invocation) {
@@ -204,7 +204,7 @@
 }
 
 - (void)testNilCanBeMatched {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 
 	[when([mock methodWithObject:nil]) thenReturn:@"return"];
 
@@ -212,7 +212,7 @@
 }
 
 - (void)testBlockCanBeMatched {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
     
 	SBLTestingBlock block = ^(int integer, NSObject *object) {
 		NSLog(@"block");
@@ -223,7 +223,7 @@
 }
 
 - (void)testWhenProtocolIsStubbedThenCorrectValueIsReturned {
-    id<SBLTestingProtocol> mock = [SBLMock mockForProtocol:@protocol(SBLTestingProtocol)];
+    id<SBLTestingProtocol> mock = mock(@protocol(SBLTestingProtocol));
 	
 	[when([mock protocolMethodWithInteger:42]) thenReturn:@"2"];
 	[when([mock protocolMethodWithInteger:3]) thenReturn:@"1"];
@@ -240,11 +240,11 @@
 
 - (void)testEncode {
 	const char *encodingClass = @encode(__typeof__([NSObject class]));
-	const char *encodingProtocol = @encode(__typeof__(@protocol(SBLMockObject)));
+	const char *encodingProtocol = @encode(__typeof__(@protocol(NSObject)));
 	
 	NSLog(@"class: %s", encodingClass);
 	NSLog(@"protocol: %s", encodingProtocol);
-	NSLog(@"protocol class: %@", NSStringFromClass([(id)@protocol(SBLMockObject) class]));
+	NSLog(@"protocol class: %@", NSStringFromClass([(id)@protocol(NSObject) class]));
 }
 
 @end

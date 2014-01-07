@@ -18,9 +18,9 @@
 #define SBLBetween(atLeast, atMost) ({ [SBLTimesMatcher between:atLeast andAtMost:atMost]; })
 
 #define SBLAny() _Pragma("clang diagnostic push") \
-	_Pragma("clang diagnostic ignored \"-Wconversion\"") \
-	 ({ SBLMatcher *matcher = [SBLMatcher any]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; [matcher placeholder]; }) \
-	_Pragma("clang diagnostic pop")
+    _Pragma("clang diagnostic ignored \"-Wconversion\"") \
+    ({ SBLMatcher *matcher = [SBLMatcher any]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; [matcher placeholder]; }) \
+    _Pragma("clang diagnostic pop")
 
 #define SBLAnyWithPlaceholder(placeholder...) ({ [SBLTransactionManager.currentTransactionManager addMatcher:[SBLMatcher any]]; placeholder; })
 #define SBLAnyCGRect() SBLAnyWithPlaceholder(CGRectZero)
@@ -29,3 +29,9 @@
     _Pragma("clang diagnostic ignored \"-Wconversion\"") \
     ({ SBLMatcher *matcher = [SBLMatcher captor:captorReference]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; [matcher placeholder]; }) \
     _Pragma("clang diagnostic pop")
+
+#define SBLMock(classOrProtocol) ({ const char *typeEncoding = @encode(typeof(classOrProtocol)); \
+    SBLMockObject *mock = nil; \
+    if (strcmp(typeEncoding, "#") == 0) { mock = [SBLMockObject mockForClass:(id)classOrProtocol]; } \
+    else if (strcmp(typeEncoding, "@") == 0) { mock = [SBLMockObject mockForProtocol:(id)classOrProtocol]; } \
+    (id)mock; })

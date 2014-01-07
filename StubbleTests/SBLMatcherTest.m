@@ -1,5 +1,5 @@
 #import <XCTest/XCTest.h>
-#import "SBLMock.h"
+#import "Stubble.h"
 #import "SBLTestingClass.h"
 
 @interface SBLMatcherTestBlockRunner : NSObject
@@ -39,7 +39,7 @@
 @implementation SBLMatcherTest
 
 - (void)testWhenMethodStubbedWithAnyMatcherThenCorrectValueIsReturned {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
 	[when([mock methodWithObject:any()]) thenReturn:@"one"];
 	[when([mock methodWithInteger:any()]) thenReturn:@"two"];
@@ -54,7 +54,7 @@
 }
 
 - (void)testWhenMultipleArgumentMethodHasMatcherForOneArgumentThenOtherArgumentIsUsedForMatching {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
 	[when([mock methodWithArgument1:@"arg1" argument2:any()]) thenReturn:@"one"];
 	[when([mock methodWithArgument1:@"arg2" argument2:any()]) thenReturn:@"two"];
@@ -69,7 +69,7 @@
 }
 
 - (void)testMatcherWorksForManyArgumentTypes {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 
 	[when([mock methodWithBool:any()]) thenReturn:@"return"];
 	[when([mock methodWithInteger:any()]) thenReturn:@"return"];
@@ -104,7 +104,7 @@
 }
 
 - (void)testCaptureCapturesArgumentInWhen {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
     BOOL capturedBool = NO;
     NSInteger capturedInteger = 0;
     NSNumber *capturedObject = nil;
@@ -132,7 +132,7 @@
 }
 
 - (void)testCaptureCapturesArgumentInVerify {
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
     BOOL capturedBool = NO;
     NSInteger capturedInteger = 0;
     NSNumber *capturedObject = nil;
@@ -162,7 +162,7 @@
 
 - (void)testBlockCaptureWorksWhenWeakReferenceIsUsedInBlock {
     SBLTestingBlock capturedBlock = nil;
-    SBLTestingClass *mock = [SBLMock mockForClass:SBLTestingClass.class];
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     SBLMatcherTestBlockRunner *runner = [[SBLMatcherTestBlockRunner alloc] initAndPassBlockToMock:mock];
 

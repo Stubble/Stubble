@@ -1,8 +1,5 @@
-#import "SBLStubbedInvocation.h"
 #import "SBLMatcher.h"
 #import "SBLMockObject.h"
-#import "SBLTimesMatcher.h"
-#import "SBLVerificationResult.h"
 
 typedef enum {
     SBLTransactionManagerStateAtRest,
@@ -19,11 +16,11 @@ typedef enum {
 - (void)clear;
 
 - (void)prepareForWhen;
-- (void)whenMethodInvokedForMock:(id<SBLMockObject>)mock;
+- (void)whenMethodInvokedForMock:(SBLMockObject *)mock;
 - (SBLStubbedInvocation *)performWhen;
 
 - (void)prepareForVerify;
-- (void)verifyMethodInvokedForMock:(id<SBLMockObject>)mock;
+- (void)verifyMethodInvokedForMock:(SBLMockObject *)mock;
 //- (void)performVerify;
 - (SBLVerificationResult *)performVerifyNumberOfTimes:(SBLTimesMatcher *)timesMatcher;
 

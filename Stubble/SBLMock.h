@@ -20,9 +20,4 @@
 #define anyCGRect() SBLAnyCGRect()
 #define capture(captorReference) SBLCapture(captorReference)
 
-@interface SBLMock : NSObject
-
-+ (id)mockForClass:(Class)class;
-+ (id)mockForProtocol:(Protocol *)protocol;
-
-@end
+#define mock(classOrProtocol) SBLMock(classOrProtocol)
