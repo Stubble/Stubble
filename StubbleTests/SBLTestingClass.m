@@ -26,8 +26,52 @@
     return 123;
 }
 
+- (char)methodReturningChar {
+    return '0';
+}
+
+- (unsigned char)methodReturningUnsignedChar {
+    return '0';
+}
+
+- (short)methodReturningShort {
+    return 123;
+}
+
+- (unsigned short)methodReturningUnsignedShort {
+    return 123u;
+}
+
+- (unsigned int)methodReturningUnsignedInt {
+    return 123u;
+}
+
+- (long)methodReturningLong {
+    return 123L;
+}
+
+- (unsigned long)methodReturningUnsignedLong {
+    return 123ul;
+}
+
+- (long long)methodReturningLongLong {
+    return 123;
+}
+
+- (unsigned long long)methodReturningUnsignedLongLong {
+    return 123ul;
+}
+
+- (float)methodReturningFloat {
+    return 123.0f;
+}
+
 - (double)methodReturningDouble {
     return 123.0;
+}
+
+- (BOOL)methodReturningBool {
+    return NO;
 }
 
 - (NSValue *)methodReturningNSValue {

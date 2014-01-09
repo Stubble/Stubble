@@ -255,4 +255,50 @@
     XCTAssertEqualWithAccuracy(mock.methodReturningDouble, 123.0, 0.0000000001);
 }
 
+- (void)testWhenNSNumbersNotExactlyMatchingTypeAreReturnedFromStubMethodsThatReturnPrimitivesThenCorrectPrimitivesAreReturned {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    [when(mock.methodReturningInt) thenReturn:@123];
+    [when(mock.methodReturningChar) thenReturn:@123];
+    [when(mock.methodReturningUnsignedChar) thenReturn:@123];
+    [when(mock.methodReturningShort) thenReturn:@123];
+    [when(mock.methodReturningUnsignedShort) thenReturn:@123];
+    [when(mock.methodReturningUnsignedInt) thenReturn:@123];
+    [when(mock.methodReturningLong) thenReturn:@123];
+    [when(mock.methodReturningUnsignedLong) thenReturn:@123];
+    [when(mock.methodReturningLongLong) thenReturn:@123];
+    [when(mock.methodReturningUnsignedLongLong) thenReturn:@123];
+    [when(mock.methodReturningFloat) thenReturn:@123];
+    [when(mock.methodReturningDouble) thenReturn:@123];
+    [when(mock.methodReturningBool) thenReturn:@0];
+
+    int a = 123;
+    char b = 123;
+    unsigned char c = 123;
+    short d = 123;
+    unsigned short e = 123;
+    unsigned int f = 123;
+    long g = 123;
+    unsigned long h = 123;
+    long long i = 123;
+    unsigned long long j = 123;
+    float k = 123;
+    double l = 123;
+    BOOL m = NO;
+
+    XCTAssertEqual(mock.methodReturningInt, a);
+    XCTAssertEqual(mock.methodReturningChar, b);
+    XCTAssertEqual(mock.methodReturningUnsignedChar, c);
+    XCTAssertEqual(mock.methodReturningShort, d);
+    XCTAssertEqual(mock.methodReturningUnsignedShort, e);
+    XCTAssertEqual(mock.methodReturningUnsignedInt, f);
+    XCTAssertEqual(mock.methodReturningLong, g);
+    XCTAssertEqual(mock.methodReturningUnsignedLong, h);
+    XCTAssertEqual(mock.methodReturningLongLong, i);
+    XCTAssertEqual(mock.methodReturningUnsignedLongLong, j);
+    XCTAssertEqual(mock.methodReturningFloat, k);
+    XCTAssertEqual(mock.methodReturningDouble, l);
+    XCTAssertEqual(mock.methodReturningBool, m);
+}
+
 @end

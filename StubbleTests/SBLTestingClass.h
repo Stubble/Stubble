@@ -27,9 +27,21 @@ typedef void(^SBLTestingBlock)(int integer, NSObject *object);
 #pragma mark - Zero Parameter Methods
 
 - (NSString *)methodReturningString;
-- (int)methodReturningInt;
 - (NSValue *)methodReturningNSValue;
+
+- (int)methodReturningInt;
+- (char)methodReturningChar;
+- (unsigned char)methodReturningUnsignedChar;
+- (short)methodReturningShort;
+- (unsigned short)methodReturningUnsignedShort;
+- (unsigned int)methodReturningUnsignedInt;
+- (long)methodReturningLong;
+- (unsigned long)methodReturningUnsignedLong;
+- (long long)methodReturningLongLong;
+- (unsigned long long)methodReturningUnsignedLongLong;
+- (float)methodReturningFloat;
 - (double)methodReturningDouble;
+- (BOOL)methodReturningBool;
 
 #pragma mark - Single Parameter Methods
 

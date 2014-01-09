@@ -28,6 +28,8 @@
                 NSNumber *numberValue = returnValue;
                 if (strcmp(returnType, "d") == 0) {
                     value = @(numberValue.doubleValue);
+                } else if (strcmp(returnType, "f") == 0) {
+                    value = @(numberValue.floatValue);
                 }
                 // TODO all the other primitive types as well
             }
