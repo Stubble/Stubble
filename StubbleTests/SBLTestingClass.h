@@ -29,6 +29,7 @@ typedef void(^SBLTestingBlock)(int integer, NSObject *object);
 - (NSString *)methodReturningString;
 - (int)methodReturningInt;
 - (NSValue *)methodReturningNSValue;
+- (double)methodReturningDouble;
 
 #pragma mark - Single Parameter Methods
 

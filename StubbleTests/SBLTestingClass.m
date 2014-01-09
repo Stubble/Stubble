@@ -26,6 +26,10 @@
     return 123;
 }
 
+- (double)methodReturningDouble {
+    return 123.0;
+}
+
 - (NSValue *)methodReturningNSValue {
     return @123;
 }

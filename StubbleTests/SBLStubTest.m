@@ -247,4 +247,12 @@
 	NSLog(@"protocol class: %@", NSStringFromClass([(id)@protocol(NSObject) class]));
 }
 
+- (void)testWhenIntegerNumberIsReturnedFromStubMethodThatReturnsADoubleThenTheCorrectValueIsReturned {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    [when(mock.methodReturningDouble) thenReturn:@123];
+
+    XCTAssertEqualWithAccuracy(mock.methodReturningDouble, 123.0, 0.0000000001);
+}
+
 @end
