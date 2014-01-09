@@ -17,13 +17,23 @@
 }
 
 - (SBLStubbedInvocation *)thenReturn:(id)returnValue {
-	BOOL shouldUnboxReturnValue = [returnValue isKindOfClass:[NSValue class]] && strcmp([self returnType], [returnValue objCType]) == 0;
-	
-	[self thenDoWithInvocation:^(NSInvocation *invocation) {
+    char const *returnType = self.returnType;
+    BOOL shouldUnboxReturnValue = [returnValue isKindOfClass:NSValue.class] && strcmp(returnType, "@") != 0;
+
+    [self thenDoWithInvocation:^(NSInvocation *invocation) {
 		NSUInteger methodReturnLength = [[invocation methodSignature] methodReturnLength];
 		if (shouldUnboxReturnValue) {
+            NSValue *value = returnValue;
+            if ([returnValue isKindOfClass:NSNumber.class]) {
+                NSNumber *numberValue = returnValue;
+                if (strcmp(returnType, "d") == 0) {
+                    value = @(numberValue.doubleValue);
+                }
+                // TODO all the other primitive types as well
+            }
+
 			void *buffer = malloc(methodReturnLength);
-			[returnValue getValue:buffer];
+			[value getValue:buffer];
 			[invocation setReturnValue:buffer];
 			free(buffer);
 		} else {
