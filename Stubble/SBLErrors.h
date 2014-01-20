@@ -1,6 +1,7 @@
 #define SBLBadWhenErrorMessage @"called when without specifying a method call on a mock"
 #define SBLBadVerifyErrorMessage @"called VERIFY without specifying a method call on a mock"
 #define SBLBadUsage @"SBLBadUsage"
+#define SBLMethodWasCalledUnexpectedly @"Mock was called when no interactions expected"
 #define SBLBadTimesProvided @"Number of times must be 0 or more"
 #define SBLBadAtLeastTimesProvided @"Number of atLeast times must be 1 or more"
 #define SBLBadAtMostTimesProvided @"Number of atMost times must be 1 or more"

@@ -13,7 +13,9 @@
 @property (nonatomic, readonly) SBLStubbedInvocation *currentStubbedInvocation;
 @property (nonatomic, readonly) NSArray *actualInvocations;
 @property (nonatomic, readonly) SBLInvocationRecord *verifyInvocation;
+@property (nonatomic, readonly) NSUInteger *numberOfInvocations;
 
+- (void)verifyMockNotCalled;
 - (SBLVerificationResult *)verifyInvocationOccurredNumberOfTimes:(SBLTimesMatcher *)times;
 
 @end

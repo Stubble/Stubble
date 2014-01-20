@@ -11,6 +11,7 @@
 @property (nonatomic, readonly) NSMutableArray *stubbedInvocations;
 @property (nonatomic, readonly) NSMutableArray *actualInvocationsArray;
 @property (nonatomic, readwrite) SBLInvocationRecord *verifyInvocation;
+@property (nonatomic, readwrite) NSUInteger *numberOfInvocations;
 
 @end
 
@@ -28,10 +29,13 @@
     _behavior = behavior;
 	_stubbedInvocations = [NSMutableArray array];
     _actualInvocationsArray = [NSMutableArray array];
+    _numberOfInvocations = 0;
 	return self;
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
+    self.numberOfInvocations++;
+
 	if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateStubInProgress) {
 		[self.stubbedInvocations addObject:[[SBLStubbedInvocation alloc] initWithInvocation:invocation]];
 		[SBLTransactionManager.currentTransactionManager whenMethodInvokedForMock:self];
@@ -62,6 +66,12 @@
 
 - (NSArray *)actualInvocations {
     return self.actualInvocationsArray;
+}
+
+- (void)verifyMockNotCalled {
+    if ([self numberOfInvocations]) {
+        [NSException raise:SBLBadUsage format:@"%@", SBLMethodWasCalledUnexpectedly];
+    }
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {

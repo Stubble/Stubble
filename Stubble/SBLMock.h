@@ -9,6 +9,7 @@
 #define verify(methodCall...) SBLVerify(methodCall)
 #define verifyNever(args...) SBLVerifyNever(args)
 #define verifyTimes(timesMatcher, methodCall...) SBLVerifyTimes(timesMatcher, methodCall)
+#define verifyNoInteractions(mock) SBLVerifyNoInteractions(mock)
 
 #define times(times) SBLTimes(times)
 #define atLeast(times) SBLAtLeast(times)

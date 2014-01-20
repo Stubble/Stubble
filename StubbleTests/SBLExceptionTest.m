@@ -3,6 +3,8 @@
 #import "SBLTestingClass.h"
 #import "SBLErrors.h"
 
+@class mockObject;
+
 @interface SBLExceptionTest : XCTestCase
 
 @end
@@ -28,6 +30,32 @@
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
         [self verifyException:e ofName:SBLBadUsage reason:SBLBadVerifyErrorMessage];
+    }
+}
+
+- (void)testWhenVerifyingNoInteractions_WhenMockCalled_ThenExceptionIsThrown {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    @try {
+        [mock methodReturningBool];
+        verifyNoInteractions(mock);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLBadUsage reason:SBLMethodWasCalledUnexpectedly];
+    }
+}
+
+- (void)testWhenVerifyingNoInteractions_WhenSecondMockCalled_ThenExceptionIsThrown {
+    SBLTestingClass *mock1 = mock(SBLTestingClass.class);
+    SBLTestingClass *mock2 = mock(SBLTestingClass.class);
+
+    @try {
+        [mock2 methodReturningBool];
+        verifyNoInteractions(mock1);
+        verifyNoInteractions(mock2);
+        XCTFail(@"Should have thrown NSException!");
+    } @catch (NSException *e){
+        [self verifyException:e ofName:SBLBadUsage reason:SBLMethodWasCalledUnexpectedly];
     }
 }
 

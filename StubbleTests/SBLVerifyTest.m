@@ -2,6 +2,7 @@
 #import "Stubble.h"
 #import "SBLTestingClass.h"
 #import "SBLVerificationResult.h"
+#import "SBLErrors.h"
 
 @interface SBLVerifyTest : XCTestCase
 
@@ -148,11 +149,26 @@
 	XCTAssertTrue(result.successful);
 }
 
-//- (void)testWhenVerifyingNever_WhenNotCalled_ThenNoExceptionIsThrown {
-//    SBLTestingClass *mock = mock(SBLTestingClass.class);
-//
-//    XCTAssertNoThrow(verifyNever([mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
-//}
+- (void)testWhenVerifyingNever_WhenNotCalled_ThenNoExceptionIsThrown {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    XCTAssertNoThrow(verifyNever([mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
+}
+
+- (void)testWhenVerifyingNoInteractions_WhenMockNotCalled_ThenNoExceptionIsThrown {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    XCTAssertNoThrow(verifyNoInteractions(mock));
+}
+
+- (void)testWhenVerifyingNoInteractions_WhenDifferentMockCalled_ThenNoExceptionIsThrown {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+    SBLTestingClass *mock2 = mock(SBLTestingClass.class);
+
+    [mock2 methodReturningBool];
+
+    XCTAssertNoThrow(verifyNoInteractions(mock));
+}
 
 - (void)testWhenVerifyingNeverTimes_WhenNotCalled_ThenNoExceptionIsThrown {
     SBLTestingClass *mock = mock(SBLTestingClass.class);

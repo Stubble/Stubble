@@ -1,11 +1,13 @@
 #import "SBLTransactionManager.h"
 #import "SBLMatcher.h"
 #import "SBLVerificationHandler.h"
+#import "SBLErrors.h"
 
 #define SBLWhen(methodCall...) ({ [SBLTransactionManager.currentTransactionManager prepareForWhen]; (void)methodCall; [SBLTransactionManager.currentTransactionManager performWhen]; })
 
 #define SBLVerify(methodCall...) SBLVerifyTimes(SBLAtLeast(1), methodCall)
 #define SBLVerifyNever(args...) SBLVerifyTimes(SBLNever(), args)
+#define SBLVerifyNoInteractions(mock) ({ SBLMockObject *mockObject = mock; [mockObject verifyMockNotCalled]; })
 #define SBLVerifyTimes(timesMatcher, methodCall...) ({ SBLHandleVerifyTimes(timesMatcher, methodCall); })
 #define SBLHandleVerifyTimes(timesMatcher, methodCall...) ({ SBLHandleVerificationResult(SBLVerifyTimesImpl(timesMatcher, methodCall)); })
 #define SBLVerifyTimesImpl(timesMatcher, methodCall...) ({ [SBLTransactionManager.currentTransactionManager prepareForVerify]; (void)methodCall; [SBLTransactionManager.currentTransactionManager performVerifyNumberOfTimes:timesMatcher]; })
