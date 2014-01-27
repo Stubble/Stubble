@@ -7,45 +7,61 @@
 
 @interface SBLMockObject ()
 
-@property (nonatomic, readonly) id<SBLMockObjectBehavior> behavior;
-@property (nonatomic, readonly) NSMutableArray *stubbedInvocations;
-@property (nonatomic, readonly) NSMutableArray *actualInvocationsArray;
-@property (nonatomic, readwrite) SBLInvocationRecord *verifyInvocation;
-@property (nonatomic, readwrite) NSUInteger *numberOfInvocations;
+@property (nonatomic, readonly) id<SBLMockObjectBehavior> sblBehavior;
+@property (nonatomic, readonly) NSMutableArray *sblStubbedInvocations;
+@property (nonatomic, readonly) NSMutableArray *sblActualInvocationsArray;
+@property (nonatomic, readwrite) SBLInvocationRecord *sblVerifyInvocation;
+@property (nonatomic, readwrite) NSUInteger *sblNumberOfInvocations;
 
 @end
 
 @implementation SBLMockObject
 
-+ (id)mockForClass:(Class)class {
++ (id)sblMockForClass:(Class)class {
     return [[SBLMockObject alloc] initWithBehavior:[[SBLClassMockObjectBehavior alloc] initWithClass:class]];
 }
 
-+ (id)mockForProtocol:(Protocol *)protocol {
++ (id)sblMockForProtocol:(Protocol *)protocol {
     return [[SBLMockObject alloc] initWithBehavior:[[SBLProtocolMockObjectBehavior alloc] initWithProtocol:protocol]];
 }
 
 - (instancetype)initWithBehavior:(id<SBLMockObjectBehavior>)behavior {
-    _behavior = behavior;
-	_stubbedInvocations = [NSMutableArray array];
-    _actualInvocationsArray = [NSMutableArray array];
-    _numberOfInvocations = 0;
+    _sblBehavior = behavior;
+	_sblStubbedInvocations = [NSMutableArray array];
+    _sblActualInvocationsArray = [NSMutableArray array];
+    _sblNumberOfInvocations = 0;
 	return self;
 }
 
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
+	return [self.sblBehavior mockObjectMethodSignatureForSelector:aSelector];
+}
+
+- (BOOL)respondsToSelector:(SEL)selector {
+	return [self.sblBehavior mockObjectRespondsToSelector:selector];
+}
+
+- (BOOL)isKindOfClass:(Class)aClass {
+	return [self.sblBehavior mockObjectIsKindOfClass:aClass];
+}
+
+- (BOOL)conformsToProtocol:(Protocol *)aProtocol {
+	return [self.sblBehavior mockObjectConformsToProtocol:aProtocol];
+}
+
 - (void)forwardInvocation:(NSInvocation *)invocation {
-    self.numberOfInvocations++;
+    self.sblNumberOfInvocations++;
 
 	if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateStubInProgress) {
-		[self.stubbedInvocations addObject:[[SBLStubbedInvocation alloc] initWithInvocation:invocation]];
+		[self.sblStubbedInvocations addObject:[[SBLStubbedInvocation alloc] initWithInvocation:invocation]];
 		[SBLTransactionManager.currentTransactionManager whenMethodInvokedForMock:self];
 	} else if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateVerifyInProgress) {
-        self.verifyInvocation = [[SBLInvocationRecord alloc] initWithInvocation:invocation];
+        self.sblVerifyInvocation = [[SBLInvocationRecord alloc] initWithInvocation:invocation];
         [SBLTransactionManager.currentTransactionManager verifyMethodInvokedForMock:self];
     } else {
 		// Find Matching Stub
 		SBLStubbedInvocation *matchingWhen = nil;
-		for (SBLStubbedInvocation *ongoingWhen in self.stubbedInvocations.reverseObjectEnumerator) {
+		for (SBLStubbedInvocation *ongoingWhen in self.sblStubbedInvocations.reverseObjectEnumerator) {
 			if ([ongoingWhen matchesInvocation:invocation]) {
 				matchingWhen = ongoingWhen;
 				break;
@@ -60,70 +76,57 @@
 		// Invoke and Record Invocation
 		[invocation invokeWithTarget:nil];
         [invocation retainArguments];
-        [self.actualInvocationsArray addObject:invocation];
+        [self.sblActualInvocationsArray addObject:invocation];
 	}
 }
 
-- (NSArray *)actualInvocations {
-    return self.actualInvocationsArray;
+- (NSArray *)sblActualInvocations {
+    return self.sblActualInvocationsArray;
 }
 
-- (void)verifyMockNotCalled {
-    if ([self numberOfInvocations]) {
+- (void)sblVerifyMockNotCalled {
+    if ([self sblNumberOfInvocations]) {
         [NSException raise:SBLBadUsage format:@"%@", SBLMethodWasCalledUnexpectedly];
     }
 }
 
-- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
-    return [self.behavior mockObjectMethodSignatureForSelector:aSelector];
+- (SBLStubbedInvocation *)sblCurrentStubbedInvocation {
+	return [self.sblStubbedInvocations lastObject];
 }
 
-- (BOOL)respondsToSelector:(SEL)selector {
-    return [self.behavior mockObjectRespondsToSelector:selector];
-}
-
-- (BOOL)isKindOfClass:(Class)aClass {
-    return [self.behavior mockObjectIsKindOfClass:aClass];
-}
-
-- (BOOL)conformsToProtocol:(Protocol *)aProtocol {
-	return [self.behavior mockObjectConformsToProtocol:aProtocol];
-}
-
-- (SBLStubbedInvocation *)currentStubbedInvocation {
-	return [self.stubbedInvocations lastObject];
-}
-
-- (SBLVerificationResult *)verifyInvocationOccurredNumberOfTimes:(SBLTimesMatcher *)timesMatcher {
-    [self validateTimesMatcherUsage:timesMatcher];
+- (SBLVerificationResult *)sblVerifyInvocationOccurredNumberOfTimes:(SBLTimesMatcher *)timesMatcher {
+	[self sblValidateTimesMatcherUsage:timesMatcher];
 
     NSInteger atLeastTimes = timesMatcher.atLeast;
     NSInteger atMostTimes = timesMatcher.atMost;
     NSInteger invocationCount = 0;
-    BOOL methodWithMatchingSignatureCalled = NO;
-    for (NSInvocation *actualInvocation in self.actualInvocations) {
-        if ([self.verifyInvocation matchesInvocation:actualInvocation]) {
+    for (NSInvocation *actualInvocation in self.sblActualInvocations) {
+        if ([self.sblVerifyInvocation matchesInvocation:actualInvocation]) {
             invocationCount++;
-        } else if ([actualInvocation selector] == [self.verifyInvocation selector]){
-            methodWithMatchingSignatureCalled = YES;
         }
     }
 	
-	BOOL success = YES;
+	BOOL success = atLeastTimes <= invocationCount && invocationCount <= atMostTimes;
 	NSString *failureMessage = nil;
-	// TODO better messaging
-	if (invocationCount < atLeastTimes) {
-		success = NO;
-		failureMessage = [NSString stringWithFormat:@"Method '%@' was not called at least %ld times", NSStringFromSelector(self.verifyInvocation.selector), (long)atLeastTimes];
-	} else if (invocationCount > atMostTimes) {
-		success = NO;
-		failureMessage = [NSString stringWithFormat:@"Method '%@' was called more than %ld times", NSStringFromSelector(self.verifyInvocation.selector), (long)atMostTimes];
-	}
-	
+    if (!success) {
+        NSString *countString = invocationCount == 1 ? @"1 time" : [NSString stringWithFormat:@"%ld times", (long)invocationCount];
+        NSString *actualString = [NSString stringWithFormat:@"Method '%@' was called %@ ", NSStringFromSelector(self.sblVerifyInvocation.selector), countString];
+        NSString *expectedString;
+        if (atMostTimes == 0) {
+            expectedString = @"(expected no calls)";
+        } else if (atMostTimes == NSIntegerMax) {
+            expectedString = [NSString stringWithFormat:@"(expected at least %ld)", (long)atLeastTimes];
+        } else if (atMostTimes == atLeastTimes) {
+            expectedString = [NSString stringWithFormat:@"(expected exactly %ld)", (long)atLeastTimes];
+        } else {
+            expectedString = [NSString stringWithFormat:@"(expected between %ld and %ld)", (long)atLeastTimes, (long)atMostTimes];
+        }
+        failureMessage = [actualString stringByAppendingString:expectedString];
+    }
 	return [[SBLVerificationResult alloc] initWithSuccess:success failureDescription:failureMessage];
 }
 
-- (void)validateTimesMatcherUsage:(SBLTimesMatcher *)timesMatcher {
+- (void)sblValidateTimesMatcherUsage:(SBLTimesMatcher *)timesMatcher {
     if (timesMatcher.atMost == NSIntegerMax && timesMatcher.atLeast < 1) {
         [NSException raise:SBLBadUsage format:SBLBadAtLeastTimesProvided];
     } else if (timesMatcher.atLeast < 0 || timesMatcher.atMost < 0) {

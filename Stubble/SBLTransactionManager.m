@@ -5,7 +5,7 @@
 @interface SBLTransactionManager ()
 
 @property (nonatomic, readwrite) SBLTransactionManagerState state;
-@property (nonatomic) SBLMockObject * currentMock;
+@property (nonatomic) SBLMockObject *currentMock;
 @property (nonatomic, readonly) NSMutableArray *matchers;
 
 @end
@@ -38,14 +38,14 @@
 - (void)whenMethodInvokedForMock:(SBLMockObject *)mock {
     [self verifyState:SBLTransactionManagerStateStubInProgress];
     self.currentMock = mock;
-	[self.currentMock.currentStubbedInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
+	[self.currentMock.sblCurrentStubbedInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }
 
 - (SBLStubbedInvocation *)performWhen {
     [self verifyState:SBLTransactionManagerStateStubInProgress];
     [self verifyMockCalled:SBLBadWhenErrorMessage];
 
-    SBLStubbedInvocation *when = self.currentMock.currentStubbedInvocation;
+    SBLStubbedInvocation *when = self.currentMock.sblCurrentStubbedInvocation;
     [self clear];
     return when;
 }
@@ -71,7 +71,7 @@
 
 - (void)verifyMethodInvokedForMock:(SBLMockObject *)mock {
 	self.currentMock = mock;
-	[self.currentMock.verifyInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
+	[self.currentMock.sblVerifyInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }
 
 - (SBLVerificationResult *)performVerifyNumberOfTimes:(SBLTimesMatcher *)timesMatcher {
@@ -79,7 +79,7 @@
     [self verifyMockCalled:SBLBadVerifyErrorMessage];
     SBLVerificationResult *result = nil;
 	@try {
-	result = [self.currentMock verifyInvocationOccurredNumberOfTimes:timesMatcher];
+         result = [self.currentMock sblVerifyInvocationOccurredNumberOfTimes:timesMatcher];
 	} @finally {
 		[self clear];
 	}

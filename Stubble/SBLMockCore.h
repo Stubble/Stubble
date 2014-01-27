@@ -7,12 +7,11 @@
 
 #define SBLVerify(methodCall...) SBLVerifyTimes(SBLAtLeast(1), methodCall)
 #define SBLVerifyNever(args...) SBLVerifyTimes(SBLNever(), args)
-#define SBLVerifyNoInteractions(mock) ({ SBLMockObject *mockObject = mock; [mockObject verifyMockNotCalled]; })
+#define SBLVerifyNoInteractions(mock) ({ [(SBLMockObject *)mock sblVerifyMockNotCalled]; })
 #define SBLVerifyTimes(timesMatcher, methodCall...) ({ SBLHandleVerifyTimes(timesMatcher, methodCall); })
 #define SBLHandleVerifyTimes(timesMatcher, methodCall...) ({ SBLHandleVerificationResult(SBLVerifyTimesImpl(timesMatcher, methodCall)); })
 #define SBLVerifyTimesImpl(timesMatcher, methodCall...) ({ [SBLTransactionManager.currentTransactionManager prepareForVerify]; (void)methodCall; [SBLTransactionManager.currentTransactionManager performVerifyNumberOfTimes:timesMatcher]; })
 #define SBLHandleVerificationResult(verificationResult) ({ [SBLVerificationHandler handleVerificationResult:verificationResult inTestCase:self inFile:__FILE__ onLine:__LINE__]; })
-#define SBLSingleArg(...) __VA_ARGS__
 
 #define SBLTimes(times) ({ [SBLTimesMatcher exactly:times]; })
 #define SBLAtLeast(times) ({ [SBLTimesMatcher atLeast:times]; })
@@ -34,6 +33,6 @@
 
 #define SBLMock(classOrProtocol) ({ const char *typeEncoding = @encode(typeof(classOrProtocol)); \
     SBLMockObject *mock = nil; \
-    if (strcmp(typeEncoding, "#") == 0) { mock = [SBLMockObject mockForClass:(id)classOrProtocol]; } \
-    else if (strcmp(typeEncoding, "@") == 0) { mock = [SBLMockObject mockForProtocol:(id)classOrProtocol]; } \
+    if (strcmp(typeEncoding, "#") == 0) { mock = [SBLMockObject sblMockForClass:(id)classOrProtocol]; } \
+    else if (strcmp(typeEncoding, "@") == 0) { mock = [SBLMockObject sblMockForProtocol:(id)classOrProtocol]; } \
     (id)mock; })

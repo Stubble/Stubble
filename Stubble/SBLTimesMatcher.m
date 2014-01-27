@@ -25,8 +25,8 @@
     return [[SBLTimesMatcher alloc] init];
 }
 
-+ (instancetype)exactly:(NSInteger)minTimes {
-    return [[SBLTimesMatcher alloc] initWithAtLeast:minTimes upTo:minTimes];
++ (instancetype)exactly:(NSInteger)times {
+    return [[SBLTimesMatcher alloc] initWithAtLeast:times upTo:times];
 }
 
 + (instancetype)atLeast:(NSInteger)minTimes {
