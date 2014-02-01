@@ -12,7 +12,7 @@
 @property (nonatomic, readonly) SBLInvocationRecord *sblVerifyInvocation;
 @property (nonatomic, readonly) NSUInteger *sblNumberOfInvocations;
 
-- (void)sblVerifyMockNotCalled;
+- (SBLVerificationResult *)sblVerifyMockNotCalled;
 - (SBLVerificationResult *)sblVerifyInvocationOccurredNumberOfTimes:(SBLTimesMatcher *)times;
 
 @end

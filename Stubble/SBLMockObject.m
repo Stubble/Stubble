@@ -84,10 +84,11 @@
     return self.sblActualInvocationsArray;
 }
 
-- (void)sblVerifyMockNotCalled {
+- (SBLVerificationResult *)sblVerifyMockNotCalled {
     if ([self sblNumberOfInvocations]) {
-        [NSException raise:SBLBadUsage format:@"%@", SBLMethodWasCalledUnexpectedly];
+        return [[SBLVerificationResult alloc] initWithSuccess:NO failureDescription:SBLMethodWasCalledUnexpectedly];
     }
+    return [[SBLVerificationResult alloc] initWithSuccess:YES failureDescription:nil];
 }
 
 - (SBLStubbedInvocation *)sblCurrentStubbedInvocation {
