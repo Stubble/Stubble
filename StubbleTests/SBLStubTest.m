@@ -295,6 +295,7 @@
     XCTAssertEqual(mock.methodReturningLong, g);
     XCTAssertEqual(mock.methodReturningUnsignedLong, h);
     XCTAssertEqual(mock.methodReturningLongLong, i);
+    // FIXME: Getting intermittent test failures for this assert in AppCode
     XCTAssertEqual(mock.methodReturningUnsignedLongLong, j);
     XCTAssertEqual(mock.methodReturningFloat, k);
     XCTAssertEqual(mock.methodReturningDouble, l);
