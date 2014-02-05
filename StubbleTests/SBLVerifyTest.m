@@ -127,14 +127,13 @@
 	XCTAssertTrue(result.successful);
 }
 
-- (void)testWhenVerifyingBetwenOneAndThreeTimes_WhenCalledValidNumberOfTimes_ThenNoExceptionIsThrown {
+- (void)testWhenVerifyingBetweenOneAndThreeTimes_WhenCalledValidNumberOfTimes_ThenNoExceptionIsThrown {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodWithArray:@[@"arg1"]];
 	SBLVerificationResult *result = SBLVerifyTimesImpl(between(1, 3), [mock methodWithArray:@[@"arg1"]]);
 	XCTAssertTrue(result.successful);
 
-    // TODO: Shouldn't have to recreate mock? Won't work without this currently.
     mock = mock(SBLTestingClass.class);
     [mock methodWithArray:@[@"arg1"]];
     [mock methodWithArray:@[@"arg1"]];
@@ -149,35 +148,15 @@
 	XCTAssertTrue(result.successful);
 }
 
-- (void)testWhenVerifyingNever_WhenNotCalled_ThenNoExceptionIsThrown {
-    SBLTestingClass *mock = mock(SBLTestingClass.class);
-
-    XCTAssertNoThrow(verifyNever([mock methodWithManyArguments:@"arg1" primitive:2 number:@3]));
-}
-
-- (void)testWhenVerifyingNoInteractions_WhenMockNotCalled_ThenNoExceptionIsThrown {
-    SBLTestingClass *mock = mock(SBLTestingClass.class);
-
-    XCTAssertNoThrow(verifyNoInteractions(mock));
-}
-
-- (void)testWhenVerifyingNoInteractions_WhenDifferentMockCalled_ThenNoExceptionIsThrown {
-    SBLTestingClass *mock = mock(SBLTestingClass.class);
-    SBLTestingClass *mock2 = mock(SBLTestingClass.class);
-
-    [mock2 methodReturningBool];
-
-    XCTAssertNoThrow(verifyNoInteractions(mock));
-}
-
-- (void)testWhenVerifyingNeverTimes_WhenNotCalled_ThenNoExceptionIsThrown {
+- (void)testWhenVerifyingNeverWhenNotCalledThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
 	SBLVerificationResult *result = SBLVerifyTimesImpl(never(), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
 	XCTAssertTrue(result.successful);
+    XCTAssertNil(result.failureDescription);
 }
 
-- (void)testWhenVerifyingTimesForMultipleMethodCallsThenNoExceptionIsThrown {
+- (void)testWhenVerifyingTimesForMultipleMethodCallsThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodReturningString];
@@ -198,13 +177,7 @@
 }
 
 - (void)testVerifyCanBeCalledWithCommas {
-    SBLTestingClass *mock = mock(SBLTestingClass.class);
-
-//	[mock methodWithArray:@[@"1", @"2", @"3"]];
-//
-//    verify([mock methodWithArray:@[@"1", @"2", @"3"]]);
-	
-    mock = mock(SBLTestingClass.class);
+    SBLTestingClass *mock =  mock(SBLTestingClass.class);
     [mock methodWithArray:@[@"4", @"5", @"6"]];
     [mock methodWithArray:@[@"4", @"5", @"6"]];
     verifyTimes(times(2), [mock methodWithArray:@[@"4", @"5", @"6"]]);
@@ -235,7 +208,7 @@
 	
 	SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodReturningInt]);
 	XCTAssertFalse(result.successful);
-	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningInt' was not called at least 1 times");
+    XCTAssertNotNil(result.failureDescription);
 }
 
 - (void)testWhenVerifyingForMethodWithDifferentParametersThenExceptionIsThrown {
@@ -245,15 +218,15 @@
 	
 	SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"2" primitive:2 number:@3]);
 	XCTAssertFalse(result.successful);
-	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodWithManyArguments:primitive:number:' was not called at least 1 times");
+    XCTAssertNotNil(result.failureDescription);
 	
 	result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"1" primitive:1 number:@3]);
 	XCTAssertFalse(result.successful);
-	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodWithManyArguments:primitive:number:' was not called at least 1 times");
+    XCTAssertNotNil(result.failureDescription);
 	
 	result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"1" primitive:2 number:@1]);
 	XCTAssertFalse(result.successful);
-	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodWithManyArguments:primitive:number:' was not called at least 1 times");
+    XCTAssertNotNil(result.failureDescription);
 }
 
 - (void)testWhenVerifyingForMethodWithVoidReturnTypeNotCalledThenAnExceptionIsThrown {
@@ -261,7 +234,7 @@
 
 	SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithNoReturn]);
 	XCTAssertFalse(result.successful);
-	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodWithNoReturn' was not called at least 1 times");
+    XCTAssertNotNil(result.failureDescription);
 }
 
 #pragma mark - Verify Times Tests
@@ -269,64 +242,65 @@
 - (void)testWhenVerifyIsCalledZeroTimesThenAnExpectedExceptionIsThrown {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
+	SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodReturningInt]);
+	XCTAssertFalse(result.successful);
+    XCTAssertNotNil(result.failureDescription);
+}
+
+- (void)testWhenVerifyingExactNumberOfTimesAndMethodIsCalledTooFewTimesThenTheTestFailsWithTheCorrectMessage {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+	
+    [mock methodReturningInt];
+	
+	SBLVerificationResult *result = SBLVerifyTimesImpl(times(2), [mock methodReturningInt]);
+	XCTAssertFalse(result.successful);
+	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningInt' was called 1 time (expected exactly 2)");
+}
+
+- (void)testWhenVerifyingExactNumberOfTimesAndMethodIsCalledTooManyTimesThenTheTestFailsWithTheCorrectMessage {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+	
+    [mock methodReturningInt];
+    [mock methodReturningInt];
+    [mock methodReturningInt];
+	
 	SBLVerificationResult *result = SBLVerifyTimesImpl(times(1), [mock methodReturningInt]);
 	XCTAssertFalse(result.successful);
-	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningInt' was not called at least 1 times");
+	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningInt' was called 3 times (expected exactly 1)");
 }
 
-- (void)testWhenVerifyIsCalledTooFewTimesThenAnExceptionIsThrown {
-    SBLTestingClass *mock = mock(SBLTestingClass.class);
-	
-    [mock methodReturningInt];
-	
-	SBLVerificationResult *result = SBLVerifyTimesImpl(times(2), [mock methodReturningInt]);
-	XCTAssertFalse(result.successful);
-	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningInt' was not called at least 2 times");
-}
-
-- (void)testWhenVerifyTimesIsCalledTooManyTimesThenAnExceptionIsThrown {
-    SBLTestingClass *mock = mock(SBLTestingClass.class);
-	
-    [mock methodReturningInt];
-    [mock methodReturningInt];
-    [mock methodReturningInt];
-	
-	SBLVerificationResult *result = SBLVerifyTimesImpl(times(2), [mock methodReturningInt]);
-	XCTAssertFalse(result.successful);
-	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningInt' was called more than 2 times");
-}
-
-- (void)testWhenVerifyNeverIsCalledAndMethodIsCalledOnceThenAnExceptionIsThrown {
+- (void)testWhenVerifyNeverIsCalledAndMethodIsCalledOnceThenTheTestFailsWithTheCorrectMessage {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [mock methodReturningInt];
 	
 	SBLVerificationResult *result = SBLVerifyTimesImpl(never(), [mock methodReturningInt]);
 	XCTAssertFalse(result.successful);
-	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningInt' was called more than 0 times");
+	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningInt' was called 1 time (expected no calls)");
 }
 
-- (void)testWhenVerifyAtLeastTwoTimesIsOnlyCalledOneTimeThenAnExceptionIsThrown {
+- (void)testWhenVerifyingAtLeastAndTheMethodIsCalledFewerTimesThenTheTestFailsWithTheCorrectMessage {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [mock methodReturningString];
+    [mock methodReturningString];
 	
-	SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(2), [mock methodReturningString]);
+	SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(3), [mock methodReturningString]);
 	XCTAssertFalse(result.successful);
-	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningString' was not called at least 2 times");
+	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningString' was called 2 times (expected at least 3)");
 }
 
-- (void)testWhenVerifyBetweenIsCalledTooFewTimesThenAnExceptionIsThrown {
+- (void)testWhenVerifyingBetweenAndMethodIsCalledTooFewTimesThenTheTestFailsWithTheCorrectMessage {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [mock methodReturningString];
 	
 	SBLVerificationResult *result = SBLVerifyTimesImpl(between(2, 3), [mock methodReturningString]);
 	XCTAssertFalse(result.successful);
-	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningString' was not called at least 2 times");
+	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningString' was called 1 time (expected between 2 and 3)");
 }
 
-- (void)testWhenVerifyBetweenIsCalledTooManyTimesThenAnExceptionIsThrown {
+- (void)testWhenVerifyingBetweenAndMethodIsCalledTooManyTimesThenTheTestFailsWithTheCorrectMessage {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [mock methodReturningString];
@@ -335,7 +309,51 @@
 	
 	SBLVerificationResult *result = SBLVerifyTimesImpl(between(1, 2), [mock methodReturningString]);
 	XCTAssertFalse(result.successful);
-	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningString' was called more than 2 times");
+	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningString' was called 3 times (expected between 1 and 2)");
+}
+
+#pragma mark - Verify No Interactions Tests
+
+- (void)testWhenVerifyingNoInteractionsWhenMockNotCalledThenResultIsSuccessful {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    SBLVerificationResult *result = SBLVerifyNoInteractionsImpl(mock);
+    XCTAssertTrue(result.successful);
+    XCTAssertNil(result.failureDescription);
+}
+
+- (void)testWhenVerifyingNoInteractionsWhenDifferentMockCalledThenResultIsSuccessful {
+    SBLTestingClass *mock1 = mock(SBLTestingClass.class);
+    SBLTestingClass *mock2 = mock(SBLTestingClass.class);
+
+    [mock2 methodReturningBool];
+
+    SBLVerificationResult *result = SBLVerifyNoInteractionsImpl(mock1);
+    XCTAssertTrue(result.successful);
+    XCTAssertNil(result.failureDescription);
+}
+
+- (void)testWhenVerifyingNoInteractionsWhenMockCalledThenTestFailsWithTheCorrectMessage {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    [mock methodReturningBool];
+
+    SBLVerificationResult *result = SBLVerifyNoInteractionsImpl(mock);
+    XCTAssertFalse(result.successful);
+    XCTAssertEqualObjects(result.failureDescription, SBLMethodWasCalledUnexpectedly);
+}
+
+- (void)testWhenVerifyingNoInteractionsAndSecondMockIsCalledThenOnlySecondMockFailsWithTheCorrectMessage {
+    SBLTestingClass *mock1 = mock(SBLTestingClass.class);
+    SBLTestingClass *mock2 = mock(SBLTestingClass.class);
+
+    [mock2 methodReturningBool];
+
+    SBLVerificationResult *result1 = SBLVerifyNoInteractionsImpl(mock1);
+    SBLVerificationResult *result2 = SBLVerifyNoInteractionsImpl(mock2);
+    XCTAssertTrue(result1.successful);
+    XCTAssertFalse(result2.successful);
+    XCTAssertEqualObjects(result2.failureDescription, SBLMethodWasCalledUnexpectedly);
 }
 
 @end

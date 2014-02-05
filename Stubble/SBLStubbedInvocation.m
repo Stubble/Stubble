@@ -30,8 +30,8 @@
                     value = @(numberValue.doubleValue);
                 } else if (strcmp(returnType, "f") == 0) {
                     value = @(numberValue.floatValue);
-                }
-                // TODO all the other primitive types as well
+				}
+				// TODO all the other primitive types as well
             }
 
 			void *buffer = malloc(methodReturnLength);

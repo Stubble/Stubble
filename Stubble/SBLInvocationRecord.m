@@ -43,8 +43,6 @@
 }
 
 - (void)setMatchers:(NSArray *)matchers {
-	//NSLog(@"setMatchers: %p %@", self, matchers);
-	
 	NSMutableArray *nonObjectMatchers = [matchers mutableCopy];
 	
 	[self.invocation.methodSignature numberOfArguments];
@@ -87,14 +85,10 @@
 			[allMatchers addObject:[SBLMatcher valueIsEqualMatcher:boxedValue]];
 		}
 	}
-	//NSLog(@"allMatchers: %p %@", self, allMatchers);
-	
 	_matchers = allMatchers;
 }
 
 - (BOOL)matchesInvocation:(NSInvocation *)invocation {
-	//NSLog(@"matchesInvocation: %p %@", self, invocation);
-	//NSLog(@"matchers: %p %@", self, self.matchers);
 	NSInvocation *recordedInvocation = self.invocation;
 	BOOL matchingInvocation = recordedInvocation.selector == invocation.selector;
 	if (matchingInvocation) {
