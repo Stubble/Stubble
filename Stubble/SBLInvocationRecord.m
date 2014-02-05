@@ -1,5 +1,6 @@
 #import "SBLInvocationRecord.h"
 #import "SBLErrors.h"
+#import "SBLHelpers.h"
 
 @interface SBLInvocationRecord ()
 
@@ -20,10 +21,6 @@
 
 - (SEL)selector {
 	return self.invocation.selector;
-}
-
-- (BOOL)isObjectType:(const char *)type {
-	return (strchr("@#", type[0]) != NULL);
 }
 
 - (NSValue *)boxedValueForArgumentIndex:(NSInteger)index inInvocation:(NSInvocation *)invocation {
@@ -56,7 +53,7 @@
 	NSMutableArray *objectMatchers = [NSMutableArray array];
 	for (NSInteger i = 2; i < self.invocation.methodSignature.numberOfArguments; i++) {
 		const char *argumentType = [self.invocation.methodSignature getArgumentTypeAtIndex:i];
-		if ([self isObjectType:argumentType]) {
+		if (SBLIsObjectType(argumentType)) {
 			__unsafe_unretained id argument = nil;
 			[self.invocation getArgument:&argument atIndex:i];
 			if ([argument isKindOfClass:[SBLMatcher class]]) {
@@ -79,7 +76,7 @@
 	NSMutableArray *allMatchers = [NSMutableArray array];
 	for (NSInteger i = 2; i < self.invocation.methodSignature.numberOfArguments; i++) {
 		const char *argumentType = [self.invocation.methodSignature getArgumentTypeAtIndex:i];
-		if ([self isObjectType:argumentType]) {
+		if (SBLIsObjectType(argumentType)) {
 			[allMatchers addObject:objectMatchers[0]];
 			[objectMatchers removeObjectAtIndex:0];
 		} else if (useMatchersForNonObjects) {
@@ -103,7 +100,7 @@
 	if (matchingInvocation) {
 		for (int i = 2; i < recordedInvocation.methodSignature.numberOfArguments; i++) {
 			const char *argumentType = [self.invocation.methodSignature getArgumentTypeAtIndex:i];
-            BOOL isObject = [self isObjectType:argumentType];
+            BOOL isObject = SBLIsObjectType(argumentType);
 			__unsafe_unretained id argument = nil; // Need unsafe unretained here - http://stackoverflow.com/questions/11874056/nsinvocation-getreturnvalue-called-inside-forwardinvocation-makes-the-returned
 			if (isObject) {
 				[invocation getArgument:&argument atIndex:i];
@@ -115,10 +112,6 @@
 		}
 	}
     return matchingInvocation;
-}
-
-- (BOOL)typeIsObject:(const char *)type {
-    return strcmp(type, "@") == 0;
 }
 
 - (const char *)returnType {

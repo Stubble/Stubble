@@ -11,5 +11,6 @@ typedef BOOL(^SBLMatcherBlock)(id argument, BOOL shouldUnboxArgument);
 
 - (BOOL)matchesArgument:(id)argument shouldUnboxArgument:(BOOL)shouldUnboxArgument;
 - (void *)placeholder;
+- (NSValue *)placeholderWithType:(char[])type;
 
 @end

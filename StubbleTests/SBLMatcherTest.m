@@ -68,39 +68,42 @@
 	XCTAssertNil([mock methodWithArgument1:@"stuff" argument2:@"other stuff"]);
 }
 
-- (void)testMatcherWorksForManyArgumentTypes {
+- (void)testAnyMatcherWorksForManyArgumentTypes {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
-
-	[when([mock methodWithBool:any()]) thenReturn:@"return"];
-	[when([mock methodWithInteger:any()]) thenReturn:@"return"];
-    // TODO make any() work for double/NSTimeInterval?
-	[when([mock methodWithTimeInterval:anyWithPlaceholder(25.0)]) thenReturn:@"return"];
-	[when([mock methodWithPrimitiveReference:any()]) thenReturn:@"return"];
-	// TODO make object references (ie: (NSString * __autoreleasing *)) work somehow too...
-	//[when([mock methodWithReference:any()]) thenReturn:@"return"];
-	[when([mock methodWithSelector:any()]) thenReturn:@"return"];
-	[when([mock methodWithCGRect:anyCGRect()]) thenReturn:@"return"];
-	SBLTestingStruct validStruct = { 1, YES, NULL };
-	[when([mock methodWithStruct:anyWithPlaceholder(validStruct)]) thenReturn:@"return"];
-	[when([mock methodWithStructReference:any()]) thenReturn:@"return"];
-	[when([mock methodWithClass:any()]) thenReturn:@"return"];
+    SBLTestingClass *mock2 = mock(SBLTestingClass.class);
+	[when([mock methodWithBool:any(BOOL)]) thenReturn:@"return"];
+	[when([mock methodWithInteger:any(NSInteger)]) thenReturn:@"return"];
+	[when([mock methodWithPrimitiveReference:any(NSInteger *)]) thenReturn:@"return"];
+	[when([mock methodWithReference:any(__autoreleasing NSString **)]) thenReturn:@"return"];
+	[when([mock methodWithSelector:any(SEL)]) thenReturn:@"return"];
+	[when([mock methodWithCGRect:any(CGRect)]) thenReturn:@"return"];
+	[when([mock methodWithStruct:any(SBLTestingStruct)]) thenReturn:@"return"];
+	[when([mock methodWithStructReference:any(SBLTestingStruct *)]) thenReturn:@"return"];
 	[when([mock methodWithBlock:any()]) thenReturn:@"return"];
+	[when([mock methodWithObject:any()]) thenReturn:@"return"];
+	[when([mock2 methodWithObject:any(NSNumber *)]) thenReturn:@"return"];
+	[when([mock methodWithClass:any()]) thenReturn:@"return"];
+	[when([mock2 methodWithClass:any(Class)]) thenReturn:@"return"];
 	
+	XCTAssertEqualObjects([mock methodWithInteger:23], @"return");
 	XCTAssertEqualObjects([mock methodWithBool:YES], @"return");
 	NSInteger integer = 42;
 	XCTAssertEqualObjects([mock methodWithPrimitiveReference:&integer], @"return");
-	//NSString *string = @"42";
-	//XCTAssertEqualObjects([mock methodWithReference:&string], @"return");
-	XCTAssertEqualObjects([mock methodWithSelector:@selector(testMatcherWorksForManyArgumentTypes)], @"return");
+	NSString *string = @"42";
+	XCTAssertEqualObjects([mock methodWithReference:&string], @"return");
+	XCTAssertEqualObjects([mock methodWithSelector:@selector(testAnyMatcherWorksForManyArgumentTypes)], @"return");
 	XCTAssertEqualObjects([mock methodWithCGRect:CGRectMake(10, 1, 30, 50)], @"return");
 	SBLTestingStruct testingStruct = { 1, YES, "other stuff" };
 	XCTAssertEqualObjects([mock methodWithStruct:testingStruct], @"return");
 	XCTAssertEqualObjects([mock methodWithStructReference:&testingStruct], @"return");
-	XCTAssertEqualObjects([mock methodWithClass:[NSArray class]], @"return");
 	SBLTestingBlock block = ^(int integer, NSObject *object) {
 		NSLog(@"block");
 	};
 	XCTAssertEqualObjects([mock methodWithBlock:block], @"return");
+	XCTAssertEqualObjects([mock methodWithClass:[NSArray class]], @"return");
+	XCTAssertEqualObjects([mock2 methodWithClass:[NSArray class]], @"return");
+	XCTAssertEqualObjects([mock methodWithObject:@2], @"return");
+	XCTAssertEqualObjects([mock2 methodWithObject:@2], @"return");
 }
 
 - (void)testCaptureCapturesArgumentInWhen {

@@ -16,9 +16,7 @@
 #define never() SBLNever()
 #define between(atLeast, atMost) SBLBetween(atLeast, atMost)
 
-#define any() SBLAny()
-#define anyWithPlaceholder(placeholder...) SBLAnyWithPlaceholder(placeholder)
-#define anyCGRect() SBLAnyCGRect()
+#define any(argumentType...) SBLAny(argumentType)
 #define capture(captorReference) SBLCapture(captorReference)
 
 #define mock(classOrProtocol) SBLMock(classOrProtocol)

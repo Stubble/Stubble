@@ -19,14 +19,16 @@
 #define SBLNever() ({ [SBLTimesMatcher never]; })
 #define SBLBetween(atLeast, atMost) ({ [SBLTimesMatcher between:atLeast andAtMost:atMost]; })
 
-#define SBLAny() _Pragma("clang diagnostic push") \
-    _Pragma("clang diagnostic ignored \"-Wconversion\"") \
-    ({ SBLMatcher *matcher = [SBLMatcher any]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; [matcher placeholder]; }) \
-    _Pragma("clang diagnostic pop")
+#define __SBLNumberOfArgs(unused, _1, VAL, ...) VAL
+#define SBLNumberOfArgs(...) __SBLNumberOfArgs(unused, ## __VA_ARGS__, 1, 0)
 
-#define SBLAnyWithPlaceholder(placeholder...) ({ [SBLTransactionManager.currentTransactionManager addMatcher:[SBLMatcher any]]; placeholder; })
-#define SBLAnyCGRect() SBLAnyWithPlaceholder(CGRectZero)
+#define SBLAny(...) _SBLAny(SBLNumberOfArgs(__VA_ARGS__), __VA_ARGS__)
+#define _SBLAny(ARGC, ARGS...) __SBLAny(ARGC, ARGS)
+#define __SBLAny(ARGC, ARGS...) SBLAny_ ## ARGC (ARGS)
+#define SBLAny_0(argumentType...) ({ SBLMatcher *matcher = [SBLMatcher any]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; [matcher placeholder]; })
+#define SBLAny_1(argumentType...) ({ SBLMatcher *matcher = [SBLMatcher any]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; NSValue *placeholderValue = [matcher placeholderWithType:@encode(argumentType)]; argumentType placeholder; [placeholderValue getValue:&placeholder]; placeholder; })
 
+// TODO - support all types
 #define SBLCapture(captorReference) _Pragma("clang diagnostic push") \
     _Pragma("clang diagnostic ignored \"-Wconversion\"") \
     ({ SBLMatcher *matcher = [SBLMatcher captor:captorReference]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; [matcher placeholder]; }) \

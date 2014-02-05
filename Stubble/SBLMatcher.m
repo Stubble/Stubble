@@ -1,4 +1,5 @@
 #import "SBLMatcher.h"
+#import "SBLHelpers.h"
 
 @interface SBLMatcher ()<NSCopying>
 
@@ -87,6 +88,11 @@
 
 - (void *)placeholder {
 	return (__bridge void *)self;
+}
+
+- (NSValue *)placeholderWithType:(char[])type {
+	void *pointer = SBLIsObjectType(type) ? [self placeholder] : NULL;
+	return [NSValue value:&pointer withObjCType:type];
 }
 
 // need to implement this to support matching blocks
