@@ -1,10 +1,11 @@
 #import "SBLMatcher.h"
-#import "SBLHelpers.h"
 
 @interface SBLMatcher ()<NSCopying>
 
 @property (nonatomic, copy) SBLMatcherBlock matcherBlock;
 @property (nonatomic, readonly) NSUUID *uuid;
+@property (nonatomic, copy) SBLMatcherPlaceholderBlock placeholderBlock;
+@property (nonatomic) SBLMatcher *memoryHack;
 
 @end
 
@@ -17,14 +18,14 @@
 }
 
 + (instancetype)captor:(void *)captor {
-    NSValue *pointerValue = [NSValue valueWithPointer:captor];
+	NSValue *pointerValue = [NSValue valueWithPointer:captor];
 	return [SBLMatcher matcherWithBlock:^BOOL(id argument, BOOL shouldUnboxArgument) {
         void *captorPointer = [pointerValue pointerValue];
 
         if (shouldUnboxArgument) {
             [(NSValue *)argument getValue:captorPointer];
         } else {
-            if ([SBLMatcher isBlock:argument]) {
+            if (SBLIsBlock(argument)) {
                 argument = [argument copy];
             }
             __block id __strong *captorId = (id __strong *)captorPointer;
@@ -52,25 +53,6 @@
 	}];
 }
 
-+ (BOOL)isBlock:(id)item {
-    BOOL isBlock = NO;
-
-    // find the block class at runtime in case it changes in a different OS version
-    static Class blockClass = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        id block = ^{};
-        blockClass = [block class];
-        while ([blockClass superclass] != [NSObject class]) {
-            blockClass = [blockClass superclass];
-        }
-    });
-
-    isBlock = [item isKindOfClass:blockClass];
-
-    return isBlock;
-}
-
 - (id)init {
     return [self initWithUUID:[NSUUID UUID]];
 }
@@ -91,8 +73,30 @@
 }
 
 - (NSValue *)placeholderWithType:(char[])type {
-	void *pointer = SBLIsObjectType(type) ? [self placeholder] : NULL;
-	return [NSValue value:&pointer withObjCType:type];
+	NSValue *placeholderValue = nil;
+	if (SBLIsBlockType(type)) {
+		NSLog(@"placeholderWithType: BLOCK %@", self);
+		__weak typeof(self) weakSelf = self;
+		self.memoryHack = self;
+		if (!self.placeholderBlock) {
+			self.placeholderBlock = ^{return weakSelf;};
+		}
+		placeholderValue = [NSValue value:&_placeholderBlock withObjCType:type];
+	} else if (SBLIsObjectType(type)) {
+		NSLog(@"placeholderWithType: OBJECT %@", self);
+		self.memoryHack = self;
+		SBLMatcher *placeholder = [self placeholder];
+		placeholderValue = [NSValue value:&placeholder withObjCType:type];
+	} else {
+		NSLog(@"placeholderWithType: PRIMITIVE %@", self);
+		void *placeholder = NULL;
+		placeholderValue = [NSValue value:&placeholder withObjCType:type];
+	}
+	return placeholderValue;
+}
+
+- (void)getValue:(id *)value {
+	*value = [self copy];
 }
 
 // need to implement this to support matching blocks
@@ -104,6 +108,10 @@
 
 - (BOOL)isEqual:(id)object {
     return [object isKindOfClass:[SBLMatcher class]] && [self.uuid isEqual:[object uuid]];
+}
+
+- (BOOL)isBlockPlaceholderForMatcher:(SBLMatcherPlaceholderBlock)block {
+	return self.placeholderBlock != nil && block == self.placeholderBlock;
 }
 
 - (NSUInteger)hash {

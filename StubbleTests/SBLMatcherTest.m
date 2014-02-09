@@ -42,7 +42,7 @@
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
 	[when([mock methodWithObject:any()]) thenReturn:@"one"];
-	[when([mock methodWithInteger:any()]) thenReturn:@"two"];
+	[when([mock methodWithInteger:any(NSInteger)]) thenReturn:@"two"];
 	
 	XCTAssertEqualObjects([mock methodWithObject:@11], @"one");
 	XCTAssertEqualObjects([mock methodWithObject:@42], @"one");
@@ -80,6 +80,7 @@
 	[when([mock methodWithStruct:any(SBLTestingStruct)]) thenReturn:@"return"];
 	[when([mock methodWithStructReference:any(SBLTestingStruct *)]) thenReturn:@"return"];
 	[when([mock methodWithBlock:any()]) thenReturn:@"return"];
+	[when([mock2 methodWithBlock:any(SBLTestingBlock)]) thenReturn:@"return"];
 	[when([mock methodWithObject:any()]) thenReturn:@"return"];
 	[when([mock2 methodWithObject:any(NSNumber *)]) thenReturn:@"return"];
 	[when([mock methodWithClass:any()]) thenReturn:@"return"];
@@ -112,15 +113,21 @@
     NSInteger capturedInteger = 0;
     NSNumber *capturedObject = nil;
     __block BOOL capturedBlockRun = NO;
-    SBLTestingBlock capturedBlock = nil;
+	SBLTestingBlock capturedBlock = nil;
+	NSTimeInterval capturedTimeInterval;
+	CGRect capturedRect;
 
 	when([mock methodWithBool:capture(&capturedBool)]);
+	when([mock methodWithTimeInterval:capture(&capturedTimeInterval)]);
 	when([mock methodWithInteger:capture(&capturedInteger)]);
 	when([mock methodWithObject:capture(&capturedObject)]);
 	when([mock methodWithBlock:capture(&capturedBlock)]);
+	when([mock methodWithCGRect:capture(&capturedRect)]);
 
     [mock methodWithBool:YES];
     XCTAssertTrue(capturedBool);
+    [mock methodWithTimeInterval:1337.0423];
+    XCTAssertEqual(capturedTimeInterval, 1337.0423);
     [mock methodWithInteger:42];
     XCTAssertEqual(capturedInteger, (NSInteger)42);
     [mock methodWithObject:@42];

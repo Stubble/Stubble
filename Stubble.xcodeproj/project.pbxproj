@@ -29,7 +29,7 @@
 		4DD1ACB7187462B300A5FEC4 /* SBLVerificationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD1ACB5187462B300A5FEC4 /* SBLVerificationHandler.m */; };
 		4DD1ACBA1874691300A5FEC4 /* SBLVerificationResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DD1ACB81874691300A5FEC4 /* SBLVerificationResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DD1ACBB1874691300A5FEC4 /* SBLVerificationResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD1ACB91874691300A5FEC4 /* SBLVerificationResult.m */; };
-		4DE7829B18A1CD7E002C0470 /* SBLHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DE7829918A1CD7E002C0470 /* SBLHelpers.h */; };
+		4DE7829B18A1CD7E002C0470 /* SBLHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DE7829918A1CD7E002C0470 /* SBLHelpers.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DE7829C18A1CD7E002C0470 /* SBLHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DE7829A18A1CD7E002C0470 /* SBLHelpers.m */; };
 		4DF0042F185AB833003171E5 /* SBLStubbleCoreThreadingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0042E185AB833003171E5 /* SBLStubbleCoreThreadingTest.m */; };
 		4DF00432185ACB53003171E5 /* SBLInvocationRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF00431185ACB53003171E5 /* SBLInvocationRecord.m */; };
@@ -240,6 +240,8 @@
 				4D80408C186403BE001DE9FE /* SBLClassMockObjectBehavior.h */,
 				4D80408D186403BE001DE9FE /* SBLClassMockObjectBehavior.m */,
 				4D0E7550185D09B200C681BE /* SBLErrors.h */,
+				4DE7829918A1CD7E002C0470 /* SBLHelpers.h */,
+				4DE7829A18A1CD7E002C0470 /* SBLHelpers.m */,
 				4DF00430185ACB53003171E5 /* SBLInvocationRecord.h */,
 				4DF00431185ACB53003171E5 /* SBLInvocationRecord.m */,
 				4DF00433185AD2AC003171E5 /* SBLMatcher.h */,
@@ -256,20 +258,18 @@
 				AAFD46DFB029A6FC17A48B0D /* SBLTimesMatcher.h */,
 				AAFD431560AC3BD461C4B3D1 /* SBLTimesMatcher.m */,
 				6313CDEF8A8E8B3BACE5F92B /* SBLTransactionManager.h */,
-				6313C7BCAFA194BF50DC6C50 /* SBLTransactionManager.m */,
 				74F93DC61852601C00214852 /* SBLMock.h */,
-				6313CEDAAD534F7C448E45DD /* SBLMockCore.h */,
+				6313C7BCAFA194BF50DC6C50 /* SBLTransactionManager.m */,
 				4DD1ACB4187462B300A5FEC4 /* SBLVerificationHandler.h */,
 				4DD1ACB5187462B300A5FEC4 /* SBLVerificationHandler.m */,
 				4DD1ACB81874691300A5FEC4 /* SBLVerificationResult.h */,
 				4DD1ACB91874691300A5FEC4 /* SBLVerificationResult.m */,
 				75EAF7531873808E00C1FB5F /* Stubble.h */,
+				6313CEDAAD534F7C448E45DD /* SBLMockCore.h */,
 				6313CD2DFCBE3162EB6EE10B /* SBLStubbedInvocation.h */,
 				6313C082B67BDB77399B202D /* SBLStubbedInvocation.m */,
 				6313CDEF8A8E8B3BACE5F92B /* SBLTransactionManager.h */,
 				6313C7BCAFA194BF50DC6C50 /* SBLTransactionManager.m */,
-				4DE7829918A1CD7E002C0470 /* SBLHelpers.h */,
-				4DE7829A18A1CD7E002C0470 /* SBLHelpers.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -287,7 +287,6 @@
 				5AA4A97418689FFB0033BAE0 /* SBLStubbedInvocation.h in Headers */,
 				5AA4A97518689FFB0033BAE0 /* SBLInvocationRecord.h in Headers */,
 				5AA4A97618689FFB0033BAE0 /* SBLMatcher.h in Headers */,
-				4DE7829B18A1CD7E002C0470 /* SBLHelpers.h in Headers */,
 				5AA4A97718689FFB0033BAE0 /* SBLErrors.h in Headers */,
 				5AA4A97818689FFB0033BAE0 /* SBLTimesMatcher.h in Headers */,
 				5AA4A97918689FFB0033BAE0 /* SBLMockObjectBehavior.h in Headers */,
@@ -296,6 +295,7 @@
 				4DD1ACBA1874691300A5FEC4 /* SBLVerificationResult.h in Headers */,
 				6313C22C11DA068196886771 /* SBLMockCore.h in Headers */,
 				5A5472EC1877290A004A4A04 /* SBLMockObject.h in Headers */,
+				4DE7829B18A1CD7E002C0470 /* SBLHelpers.h in Headers */,
 				5AA4A97B18689FFB0033BAE0 /* SBLProtocolMockObjectBehavior.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

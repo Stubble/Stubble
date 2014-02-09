@@ -30,10 +30,9 @@
 #define SBLAny_1(argumentType...) ({ SBLMatcher *matcher = [SBLMatcher any]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; NSValue *placeholderValue = [matcher placeholderWithType:@encode(argumentType)]; argumentType placeholder; [placeholderValue getValue:&placeholder]; placeholder; })
 
 // TODO - support all types
-#define SBLCapture(captorReference) _Pragma("clang diagnostic push") \
-    _Pragma("clang diagnostic ignored \"-Wconversion\"") \
-    ({ SBLMatcher *matcher = [SBLMatcher captor:captorReference]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; [matcher placeholder]; }) \
-    _Pragma("clang diagnostic pop")
+#define SBLCapture(captorReference) ({ SBLMatcher *matcher = [SBLMatcher captor:captorReference]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; NSValue *placeholderValue = [matcher placeholderWithType:@encode(typeof(*(captorReference)))]; typeof(*(captorReference)) placeholder; [placeholderValue getValue:&placeholder]; placeholder; })
+//#define SBLCapture(captorReference) ({ SBLMatcher *matcher = [SBLMatcher captor:captorReference]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; NSValue *placeholderValue = [matcher placeholderWithType:@encode(typeof(*(captorReference)))]; void *pointer; [placeholderValue getValue:&pointer]; typeof(*(captorReference)) placeholder = pointer; placeholder; })
+
 
 #define SBLMock(classOrProtocol) ({ const char *typeEncoding = @encode(typeof(classOrProtocol)); \
     SBLMockObject *mock = nil; \

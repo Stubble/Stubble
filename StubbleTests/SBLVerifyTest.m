@@ -20,8 +20,6 @@
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
 	[mock methodReturningInt];
-
-	//[self recordFailureWithDescription:@"hi" inFile:[NSString stringWithUTF8String:__FILE__] atLine:__LINE__ expected:YES];
 	
 	SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodReturningInt]);
 	XCTAssertTrue(result.successful);

@@ -43,7 +43,7 @@
 }
 
 - (void)setMatchers:(NSArray *)matchers {
-	NSMutableArray *nonObjectMatchers = [matchers mutableCopy];
+	NSMutableArray *remainingMatchers = [matchers mutableCopy];
 	
 	[self.invocation.methodSignature numberOfArguments];
 	
@@ -54,9 +54,17 @@
 		if (SBLIsObjectType(argumentType)) {
 			__unsafe_unretained id argument = nil;
 			[self.invocation getArgument:&argument atIndex:i];
+			if (SBLIsBlock(argument)) {
+				for (SBLMatcher *matcher in remainingMatchers) {
+					if ([matcher isBlockPlaceholderForMatcher:argument]) {
+						argument = matcher;
+						break;
+					}
+				}
+			}
 			if ([argument isKindOfClass:[SBLMatcher class]]) {
 				[objectMatchers addObject:argument];
-				[nonObjectMatchers removeObject:argument];
+				[remainingMatchers removeObject:argument];
 			} else {
 				[objectMatchers addObject:[SBLMatcher objectIsEqualMatcher:argument]];
 			}
@@ -65,9 +73,9 @@
 		}
 	}
 	
-	BOOL useMatchersForNonObjects = [nonObjectMatchers count];
+	BOOL useMatchersForNonObjects = [remainingMatchers count];
 	
-	if (useMatchersForNonObjects && [nonObjectMatchers count] != numberOfNonObjectArguments) {
+	if (useMatchersForNonObjects && [remainingMatchers count] != numberOfNonObjectArguments) {
 		[NSException raise:SBLBadUsage format:SBLBadMatchersProvided];
 	}
 	
@@ -78,8 +86,8 @@
 			[allMatchers addObject:objectMatchers[0]];
 			[objectMatchers removeObjectAtIndex:0];
 		} else if (useMatchersForNonObjects) {
-			[allMatchers addObject:nonObjectMatchers[0]];
-			[nonObjectMatchers removeObjectAtIndex:0];
+			[allMatchers addObject:remainingMatchers[0]];
+			[remainingMatchers removeObjectAtIndex:0];
 		} else {
 			NSValue *boxedValue = [self boxedValueForArgumentIndex:i inInvocation:self.invocation];
 			[allMatchers addObject:[SBLMatcher valueIsEqualMatcher:boxedValue]];

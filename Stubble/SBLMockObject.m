@@ -51,8 +51,10 @@
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
     self.sblNumberOfInvocations++;
+	//invocation.target = nil;
 
 	if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateStubInProgress) {
+		[invocation retainArguments];
 		[self.sblStubbedInvocations addObject:[[SBLStubbedInvocation alloc] initWithInvocation:invocation]];
 		[SBLTransactionManager.currentTransactionManager whenMethodInvokedForMock:self];
 	} else if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateVerifyInProgress) {

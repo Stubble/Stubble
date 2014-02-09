@@ -30,6 +30,10 @@
                     value = @(numberValue.doubleValue);
                 } else if (strcmp(returnType, "f") == 0) {
                     value = @(numberValue.floatValue);
+				} else if (strcmp(returnType, "q") == 0) {
+                    value = @(numberValue.longLongValue);
+				} else if (strcmp(returnType, "Q") == 0) {
+                    value = @(numberValue.unsignedLongLongValue);
 				}
 				// TODO all the other primitive types as well
             }
