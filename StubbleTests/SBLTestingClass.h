@@ -64,6 +64,8 @@ typedef void(^SBLTestingBlock)(int integer, NSObject *object);
 
 #pragma mark - Multiple Arguments
 
+- (NSString *)methodWithArgument:(NSString *)string block:(SBLTestingBlock)block;
+
 - (id)methodWithVariableNumberOfArguments:(id)argument1, ...;
 
 - (NSString *)methodWithArgument1:(NSString *)argument1 argument2:(NSString *)argument2;

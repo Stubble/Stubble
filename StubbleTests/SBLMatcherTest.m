@@ -1,6 +1,7 @@
 #import <XCTest/XCTest.h>
 #import "Stubble.h"
 #import "SBLTestingClass.h"
+#import "SBLTestingBlockCreator.h"
 
 @interface SBLMatcherTestBlockRunner : NSObject
 
@@ -183,6 +184,51 @@
     }
 
     XCTAssertEqualObjects(runner.objectPassedToBlock, @(42));
+}
+
+- (void)testBlockCaptureCapturesTwoBlocks {
+    NSString *capturedString1 = nil;
+    NSString *capturedString2 = nil;
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+    
+    [mock methodWithArgument1:@"abc" argument2:@"Capture1"];
+    [mock methodWithArgument1:@"xyz" argument2:@"Capture2"];
+    
+    verify([mock methodWithArgument1:@"abc" argument2:capture(&capturedString1)]);
+    verify([mock methodWithArgument1:@"xyz" argument2:capture(&capturedString2)]);
+    
+    XCTAssertEqualObjects(capturedString1, @"Capture1");
+    XCTAssertEqualObjects(capturedString2, @"Capture2");
+}
+
+- (void)testWhenVerificationIsMadeThenMockNoLongerCapturesArgumentsForThatVerify {
+    NSString *capturedString = nil;
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+    
+    [mock methodWithArgument1:@"abc" argument2:@"original"];
+    
+    verify([mock methodWithArgument1:@"abc" argument2:capture(&capturedString)]);
+    
+    [mock methodWithArgument1:@"abc" argument2:@"new"];
+    
+    XCTAssertEqualObjects(capturedString, @"original");
+}
+
+- (void)testWhenABlockIsCapturedAndThenTheBlockLeavesOriginalScopeThenItIsStillAvailableToCall {
+    SBLTestingBlockCreator *creator = [[SBLTestingBlockCreator alloc] init];
+    SBLTestingClass *sender = mock(SBLTestingClass.class);
+    SBLTestingClass *receiver = mock(SBLTestingClass.class);
+    creator.sender = sender;
+    creator.receiver = receiver;
+    SBLTestingBlock capturedBlock;
+    
+    when([sender methodWithBlock:capture(&capturedBlock)]);
+    
+    [creator runInBlockWithNumber:1337];
+    
+    capturedBlock(0, nil);
+
+    verify([receiver methodWithInteger:1337]);
 }
 
 @end

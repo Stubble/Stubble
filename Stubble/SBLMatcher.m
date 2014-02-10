@@ -1,8 +1,11 @@
 #import "SBLMatcher.h"
 
+typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argument);
+
 @interface SBLMatcher ()<NSCopying>
 
 @property (nonatomic, copy) SBLMatcherBlock matcherBlock;
+@property (nonatomic, copy) SBLMatcherPostInvocationMatchBlock postInvocationMatchBlock;
 @property (nonatomic, readonly) NSUUID *uuid;
 @property (nonatomic, copy) SBLMatcherPlaceholderBlock placeholderBlock;
 @property (nonatomic) SBLMatcher *memoryHack;
@@ -12,32 +15,34 @@
 @implementation SBLMatcher
 
 + (instancetype)any {
-	return [SBLMatcher matcherWithBlock:^BOOL(id argument, BOOL shouldUnboxArgument) {
+	return [SBLMatcher matcherWithBlock:^BOOL(SBLInvocationArgument *argument) {
 		return YES;
 	}];
 }
 
 + (instancetype)captor:(void *)captor {
 	NSValue *pointerValue = [NSValue valueWithPointer:captor];
-	return [SBLMatcher matcherWithBlock:^BOOL(id argument, BOOL shouldUnboxArgument) {
+	SBLMatcher *matcher = [SBLMatcher any];
+    matcher.postInvocationMatchBlock = ^(SBLInvocationArgument *argument) {
         void *captorPointer = [pointerValue pointerValue];
-
-        if (shouldUnboxArgument) {
-            [(NSValue *)argument getValue:captorPointer];
+        id capturedArgument = argument.argument;
+        
+        if (argument.shouldUnbox) {
+            [(NSValue *)capturedArgument getValue:captorPointer];
         } else {
-            if (SBLIsBlock(argument)) {
-                argument = [argument copy];
+            if (SBLIsBlock(capturedArgument)) {
+                capturedArgument = [capturedArgument copy];
             }
             __block id __strong *captorId = (id __strong *)captorPointer;
-            *captorId = argument;
+            *captorId = capturedArgument;
         }
-		return YES;
-	}];
+    };
+    return matcher;
 }
 
 + (instancetype)objectIsEqualMatcher:(id)object {
-	return [SBLMatcher matcherWithBlock:^BOOL(id argument, BOOL shouldUnboxArgument) {
-		return [object isEqual:argument] || (!object && !argument);
+	return [SBLMatcher matcherWithBlock:^BOOL(SBLInvocationArgument *argument) {
+		return [object isEqual:argument.argument] || (!object && !argument.argument);
 	}];
 }
 
@@ -48,8 +53,8 @@
 }
 
 + (instancetype)valueIsEqualMatcher:(NSValue *)value {
-	return [SBLMatcher matcherWithBlock:^BOOL(NSValue *argument, BOOL shouldUnboxArgument) {
-		return [value isEqual:argument];
+	return [SBLMatcher matcherWithBlock:^BOOL(SBLInvocationArgument *argument) {
+		return [value isEqual:argument.argument];
 	}];
 }
 
@@ -64,8 +69,14 @@
     return self;
 }
 
-- (BOOL)matchesArgument:(id)argument shouldUnboxArgument:(BOOL)shouldUnboxArgument {
-	return self.matcherBlock(argument, shouldUnboxArgument);
+- (void)postInvocationMatchActionWithArgument:(SBLInvocationArgument *)argument {
+    if (self.postInvocationMatchBlock) {
+        self.postInvocationMatchBlock(argument);
+    }
+}
+
+- (BOOL)matchesArgument:(SBLInvocationArgument *)argument {
+	return self.matcherBlock(argument);
 }
 
 - (void *)placeholder {

@@ -1,6 +1,7 @@
 #import "SBLInvocationRecord.h"
 #import "SBLErrors.h"
 #import "SBLHelpers.h"
+#import "SBLInvocationArgument.h"
 
 @interface SBLInvocationRecord ()
 
@@ -21,25 +22,6 @@
 
 - (SEL)selector {
 	return self.invocation.selector;
-}
-
-- (NSValue *)boxedValueForArgumentIndex:(NSInteger)index inInvocation:(NSInvocation *)invocation {
-	const char *argumentType = [invocation.methodSignature getArgumentTypeAtIndex:index];
-	BOOL isStruct = argumentType[0] == '{';
-	NSValue *boxedArgument = nil;
-	if (isStruct) {
-		NSUInteger typeSize = 0;
-		NSGetSizeAndAlignment(argumentType, &typeSize, NULL);
-		NSMutableData *argumentData = [[NSMutableData alloc] initWithLength:typeSize];
-		[invocation getArgument:[argumentData mutableBytes] atIndex:index];
-		boxedArgument = [NSValue valueWithBytes:[argumentData bytes] objCType:argumentType];
-	} else {
-		__unsafe_unretained id argument = nil;
-		[invocation getArgument:&argument atIndex:index];
-		boxedArgument = [NSValue valueWithBytes:&argument objCType:argumentType];
-	}
-	
-	return boxedArgument;
 }
 
 - (void)setMatchers:(NSArray *)matchers {
@@ -89,7 +71,7 @@
 			[allMatchers addObject:remainingMatchers[0]];
 			[remainingMatchers removeObjectAtIndex:0];
 		} else {
-			NSValue *boxedValue = [self boxedValueForArgumentIndex:i inInvocation:self.invocation];
+			NSValue *boxedValue = [self.class boxedValueForArgumentIndex:i inInvocation:self.invocation];
 			[allMatchers addObject:[SBLMatcher valueIsEqualMatcher:boxedValue]];
 		}
 	}
@@ -100,20 +82,61 @@
 	NSInvocation *recordedInvocation = self.invocation;
 	BOOL matchingInvocation = recordedInvocation.selector == invocation.selector;
 	if (matchingInvocation) {
-		for (int i = 2; i < recordedInvocation.methodSignature.numberOfArguments; i++) {
-			const char *argumentType = [self.invocation.methodSignature getArgumentTypeAtIndex:i];
-            BOOL isObject = SBLIsObjectType(argumentType);
-			__unsafe_unretained id argument = nil; // Need unsafe unretained here - http://stackoverflow.com/questions/11874056/nsinvocation-getreturnvalue-called-inside-forwardinvocation-makes-the-returned
-			if (isObject) {
-				[invocation getArgument:&argument atIndex:i];
-			} else {
-				argument = [self boxedValueForArgumentIndex:i inInvocation:invocation];
-			}
-			SBLMatcher *matcher = self.matchers[i-2];
-			matchingInvocation &= [matcher matchesArgument:argument shouldUnboxArgument:!isObject];
-		}
+        NSArray *arguments = [self.class argumentsFromInvocation:invocation];
+        NSInteger index = 0;
+        for (SBLInvocationArgument *argument in arguments) {
+            SBLMatcher *matcher = self.matchers[index];
+			matchingInvocation &= [matcher matchesArgument:argument];
+            index++;
+        }
+        if (matchingInvocation) {
+            index = 0;
+            for (SBLInvocationArgument *argument in arguments) {
+                SBLMatcher *matcher = self.matchers[index];
+                [matcher postInvocationMatchActionWithArgument:argument];
+                index++;
+            }
+        }
 	}
     return matchingInvocation;
+}
+
++ (NSArray *)argumentsFromInvocation:(NSInvocation *)invocation {
+    NSMutableArray *arguments = [NSMutableArray array];
+    for (int i = 2; i < invocation.methodSignature.numberOfArguments; i++) {
+        const char *argumentType = [invocation.methodSignature getArgumentTypeAtIndex:i];
+        BOOL isObject = SBLIsObjectType(argumentType);
+        id argument = nil;
+        if (isObject) {
+            void *pointer;
+            [invocation getArgument:&pointer atIndex:i];
+            argument = (__bridge id)pointer;
+        } else {
+            argument = [self boxedValueForArgumentIndex:i inInvocation:invocation];
+        }
+        [arguments addObject:[[SBLInvocationArgument alloc] initWithArgument:argument shouldUnbox:!isObject isBlock:SBLIsBlockType(argumentType)]];
+    }
+    return arguments;
+}
+
+
++ (NSValue *)boxedValueForArgumentIndex:(NSInteger)index inInvocation:(NSInvocation *)invocation {
+	const char *argumentType = [invocation.methodSignature getArgumentTypeAtIndex:index];
+	BOOL isStruct = argumentType[0] == '{';
+	NSValue *boxedArgument = nil;
+	if (isStruct) {
+		NSUInteger typeSize = 0;
+		NSGetSizeAndAlignment(argumentType, &typeSize, NULL);
+		NSMutableData *argumentData = [[NSMutableData alloc] initWithLength:typeSize];
+		[invocation getArgument:[argumentData mutableBytes] atIndex:index];
+		boxedArgument = [NSValue valueWithBytes:[argumentData bytes] objCType:argumentType];
+	} else {
+		__unsafe_unretained id argument = nil;
+		[invocation getArgument:&argument atIndex:index];
+		boxedArgument = [NSValue valueWithBytes:&argument objCType:argumentType];
+	}
+	
+	return boxedArgument;
 }
 
 - (const char *)returnType {
