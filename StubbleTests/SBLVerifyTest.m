@@ -354,4 +354,33 @@
     XCTAssertEqualObjects(result2.failureDescription, SBLMethodWasCalledUnexpectedly);
 }
 
+#pragma mark - Resetting Mocks
+
+- (void)testWhenMockIsResetThenVerifyOfPreviousCallFails {
+	SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+	[mock methodReturningBool];
+
+	SBLVerificationResult *result1 = SBLVerifyTimesImpl(times(1), [mock methodReturningBool]);
+
+	resetMock(mock);
+
+	SBLVerificationResult *result2 = SBLVerifyTimesImpl(times(1), [mock methodReturningBool]);
+
+	XCTAssertTrue(result1.successful);
+	XCTAssertFalse(result2.successful);
+}
+
+- (void)testWhenMockIsResetThenPreviousWhenCallsAreRemoved {
+	SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+	[when([mock methodReturningString]) thenReturn:@"value1"];
+
+	resetMock(mock);
+
+	NSString *string = [mock methodReturningString];
+
+	XCTAssertNil(string);
+}
+
 @end

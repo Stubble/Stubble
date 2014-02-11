@@ -14,6 +14,7 @@
 #define SBLHandleVerifyTimes(timesMatcher, methodCall...) ({ SBLHandleVerificationResult(SBLVerifyTimesImpl(timesMatcher, methodCall)); })
 #define SBLVerifyTimesImpl(timesMatcher, methodCall...) ({ [SBLTransactionManager.currentTransactionManager prepareForVerify]; (void)methodCall; [SBLTransactionManager.currentTransactionManager performVerifyNumberOfTimes:timesMatcher]; })
 #define SBLHandleVerificationResult(verificationResult) ({ [SBLVerificationHandler handleVerificationResult:verificationResult inTestCase:self inFile:__FILE__ onLine:__LINE__]; })
+#define SBLResetMock(mock) ([(SBLMockObject *)mock sblResetMock])
 
 #define SBLTimes(times) ({ [SBLTimesMatcher exactly:times]; })
 #define SBLAtLeast(times) ({ [SBLTimesMatcher atLeast:times]; })
