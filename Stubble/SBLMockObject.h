@@ -8,7 +8,6 @@
 + (instancetype)sblMockForProtocol:(Protocol *)protocol;
 
 @property (nonatomic, readonly) SBLStubbedInvocation *sblCurrentStubbedInvocation;
-@property (nonatomic, readonly) NSArray *sblActualInvocations;
 @property (nonatomic, readonly) SBLInvocationRecord *sblVerifyInvocation;
 @property (nonatomic, readonly) NSUInteger *sblNumberOfInvocations;
 

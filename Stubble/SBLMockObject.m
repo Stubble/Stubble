@@ -9,7 +9,7 @@
 
 @property (nonatomic, readonly) id<SBLMockObjectBehavior> sblBehavior;
 @property (nonatomic, readonly) NSMutableArray *sblStubbedInvocations;
-@property (nonatomic, readonly) NSMutableArray *sblActualInvocationsArray;
+@property (nonatomic, readonly) NSMutableArray *sblActualInvocations;
 @property (nonatomic, readwrite) SBLInvocationRecord *sblVerifyInvocation;
 @property (nonatomic, readwrite) NSUInteger *sblNumberOfInvocations;
 
@@ -28,7 +28,7 @@
 - (instancetype)initWithBehavior:(id<SBLMockObjectBehavior>)behavior {
     _sblBehavior = behavior;
 	_sblStubbedInvocations = [NSMutableArray array];
-    _sblActualInvocationsArray = [NSMutableArray array];
+    _sblActualInvocations = [NSMutableArray array];
     _sblNumberOfInvocations = 0;
 	return self;
 }
@@ -51,10 +51,8 @@
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
     self.sblNumberOfInvocations++;
-	//invocation.target = nil;
 
 	if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateStubInProgress) {
-		//[invocation retainArguments];
 		[self.sblStubbedInvocations addObject:[[SBLStubbedInvocation alloc] initWithInvocation:invocation]];
 		[SBLTransactionManager.currentTransactionManager whenMethodInvokedForMock:self];
 	} else if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateVerifyInProgress) {
@@ -78,17 +76,13 @@
 		// Invoke and Record Invocation
 		[invocation invokeWithTarget:nil];
         [invocation retainArguments];
-        [self.sblActualInvocationsArray addObject:invocation];
+        [self.sblActualInvocations addObject:invocation];
 	}
 }
 
 - (void)sblResetMock {
-	[self.sblActualInvocationsArray removeAllObjects];
+	[self.sblActualInvocations removeAllObjects];
 	[self.sblStubbedInvocations removeAllObjects];
-}
-
-- (NSArray *)sblActualInvocations {
-    return self.sblActualInvocationsArray;
 }
 
 - (SBLVerificationResult *)sblVerifyMockNotCalled {
