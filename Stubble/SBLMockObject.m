@@ -54,7 +54,7 @@
 	//invocation.target = nil;
 
 	if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateStubInProgress) {
-		[invocation retainArguments];
+		//[invocation retainArguments];
 		[self.sblStubbedInvocations addObject:[[SBLStubbedInvocation alloc] initWithInvocation:invocation]];
 		[SBLTransactionManager.currentTransactionManager whenMethodInvokedForMock:self];
 	} else if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateVerifyInProgress) {

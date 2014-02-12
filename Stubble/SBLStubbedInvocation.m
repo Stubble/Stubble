@@ -58,8 +58,9 @@
 }
 
 - (SBLStubbedInvocation *)thenDo:(SBLActionBlock)actionBlock {
+	SBLActionBlock block = [actionBlock copy];
 	[self thenDoWithInvocation:^(NSInvocation *invocation) {
-		actionBlock();
+		block();
 	}];
 	return self;
 }

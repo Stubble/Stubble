@@ -150,8 +150,10 @@
 	__block NSInteger counter = 0;
 	__block NSNumber *capturedNumber = nil;
 	[when([mock methodWithObject:any()]) thenDoWithInvocation:^(NSInvocation *invocation) {
-		[invocation getArgument:&capturedNumber atIndex:2];
-		NSString *returnString = [NSString stringWithFormat:@"return %d", counter++];
+		void *pointer = NULL;
+		[invocation getArgument:&pointer atIndex:2];
+		capturedNumber = (__bridge NSNumber *)(pointer);
+		NSString *returnString = [NSString stringWithFormat:@"return %ld", (long)counter++];
 		[invocation setReturnValue:&returnString];
 	}];
 	

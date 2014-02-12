@@ -1,21 +1,19 @@
 #import "SBLInvocationArgument.h"
-
-@interface SBLInvocationArgument ()
-
-@property (nonatomic, readonly) BOOL isBlock;
-
-@end
+#import "SBLHelpers.h"
 
 @implementation SBLInvocationArgument
 
-- (instancetype)initWithArgument:(id)argument shouldUnbox:(BOOL)shouldUnbox isBlock:(BOOL)isBlock {
+- (instancetype)initWithArgument:(id)argument type:(const char *)type {
     if (self = [super init]) {
-        if (isBlock) {
+		BOOL isBlock = SBLIsBlockType(type);
+		BOOL isObject = SBLIsObjectType(type);
+        if (SBLIsBlockType(type)) {
             _argument = [argument copy];
         } else {
             _argument = argument;
         }
-        _shouldUnbox = shouldUnbox;
+        _shouldUnbox = !isObject;
+		_isObject = isObject;
         _isBlock = isBlock;
     }
     return self;
