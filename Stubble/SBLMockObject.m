@@ -59,10 +59,14 @@
         self.sblVerifyInvocation = [[SBLInvocationRecord alloc] initWithInvocation:invocation];
         [SBLTransactionManager.currentTransactionManager verifyMethodInvokedForMock:self];
     } else {
+		// Record Invocation
+		SBLInvocationRecord *invocationRecord = [[SBLInvocationRecord alloc] initWithInvocation:invocation];
+        [self.sblActualInvocations addObject:invocationRecord];
+		
 		// Find Matching Stub
 		SBLStubbedInvocation *matchingWhen = nil;
 		for (SBLStubbedInvocation *ongoingWhen in self.sblStubbedInvocations.reverseObjectEnumerator) {
-			if ([ongoingWhen matchesInvocation:invocation]) {
+			if ([ongoingWhen matchesInvocation:invocationRecord]) {
 				matchingWhen = ongoingWhen;
 				break;
 			}
@@ -73,10 +77,8 @@
 			action(invocation);
 		}
 		
-		// Invoke and Record Invocation
+		// Invoke Invocation
 		[invocation invokeWithTarget:nil];
-        [invocation retainArguments];
-        [self.sblActualInvocations addObject:invocation];
 	}
 }
 
@@ -102,7 +104,7 @@
     NSInteger atLeastTimes = timesMatcher.atLeast;
     NSInteger atMostTimes = timesMatcher.atMost;
     NSInteger invocationCount = 0;
-    for (NSInvocation *actualInvocation in self.sblActualInvocations) {
+    for (SBLInvocationRecord *actualInvocation in self.sblActualInvocations) {
         if ([self.sblVerifyInvocation matchesInvocation:actualInvocation]) {
             invocationCount++;
         }

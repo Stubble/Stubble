@@ -6,10 +6,8 @@
 @interface SBLInvocationRecord ()
 
 @property (nonatomic, readonly) NSMethodSignature *methodSignature;
-@property (nonatomic, readonly) NSArray *arguments;
 @property (nonatomic, readonly) SEL invocationSelector;
-
-//@property (nonatomic, readonly) NSInvocation *invocation;
+@property (nonatomic, readonly) NSArray *arguments;
 @property (nonatomic) NSArray *matchers;
 
 @end
@@ -21,10 +19,6 @@
 		_invocationSelector = invocation.selector;
 		_methodSignature = invocation.methodSignature;
 		_arguments = [self.class argumentsFromInvocation:invocation];
-		
-//		[invocation retainArguments];
-//		_invocation = invocation;
-		
 	}
 	return self;
 }
@@ -85,10 +79,10 @@
 	_matchers = allMatchers;
 }
 
-- (BOOL)matchesInvocation:(NSInvocation *)invocation {
-	BOOL matchingInvocation = self.invocationSelector == invocation.selector;
+- (BOOL)matchesInvocation:(SBLInvocationRecord *)invocationRecord {
+	BOOL matchingInvocation = self.invocationSelector == invocationRecord.selector;
 	if (matchingInvocation) {
-        NSArray *arguments = [self.class argumentsFromInvocation:invocation];
+        NSArray *arguments = invocationRecord.arguments;
         NSInteger index = 0;
         for (SBLInvocationArgument *argument in arguments) {
             SBLMatcher *matcher = self.matchers[index];
