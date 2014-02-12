@@ -19,13 +19,4 @@
     return self;
 }
 
-// TODO - is copy required for blocks here?
-//- (id)argument {
-//    id argument = _argument;
-//    if (self.isBlock) {
-//        argument = [_argument copy];
-//    }
-//    return argument;
-//}
-
 @end

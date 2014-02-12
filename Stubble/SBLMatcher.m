@@ -86,7 +86,6 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
 - (NSValue *)placeholderWithType:(char[])type {
 	NSValue *placeholderValue = nil;
 	if (SBLIsBlockType(type)) {
-		NSLog(@"placeholderWithType: BLOCK %@", self);
 		__weak typeof(self) weakSelf = self;
 		self.memoryHack = self;
 		if (!self.placeholderBlock) {
@@ -94,12 +93,10 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
 		}
 		placeholderValue = [NSValue value:&_placeholderBlock withObjCType:type];
 	} else if (SBLIsObjectType(type)) {
-		NSLog(@"placeholderWithType: OBJECT %@", self);
 		self.memoryHack = self;
 		SBLMatcher *placeholder = [self placeholder];
 		placeholderValue = [NSValue value:&placeholder withObjCType:type];
 	} else {
-		NSLog(@"placeholderWithType: PRIMITIVE %@", self);
 		void *placeholder = NULL;
 		placeholderValue = [NSValue value:&placeholder withObjCType:type];
 	}

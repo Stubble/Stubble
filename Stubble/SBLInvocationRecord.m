@@ -63,31 +63,6 @@
 		}
 	}
 	
-	
-	//	for (NSInteger i = 2; i < self.invocation.methodSignature.numberOfArguments; i++) {
-	//		const char *argumentType = [self.invocation.methodSignature getArgumentTypeAtIndex:i];
-	//		if (SBLIsObjectType(argumentType)) {
-	//			__unsafe_unretained id argument = nil;
-	//			[self.invocation getArgument:&argument atIndex:i];
-	//			if (SBLIsBlock(argument)) {
-	//				for (SBLMatcher *matcher in remainingMatchers) {
-	//					if ([matcher isBlockPlaceholderForMatcher:argument]) {
-	//						argument = matcher;
-	//						break;
-	//					}
-	//				}
-	//			}
-	//			if ([argument isKindOfClass:[SBLMatcher class]]) {
-	//				[objectMatchers addObject:argument];
-	//				[remainingMatchers removeObject:argument];
-	//			} else {
-	//				[objectMatchers addObject:[SBLMatcher objectIsEqualMatcher:argument]];
-	//			}
-	//		} else {
-	//			numberOfNonObjectArguments++;
-	//		}
-	//	}
-	
 	NSInteger remainingMatcherCount = [remainingMatchers count];
 	BOOL useMatchersForNonObjects = remainingMatcherCount;
 	
@@ -108,21 +83,6 @@
 		}
 	}
 	_matchers = allMatchers;
-	//
-	//	for (NSInteger i = 2; i < self.invocation.methodSignature.numberOfArguments; i++) {
-	//		const char *argumentType = [self.invocation.methodSignature getArgumentTypeAtIndex:i];
-	//		if (SBLIsObjectType(argumentType)) {
-	//			[allMatchers addObject:objectMatchers[0]];
-	//			[objectMatchers removeObjectAtIndex:0];
-	//		} else if (useMatchersForNonObjects) {
-	//			[allMatchers addObject:remainingMatchers[0]];
-	//			[remainingMatchers removeObjectAtIndex:0];
-	//		} else {
-	//			NSValue *boxedValue = [self.class boxedValueForArgumentIndex:i inInvocation:self.invocation];
-	//			[allMatchers addObject:[SBLMatcher valueIsEqualMatcher:boxedValue]];
-	//		}
-	//	}
-	//	_matchers = allMatchers;
 }
 
 - (BOOL)matchesInvocation:(NSInvocation *)invocation {
@@ -181,9 +141,6 @@
 		NSGetSizeAndAlignment(argumentType, &size, NULL);
 		NSMutableData *arg = [NSMutableData dataWithLength:size];
 		[invocation getArgument:[arg mutableBytes] atIndex:index];
-		
-//		void *pointer = malloc(sizeof([invocation.methodSignature ]));
-//		[invocation getArgument:&pointer atIndex:index];
 		boxedArgument = [NSValue valueWithBytes:[arg bytes] objCType:argumentType];
 	}
 	
