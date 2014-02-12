@@ -14,5 +14,6 @@
 
 - (SBLVerificationResult *)sblVerifyMockNotCalled;
 - (SBLVerificationResult *)sblVerifyInvocationOccurredNumberOfTimes:(SBLTimesMatcher *)times;
+- (void)sblResetMock;
 
 @end

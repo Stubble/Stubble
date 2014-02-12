@@ -82,6 +82,11 @@
 	}
 }
 
+- (void)sblResetMock {
+	[self.sblActualInvocationsArray removeAllObjects];
+	[self.sblStubbedInvocations removeAllObjects];
+}
+
 - (NSArray *)sblActualInvocations {
     return self.sblActualInvocationsArray;
 }
