@@ -6,7 +6,8 @@
 #endif
 
 #define when(methodCall...) SBLWhen(methodCall)
-#define verify(methodCall...) SBLVerify(methodCall)
+#define verifyCalled(methodCall...) SBLVerify(methodCall)
+#define verify(methodCall...) verifyCalled(methodCall)
 #define verifyNever(args...) SBLVerifyNever(args)
 #define verifyTimes(timesMatcher, methodCall...) SBLVerifyTimes(timesMatcher, methodCall)
 #define verifyNoInteractions(mock) SBLVerifyNoInteractions(mock)
