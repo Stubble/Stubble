@@ -63,12 +63,12 @@
 		74F93DBC18525FA100214852 /* SBLStubTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 74F93DBB18525FA100214852 /* SBLStubTest.m */; };
 		75EAF7541873808E00C1FB5F /* Stubble.h in Headers */ = {isa = PBXBuildFile; fileRef = 75EAF7531873808E00C1FB5F /* Stubble.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AAFD456B9E434F788AD7FA4A /* SBLValueLoggingHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4ECB9CA6481AFFAF849E /* SBLValueLoggingHelper.h */; };
-		AAFD457357101BF8EFFA38A7 /* SBLMatcherResult.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD49C9A0A7E574CC16048B /* SBLMatcherResult.m */; };
+		AAFD457357101BF8EFFA38A7 /* SBLArgumentMatcherResult.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD49C9A0A7E574CC16048B /* SBLArgumentMatcherResult.m */; };
 		AAFD4BBA86C957E1C735243C /* SBLValueLoggingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD48CCFBD6BC48364A7801 /* SBLValueLoggingHelper.m */; };
 		AAFD4BCD39B355447029F235 /* SBLTimesMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD431560AC3BD461C4B3D1 /* SBLTimesMatcher.m */; };
 		AAFD4BE30957D2DC3CFD42B6 /* SBLValueLoggingHelperTest.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD4916AAC6AAA9584FDB1A /* SBLValueLoggingHelperTest.m */; };
 		AAFD4E581C8800002923FDEC /* SBLExceptionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD4746845E28C0CBF4683E /* SBLExceptionTest.m */; };
-		AAFD4FC42EF9EAE772B93D67 /* SBLMatcherResult.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4BBB523D1485AC4AD7D9 /* SBLMatcherResult.h */; };
+		AAFD4FC42EF9EAE772B93D67 /* SBLArgumentMatcherResult.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4BBB523D1485AC4AD7D9 /* SBLArgumentMatcherResult.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,8 +151,8 @@
 		AAFD4746845E28C0CBF4683E /* SBLExceptionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLExceptionTest.m; sourceTree = "<group>"; };
 		AAFD48CCFBD6BC48364A7801 /* SBLValueLoggingHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLValueLoggingHelper.m; sourceTree = "<group>"; };
 		AAFD4916AAC6AAA9584FDB1A /* SBLValueLoggingHelperTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLValueLoggingHelperTest.m; sourceTree = "<group>"; };
-		AAFD49C9A0A7E574CC16048B /* SBLMatcherResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLMatcherResult.m; sourceTree = "<group>"; };
-		AAFD4BBB523D1485AC4AD7D9 /* SBLMatcherResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLMatcherResult.h; sourceTree = "<group>"; };
+		AAFD49C9A0A7E574CC16048B /* SBLArgumentMatcherResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLArgumentMatcherResult.m; sourceTree = "<group>"; };
+		AAFD4BBB523D1485AC4AD7D9 /* SBLArgumentMatcherResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLArgumentMatcherResult.h; sourceTree = "<group>"; };
 		AAFD4ECB9CA6481AFFAF849E /* SBLValueLoggingHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLValueLoggingHelper.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,8 +192,8 @@
 				AAFD431560AC3BD461C4B3D1 /* SBLTimesMatcher.m */,
 				5A7F2CAC18A96E44000B5AAD /* SBLInvocationArgument.h */,
 				5A7F2CAD18A96E44000B5AAD /* SBLInvocationArgument.m */,
-				AAFD49C9A0A7E574CC16048B /* SBLMatcherResult.m */,
-				AAFD4BBB523D1485AC4AD7D9 /* SBLMatcherResult.h */,
+				AAFD49C9A0A7E574CC16048B /* SBLArgumentMatcherResult.m */,
+				AAFD4BBB523D1485AC4AD7D9 /* SBLArgumentMatcherResult.h */,
 				AAFD48CCFBD6BC48364A7801 /* SBLValueLoggingHelper.m */,
 				AAFD4ECB9CA6481AFFAF849E /* SBLValueLoggingHelper.h */,
 			);
@@ -326,7 +326,7 @@
 				4DE7829B18A1CD7E002C0470 /* SBLHelpers.h in Headers */,
 				5A7F2CAE18A96E44000B5AAD /* SBLInvocationArgument.h in Headers */,
 				5AA4A97B18689FFB0033BAE0 /* SBLProtocolMockObjectBehavior.h in Headers */,
-				AAFD4FC42EF9EAE772B93D67 /* SBLMatcherResult.h in Headers */,
+				AAFD4FC42EF9EAE772B93D67 /* SBLArgumentMatcherResult.h in Headers */,
 				AAFD456B9E434F788AD7FA4A /* SBLValueLoggingHelper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -443,7 +443,7 @@
 				4DD1ACBB1874691300A5FEC4 /* SBLVerificationResult.m in Sources */,
 				AAFD4BCD39B355447029F235 /* SBLTimesMatcher.m in Sources */,
 				4D80408E186403BE001DE9FE /* SBLClassMockObjectBehavior.m in Sources */,
-				AAFD457357101BF8EFFA38A7 /* SBLMatcherResult.m in Sources */,
+				AAFD457357101BF8EFFA38A7 /* SBLArgumentMatcherResult.m in Sources */,
 				AAFD4BBA86C957E1C735243C /* SBLValueLoggingHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

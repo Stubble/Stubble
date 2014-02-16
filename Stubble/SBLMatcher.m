@@ -1,5 +1,5 @@
 #import "SBLMatcher.h"
-#import "SBLMatcherResult.h"
+#import "SBLArgumentMatcherResult.h"
 #import "SBLValueLoggingHelper.h"
 
 typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argument);
@@ -17,8 +17,8 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
 @implementation SBLMatcher
 
 + (instancetype)any {
-	return [SBLMatcher matcherWithBlock:^SBLMatcherResult *(SBLInvocationArgument *argument) {
-        return [[SBLMatcherResult alloc] initWithMatches:YES];
+	return [SBLMatcher matcherWithBlock:^SBLArgumentMatcherResult *(SBLInvocationArgument *argument) {
+        return [[SBLArgumentMatcherResult alloc] initWithMatches:YES];
 	}];
 }
 
@@ -43,17 +43,15 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
 }
 
 + (instancetype)objectIsEqualMatcher:(id)object {
-	return [SBLMatcher matcherWithBlock:^SBLMatcherResult *(SBLInvocationArgument *argument) {
-        BOOL matches = [object isEqual:argument.argument] || (!object && !argument.argument);
-        if (!matches) {
-            NSLog(@"Expected a %@", argument.argument);
-            NSLog(@"But was a %@", object);
+	return [SBLMatcher matcherWithBlock:^SBLArgumentMatcherResult *(SBLInvocationArgument *argument) {
+        BOOL argumentMatches = [object isEqual:argument.argument] || (!object && !argument.argument);
+        SBLArgumentMatcherResult *argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches];
+        if (!argumentMatches) {
+            argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches
+                                                             expectedArgument:argument.argument
+                                                               actualArgument:object];
         }
-        SBLMatcherResult *matcherResult = [[SBLMatcherResult alloc] initWithMatches:matches
-                                                                 expectedParameters:nil
-                                                                   actualParameters:nil];
-        NSLog(@"Matches: %@", matches ? @"YES" : @"NO");
-        return matcherResult;
+        return argumentMatcherResult;
 	}];
 }
 
@@ -64,18 +62,18 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
 }
 
 + (instancetype)valueIsEqualMatcher:(NSValue *)value {
-	return [SBLMatcher matcherWithBlock:^SBLMatcherResult *(SBLInvocationArgument *argument) {
-        BOOL matches = [value isEqual:argument.argument];
+	return [SBLMatcher matcherWithBlock:^SBLArgumentMatcherResult *(SBLInvocationArgument *argument) {
+        BOOL argumentMatches = [value isEqual:argument.argument];
+        SBLArgumentMatcherResult *argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches];
         SBLValueLoggingHelper *valueLoggingHelper = [[SBLValueLoggingHelper alloc] init];
-        if (!matches) {
-            NSLog(@"Expected a %@", [valueLoggingHelper stringValueForValue:argument.argument type:argument.type]);
-            NSLog(@"But was a %@", [valueLoggingHelper stringValueForValue:value type:argument.type]);
+        if (!argumentMatches) {
+            NSString *expectedArgument = [valueLoggingHelper stringValueForValue:argument.argument type:argument.type];
+            NSString *actualArgument = [valueLoggingHelper stringValueForValue:value type:argument.type];
+            argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches
+                                                                     expectedArgument:expectedArgument
+                                                                       actualArgument:actualArgument];
         }
-        SBLMatcherResult *matcherResult = [[SBLMatcherResult alloc] initWithMatches:matches
-                                                                 expectedParameters:nil
-                                                                   actualParameters:nil];
-        NSLog(@"Matches: %@", matches ? @"YES" : @"NO");
-        return matcherResult;
+        return argumentMatcherResult;
 	}];
 }
 
@@ -96,7 +94,7 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
     }
 }
 
-- (SBLMatcherResult *)matchesArgument:(SBLInvocationArgument *)argument {
+- (SBLArgumentMatcherResult *)matchesArgument:(SBLInvocationArgument *)argument {
 	return self.matcherBlock(argument);
 }
 

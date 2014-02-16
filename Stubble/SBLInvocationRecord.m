@@ -87,7 +87,7 @@
         NSInteger index = 0;
         for (SBLInvocationArgument *argument in arguments) {
             SBLMatcher *matcher = self.matchers[index];
-            SBLMatcherResult *matcherResult = [matcher matchesArgument:argument];
+            SBLArgumentMatcherResult *matcherResult = [matcher matchesArgument:argument];
             [matcherResults addObject:matcherResult];
             matchingInvocation &= matcherResult.matches;
             index++;
@@ -102,7 +102,7 @@
         }
 	}
     if ([matcherResults count] == 0u && matchingInvocation) {
-        [matcherResults addObject:[[SBLMatcherResult alloc] initWithMatches:YES]];
+        [matcherResults addObject:[[SBLArgumentMatcherResult alloc] initWithMatches:YES]];
     }
     return matcherResults;
 }

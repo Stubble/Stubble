@@ -86,7 +86,7 @@
 
 - (BOOL)matchesInvocation:(NSArray *)matcherResults {
     BOOL matchesInvocation = [matcherResults count] > 0;
-    for (SBLMatcherResult *matcherResult in matcherResults) {
+    for (SBLArgumentMatcherResult *matcherResult in matcherResults) {
         if (!matcherResult.matches) {
             matchesInvocation = NO;
         }
