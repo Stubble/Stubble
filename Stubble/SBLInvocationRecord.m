@@ -79,14 +79,17 @@
 	_matchers = allMatchers;
 }
 
-- (BOOL)matchesInvocation:(SBLInvocationRecord *)invocationRecord {
+- (NSArray *)matchesInvocation:(SBLInvocationRecord *)invocationRecord {
 	BOOL matchingInvocation = self.invocationSelector == invocationRecord.selector;
+    NSMutableArray *matcherResults = [NSMutableArray array];
 	if (matchingInvocation) {
         NSArray *arguments = invocationRecord.arguments;
         NSInteger index = 0;
         for (SBLInvocationArgument *argument in arguments) {
             SBLMatcher *matcher = self.matchers[index];
-			matchingInvocation &= [matcher matchesArgument:argument];
+            SBLMatcherResult *matcherResult = [matcher matchesArgument:argument];
+            [matcherResults addObject:matcherResult];
+            matchingInvocation &= matcherResult.matches;
             index++;
         }
         if (matchingInvocation) {
@@ -98,7 +101,10 @@
             }
         }
 	}
-    return matchingInvocation;
+    if ([matcherResults count] == 0u && matchingInvocation) {
+        [matcherResults addObject:[[SBLMatcherResult alloc] initWithMatches:YES]];
+    }
+    return matcherResults;
 }
 
 + (NSArray *)argumentsFromInvocation:(NSInvocation *)invocation {

@@ -51,7 +51,6 @@
         return [NSString stringWithFormat:@"%@", unwrappedValue ? @"YES" : @"NO"];
     }
     return nil;
-
 }
 
 - (NSString *)convertValue:value intoContainer:(void *)container formatSpecifier:(NSString *)formatSpecifier {

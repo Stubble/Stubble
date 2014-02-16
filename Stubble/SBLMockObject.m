@@ -66,7 +66,9 @@
 		// Find Matching Stub
 		SBLStubbedInvocation *matchingWhen = nil;
 		for (SBLStubbedInvocation *ongoingWhen in self.sblStubbedInvocations.reverseObjectEnumerator) {
-			if ([ongoingWhen matchesInvocation:invocationRecord]) {
+//            BOOL matches = [ongoingWhen matchesInvocation:invocationRecord];
+            BOOL matches = [self matchesInvocation:[ongoingWhen matchesInvocation:invocationRecord]];
+			if (matches) {
 				matchingWhen = ongoingWhen;
 				break;
 			}
@@ -80,6 +82,16 @@
 		// Invoke Invocation
 		[invocation invokeWithTarget:nil];
 	}
+}
+
+- (BOOL)matchesInvocation:(NSArray *)matcherResults {
+    BOOL matchesInvocation = [matcherResults count] > 0;
+    for (SBLMatcherResult *matcherResult in matcherResults) {
+        if (!matcherResult.matches) {
+            matchesInvocation = NO;
+        }
+    }
+    return matchesInvocation;
 }
 
 - (void)sblResetMock {
@@ -105,7 +117,9 @@
     NSInteger atMostTimes = timesMatcher.atMost;
     NSInteger invocationCount = 0;
     for (SBLInvocationRecord *actualInvocation in self.sblActualInvocations) {
-        if ([self.sblVerifyInvocation matchesInvocation:actualInvocation]) {
+//        BOOL matchesInvocation = [self.sblVerifyInvocation matchesInvocation:actualInvocation];
+        BOOL matchesInvocation = [self matchesInvocation:[self.sblVerifyInvocation matchesInvocation:actualInvocation]];
+        if (matchesInvocation) {
             invocationCount++;
         }
     }

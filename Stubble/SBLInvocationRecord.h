@@ -9,7 +9,7 @@
 
 - (void)setMatchers:(NSArray *)matchers;
 
-- (BOOL)matchesInvocation:(SBLInvocationRecord *)invocationRecord;
+- (NSArray *)matchesInvocation:(SBLInvocationRecord *)invocationRecord;
 - (const char *)returnType;
 
 

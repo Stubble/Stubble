@@ -12,6 +12,7 @@
         } else {
             _argument = argument;
         }
+        _type = type;
         _shouldUnbox = !isObject;
 		_isObject = isObject;
         _isBlock = isBlock;

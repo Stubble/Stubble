@@ -213,15 +213,15 @@
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [mock methodWithManyArguments:@"1" primitive:2 number:@3];
-	
+
 	SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"2" primitive:2 number:@3]);
 	XCTAssertFalse(result.successful);
     XCTAssertNotNil(result.failureDescription);
-	
+
 	result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"1" primitive:1 number:@3]);
 	XCTAssertFalse(result.successful);
     XCTAssertNotNil(result.failureDescription);
-	
+
 	result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"1" primitive:2 number:@1]);
 	XCTAssertFalse(result.successful);
     XCTAssertNotNil(result.failureDescription);
