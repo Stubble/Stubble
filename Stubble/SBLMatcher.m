@@ -45,12 +45,9 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
 + (instancetype)objectIsEqualMatcher:(id)object {
 	return [SBLMatcher matcherWithBlock:^SBLArgumentMatcherResult *(SBLInvocationArgument *argument) {
         BOOL argumentMatches = [object isEqual:argument.argument] || (!object && !argument.argument);
-        SBLArgumentMatcherResult *argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches];
-        if (!argumentMatches) {
-            argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches
-                                                             expectedArgument:argument.argument
-                                                               actualArgument:object];
-        }
+        SBLArgumentMatcherResult *argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches
+                                                         expectedArgument:argument.argument
+                                                           actualArgument:object];
         return argumentMatcherResult;
 	}];
 }
@@ -64,15 +61,12 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
 + (instancetype)valueIsEqualMatcher:(NSValue *)value {
 	return [SBLMatcher matcherWithBlock:^SBLArgumentMatcherResult *(SBLInvocationArgument *argument) {
         BOOL argumentMatches = [value isEqual:argument.argument];
-        SBLArgumentMatcherResult *argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches];
         SBLValueLoggingHelper *valueLoggingHelper = [[SBLValueLoggingHelper alloc] init];
-        if (!argumentMatches) {
-            NSString *expectedArgument = [valueLoggingHelper stringValueForValue:argument.argument type:argument.type];
-            NSString *actualArgument = [valueLoggingHelper stringValueForValue:value type:argument.type];
-            argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches
-                                                                     expectedArgument:expectedArgument
-                                                                       actualArgument:actualArgument];
-        }
+        NSString *expectedArgument = [valueLoggingHelper stringValueForValue:argument.argument type:argument.type];
+        NSString *actualArgument = [valueLoggingHelper stringValueForValue:value type:argument.type];
+        SBLArgumentMatcherResult *argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches
+                                                                 expectedArgument:expectedArgument
+                                                                   actualArgument:actualArgument];
         return argumentMatcherResult;
 	}];
 }

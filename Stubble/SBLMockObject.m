@@ -66,7 +66,6 @@
 		// Find Matching Stub
 		SBLStubbedInvocation *matchingWhen = nil;
 		for (SBLStubbedInvocation *ongoingWhen in self.sblStubbedInvocations.reverseObjectEnumerator) {
-//            BOOL matches = [ongoingWhen matchesInvocation:invocationRecord];
             BOOL matches = [self matchesInvocation:[ongoingWhen matchesInvocation:invocationRecord]];
 			if (matches) {
 				matchingWhen = ongoingWhen;
@@ -84,9 +83,9 @@
 	}
 }
 
-- (BOOL)matchesInvocation:(NSArray *)matcherResults {
-    BOOL matchesInvocation = [matcherResults count] > 0;
-    for (SBLArgumentMatcherResult *matcherResult in matcherResults) {
+- (BOOL)matchesInvocation:(NSArray *)argumentMatcherResults {
+    BOOL matchesInvocation = [argumentMatcherResults count] > 0;
+    for (SBLArgumentMatcherResult *matcherResult in argumentMatcherResults) {
         if (!matcherResult.matches) {
             matchesInvocation = NO;
         }
@@ -116,20 +115,24 @@
     NSInteger atLeastTimes = timesMatcher.atLeast;
     NSInteger atMostTimes = timesMatcher.atMost;
     NSInteger invocationCount = 0;
+    NSMutableArray *mismatchedMethodCalls = [NSMutableArray array];
     for (SBLInvocationRecord *actualInvocation in self.sblActualInvocations) {
-//        BOOL matchesInvocation = [self.sblVerifyInvocation matchesInvocation:actualInvocation];
-        BOOL matchesInvocation = [self matchesInvocation:[self.sblVerifyInvocation matchesInvocation:actualInvocation]];
+        NSArray *argumentMatcherResults = [self.sblVerifyInvocation matchesInvocation:actualInvocation];
+        BOOL matchesInvocation = [self matchesInvocation:argumentMatcherResults];
         if (matchesInvocation) {
             invocationCount++;
+        } else {
+            [mismatchedMethodCalls addObject:argumentMatcherResults];
         }
     }
-	
+
 	BOOL success = atLeastTimes <= invocationCount && invocationCount <= atMostTimes;
 	NSString *failureMessage = nil;
     if (!success) {
         NSString *countString = invocationCount == 1 ? @"1 time" : [NSString stringWithFormat:@"%ld times", (long)invocationCount];
         NSString *actualString = [NSString stringWithFormat:@"Method '%@' was called %@ ", NSStringFromSelector(self.sblVerifyInvocation.selector), countString];
         NSString *expectedString;
+
         if (atMostTimes == 0) {
             expectedString = @"(expected no calls)";
         } else if (atMostTimes == NSIntegerMax) {
@@ -140,6 +143,19 @@
             expectedString = [NSString stringWithFormat:@"(expected between %ld and %ld)", (long)atLeastTimes, (long)atMostTimes];
         }
         failureMessage = [actualString stringByAppendingString:expectedString];
+
+        if ([mismatchedMethodCalls count]) {
+            NSMutableArray *expectedParameters = [NSMutableArray array];
+            NSMutableArray *actualParameters = [NSMutableArray array];
+            for (SBLArgumentMatcherResult *argumentMatcherResult in mismatchedMethodCalls[0]) {
+                [expectedParameters addObject:argumentMatcherResult.expectedArgumentStringValue];
+            }
+            for (SBLArgumentMatcherResult *argumentMatcherResult in mismatchedMethodCalls[0]) {
+                [actualParameters addObject:argumentMatcherResult.actualArgumentStringValue];
+            }
+            NSString *differingParametersMessage = @"Method '%@' was called, but with differing parameters. Expected: %@ \rActual: %@";
+            failureMessage = [NSString stringWithFormat:differingParametersMessage, NSStringFromSelector(self.sblVerifyInvocation.selector), expectedParameters, actualParameters];
+        }
     }
 	return [[SBLVerificationResult alloc] initWithSuccess:success failureDescription:failureMessage];
 }

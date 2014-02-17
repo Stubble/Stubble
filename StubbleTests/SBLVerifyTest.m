@@ -201,7 +201,7 @@
 
 #pragma mark - Verify Failure Tests
 
-- (void)testWhenVerifyingForMethodThatWasNeverCalledThenExceptionIsThrown {
+- (void)testWhenVerifyingForMethodThatWasNeverCalledThenTheTestFailsWithTheCorrectMessage {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
 	SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodReturningInt]);
@@ -209,25 +209,70 @@
     XCTAssertNotNil(result.failureDescription);
 }
 
-- (void)testWhenVerifyingForMethodWithDifferentParametersThenExceptionIsThrown {
+- (void)testWhenVerifyingForMethodWithDifferentParametersThenHelpfulMessageIsReturned {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [mock methodWithManyArguments:@"1" primitive:2 number:@3];
 
+    NSString *expectedFailureMessageFormat = @"Method 'methodWithManyArguments:primitive:number:' was called, but with differing parameters. Expected: %@ \rActual: %@";
 	SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"2" primitive:2 number:@3]);
 	XCTAssertFalse(result.successful);
-    XCTAssertNotNil(result.failureDescription);
+    NSArray *expectedArray = @[@"1", @"2", @"3"];
+    NSArray *actualArray = @[@"2", @"2", @"3"];
+    NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
+    XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 
 	result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"1" primitive:1 number:@3]);
 	XCTAssertFalse(result.successful);
-    XCTAssertNotNil(result.failureDescription);
+    actualArray = @[@"1", @"1", @"3"];
+    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
+    XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 
-	result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"1" primitive:2 number:@1]);
-	XCTAssertFalse(result.successful);
-    XCTAssertNotNil(result.failureDescription);
+    result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"1" primitive:2 number:@1]);
+    XCTAssertFalse(result.successful);
+    actualArray = @[@"1", @"2", @"1"];
+    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
+    XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 }
 
-- (void)testWhenVerifyingForMethodWithVoidReturnTypeNotCalledThenAnExceptionIsThrown {
+- (void)testWhenVerifyingForMethodWithDifferentPrimitiveParametersThenHelpfulMessageIsReturned {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    [mock methodWithManyPrimitiveArguments:(int)123
+                                  shortArg:(short)123
+                                   longArg:(long)123
+                               longLongArg:(long long)123
+                                 doubleArg:(double)12.3
+                                  floatArg:(float)12.3
+                                   uIntArg:(unsigned int)123
+                                 uShortArg:(unsigned short)123
+                                  uLongArg:(unsigned long)123
+                                   charArg:(char)'w'
+                                  uCharArg:(unsigned char)123
+                                   boolArg:(bool)YES];
+
+    NSString *expectedFailureMessageFormat = @"Method 'methodWithManyPrimitiveArguments:shortArg:longArg:longLongArg:doubleArg:floatArg:uIntArg:uShortArg:uLongArg:charArg:uCharArg:boolArg:' was called, but with differing parameters. Expected: %@ \rActual: %@";
+    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyPrimitiveArguments:(int)234
+        shortArg:(short)234
+        longArg:(long)234
+        longLongArg:(long long)234
+        doubleArg:(double)23.4f
+        floatArg:(float)23.4f
+        uIntArg:(unsigned int)234
+        uShortArg:(unsigned short)234
+        uLongArg:(unsigned long)234
+        charArg:(char)'x'
+        uCharArg:(unsigned char)234
+        boolArg:(bool)NO]);
+
+    XCTAssertFalse(result.successful);
+    NSArray *expectedArray = @[@"123", @"123", @"123", @"123", @"12.3", @"12.3", @"123", @"123", @"123", @"w", @"123", @"YES"];
+    NSArray *actualArray = @[@"234", @"234", @"234", @"234", @"23.4", @"23.4", @"234", @"234", @"234", @"x", @"234", @"NO"];
+    NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
+    XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
+}
+
+- (void)testWhenVerifyingForMethodWithVoidReturnTypeNotCalledThenTestFailsWithTheCorrectMessage {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
 	SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithNoReturn]);
@@ -237,7 +282,7 @@
 
 #pragma mark - Verify Times Tests
 
-- (void)testWhenVerifyIsCalledZeroTimesThenAnExpectedExceptionIsThrown {
+- (void)testWhenVerifyIsCalledZeroTimesThenTheTestFailsWithTheCorrectMessage {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
 	SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodReturningInt]);

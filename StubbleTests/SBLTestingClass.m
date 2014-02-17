@@ -142,4 +142,18 @@
 	return @"123";
 }
 
+- (void)methodWithManyPrimitiveArguments:(int)intArg
+                                shortArg:(short)shortArg
+                                 longArg:(long)longArg
+                             longLongArg:(long long)longLongArg
+                               doubleArg:(double)doubleArg
+                                floatArg:(float)floatArg
+                                 uIntArg:(unsigned int)uIntArg
+                               uShortArg:(unsigned short)uShortArg
+                                uLongArg:(unsigned long)uLongArg
+                                 charArg:(char)charArg
+                                uCharArg:(unsigned char)uCharArg
+                                 boolArg:(bool)boolArg {
+
+}
 @end
