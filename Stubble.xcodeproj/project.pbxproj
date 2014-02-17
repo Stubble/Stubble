@@ -62,8 +62,10 @@
 		74F93DBA18525FA100214852 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74F93DB818525FA100214852 /* InfoPlist.strings */; };
 		74F93DBC18525FA100214852 /* SBLStubTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 74F93DBB18525FA100214852 /* SBLStubTest.m */; };
 		75EAF7541873808E00C1FB5F /* Stubble.h in Headers */ = {isa = PBXBuildFile; fileRef = 75EAF7531873808E00C1FB5F /* Stubble.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AAFD41575C3906917DB3B296 /* SBLInvocationMatchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4F9F2BB34D38DB5317A6 /* SBLInvocationMatchResult.h */; };
 		AAFD456B9E434F788AD7FA4A /* SBLValueLoggingHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4ECB9CA6481AFFAF849E /* SBLValueLoggingHelper.h */; };
 		AAFD457357101BF8EFFA38A7 /* SBLArgumentMatcherResult.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD49C9A0A7E574CC16048B /* SBLArgumentMatcherResult.m */; };
+		AAFD4B749CC89E374F1F7245 /* SBLInvocationMatchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD432360F5D4B73F8A79B6 /* SBLInvocationMatchResult.m */; };
 		AAFD4BBA86C957E1C735243C /* SBLValueLoggingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD48CCFBD6BC48364A7801 /* SBLValueLoggingHelper.m */; };
 		AAFD4BCD39B355447029F235 /* SBLTimesMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD431560AC3BD461C4B3D1 /* SBLTimesMatcher.m */; };
 		AAFD4BE30957D2DC3CFD42B6 /* SBLValueLoggingHelperTest.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD4916AAC6AAA9584FDB1A /* SBLValueLoggingHelperTest.m */; };
@@ -147,6 +149,7 @@
 		75EAF7531873808E00C1FB5F /* Stubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stubble.h; sourceTree = "<group>"; };
 		75EAF75C1873845D00C1FB5F /* framework-builder */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; name = "framework-builder"; path = "Scripts/framework-builder"; sourceTree = "<group>"; };
 		AAFD431560AC3BD461C4B3D1 /* SBLTimesMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLTimesMatcher.m; sourceTree = "<group>"; };
+		AAFD432360F5D4B73F8A79B6 /* SBLInvocationMatchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLInvocationMatchResult.m; sourceTree = "<group>"; };
 		AAFD46DFB029A6FC17A48B0D /* SBLTimesMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLTimesMatcher.h; sourceTree = "<group>"; };
 		AAFD4746845E28C0CBF4683E /* SBLExceptionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLExceptionTest.m; sourceTree = "<group>"; };
 		AAFD48CCFBD6BC48364A7801 /* SBLValueLoggingHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLValueLoggingHelper.m; sourceTree = "<group>"; };
@@ -154,6 +157,7 @@
 		AAFD49C9A0A7E574CC16048B /* SBLArgumentMatcherResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLArgumentMatcherResult.m; sourceTree = "<group>"; };
 		AAFD4BBB523D1485AC4AD7D9 /* SBLArgumentMatcherResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLArgumentMatcherResult.h; sourceTree = "<group>"; };
 		AAFD4ECB9CA6481AFFAF849E /* SBLValueLoggingHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLValueLoggingHelper.h; sourceTree = "<group>"; };
+		AAFD4F9F2BB34D38DB5317A6 /* SBLInvocationMatchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLInvocationMatchResult.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +200,8 @@
 				AAFD4BBB523D1485AC4AD7D9 /* SBLArgumentMatcherResult.h */,
 				AAFD48CCFBD6BC48364A7801 /* SBLValueLoggingHelper.m */,
 				AAFD4ECB9CA6481AFFAF849E /* SBLValueLoggingHelper.h */,
+				AAFD432360F5D4B73F8A79B6 /* SBLInvocationMatchResult.m */,
+				AAFD4F9F2BB34D38DB5317A6 /* SBLInvocationMatchResult.h */,
 			);
 			name = "Invocation Matching";
 			sourceTree = "<group>";
@@ -328,6 +334,7 @@
 				5AA4A97B18689FFB0033BAE0 /* SBLProtocolMockObjectBehavior.h in Headers */,
 				AAFD4FC42EF9EAE772B93D67 /* SBLArgumentMatcherResult.h in Headers */,
 				AAFD456B9E434F788AD7FA4A /* SBLValueLoggingHelper.h in Headers */,
+				AAFD41575C3906917DB3B296 /* SBLInvocationMatchResult.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +452,7 @@
 				4D80408E186403BE001DE9FE /* SBLClassMockObjectBehavior.m in Sources */,
 				AAFD457357101BF8EFFA38A7 /* SBLArgumentMatcherResult.m in Sources */,
 				AAFD4BBA86C957E1C735243C /* SBLValueLoggingHelper.m in Sources */,
+				AAFD4B749CC89E374F1F7245 /* SBLInvocationMatchResult.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

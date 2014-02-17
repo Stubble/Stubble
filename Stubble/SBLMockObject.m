@@ -1,9 +1,9 @@
 #import "SBLMockObject.h"
 #import "SBLTransactionManager.h"
 #import "SBLErrors.h"
-#import "SBLTimesMatcher.h"
 #import "SBLProtocolMockObjectBehavior.h"
 #import "SBLClassMockObjectBehavior.h"
+#import "SBLInvocationMatchResult.h"
 
 @interface SBLMockObject ()
 
@@ -66,8 +66,8 @@
 		// Find Matching Stub
 		SBLStubbedInvocation *matchingWhen = nil;
 		for (SBLStubbedInvocation *ongoingWhen in self.sblStubbedInvocations.reverseObjectEnumerator) {
-            BOOL matches = [self matchesInvocation:[ongoingWhen matchesInvocation:invocationRecord]];
-			if (matches) {
+            SBLInvocationMatchResult *invocationMatchResult = [ongoingWhen matchResultForInvocation:invocationRecord];
+			if (invocationMatchResult.invocationMatches) {
 				matchingWhen = ongoingWhen;
 				break;
 			}
@@ -81,16 +81,6 @@
 		// Invoke Invocation
 		[invocation invokeWithTarget:nil];
 	}
-}
-
-- (BOOL)matchesInvocation:(NSArray *)argumentMatcherResults {
-    BOOL matchesInvocation = [argumentMatcherResults count] > 0;
-    for (SBLArgumentMatcherResult *matcherResult in argumentMatcherResults) {
-        if (!matcherResult.matches) {
-            matchesInvocation = NO;
-        }
-    }
-    return matchesInvocation;
 }
 
 - (void)sblResetMock {
@@ -117,12 +107,11 @@
     NSInteger invocationCount = 0;
     NSMutableArray *mismatchedMethodCalls = [NSMutableArray array];
     for (SBLInvocationRecord *actualInvocation in self.sblActualInvocations) {
-        NSArray *argumentMatcherResults = [self.sblVerifyInvocation matchesInvocation:actualInvocation];
-        BOOL matchesInvocation = [self matchesInvocation:argumentMatcherResults];
-        if (matchesInvocation) {
+        SBLInvocationMatchResult *invocationMatchResult = [self.sblVerifyInvocation matchResultForInvocation:actualInvocation];
+        if (invocationMatchResult.invocationMatches) {
             invocationCount++;
         } else {
-            [mismatchedMethodCalls addObject:argumentMatcherResults];
+            [mismatchedMethodCalls addObject:invocationMatchResult.argumentMatcherResults];
         }
     }
 
@@ -145,16 +134,16 @@
         failureMessage = [actualString stringByAppendingString:expectedString];
 
         if ([mismatchedMethodCalls count]) {
-            NSMutableArray *expectedParameters = [NSMutableArray array];
-            NSMutableArray *actualParameters = [NSMutableArray array];
+            NSMutableArray *expectedArguments = [NSMutableArray array];
+            NSMutableArray *actualArguments = [NSMutableArray array];
             for (SBLArgumentMatcherResult *argumentMatcherResult in mismatchedMethodCalls[0]) {
-                [expectedParameters addObject:argumentMatcherResult.expectedArgumentStringValue];
+                [expectedArguments addObject:argumentMatcherResult.expectedArgumentStringValue];
             }
             for (SBLArgumentMatcherResult *argumentMatcherResult in mismatchedMethodCalls[0]) {
-                [actualParameters addObject:argumentMatcherResult.actualArgumentStringValue];
+                [actualArguments addObject:argumentMatcherResult.actualArgumentStringValue];
             }
-            NSString *differingParametersMessage = @"Method '%@' was called, but with differing parameters. Expected: %@ \rActual: %@";
-            failureMessage = [NSString stringWithFormat:differingParametersMessage, NSStringFromSelector(self.sblVerifyInvocation.selector), expectedParameters, actualParameters];
+            NSString *differingArgumentsMessage = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
+            failureMessage = [NSString stringWithFormat:differingArgumentsMessage, NSStringFromSelector(self.sblVerifyInvocation.selector), expectedArguments, actualArguments];
         }
     }
 	return [[SBLVerificationResult alloc] initWithSuccess:success failureDescription:failureMessage];

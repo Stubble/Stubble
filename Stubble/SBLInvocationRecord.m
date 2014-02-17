@@ -2,6 +2,7 @@
 #import "SBLErrors.h"
 #import "SBLHelpers.h"
 #import "SBLInvocationArgument.h"
+#import "SBLInvocationMatchResult.h"
 
 @interface SBLInvocationRecord ()
 
@@ -79,16 +80,16 @@
 	_matchers = allMatchers;
 }
 
-- (NSArray *)matchesInvocation:(SBLInvocationRecord *)invocationRecord {
+- (SBLInvocationMatchResult *)matchResultForInvocation:(SBLInvocationRecord *)invocationRecord {
 	BOOL matchingInvocation = self.invocationSelector == invocationRecord.selector;
-    NSMutableArray *matcherResults = [NSMutableArray array];
+    NSMutableArray *argumentMatcherResults = [NSMutableArray array];
 	if (matchingInvocation) {
         NSArray *arguments = invocationRecord.arguments;
         NSInteger index = 0;
         for (SBLInvocationArgument *argument in arguments) {
             SBLMatcher *matcher = self.matchers[index];
             SBLArgumentMatcherResult *matcherResult = [matcher matchesArgument:argument];
-            [matcherResults addObject:matcherResult];
+            [argumentMatcherResults addObject:matcherResult];
             matchingInvocation &= matcherResult.matches;
             index++;
         }
@@ -101,10 +102,7 @@
             }
         }
 	}
-    if ([matcherResults count] == 0u && matchingInvocation) {
-        [matcherResults addObject:[[SBLArgumentMatcherResult alloc] initWithMatches:YES]];
-    }
-    return matcherResults;
+    return [[SBLInvocationMatchResult alloc] initWithInvocationMatches:matchingInvocation argumentMatcherResults:argumentMatcherResults];
 }
 
 + (NSArray *)argumentsFromInvocation:(NSInvocation *)invocation {
