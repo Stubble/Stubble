@@ -16,7 +16,7 @@
 
 #pragma mark - Verify Success Tests
 
-- (void)testWhenVerifyingForMethodThatWasCalledThatWasMadeThenNoExceptionIsThrown {
+- (void)testWhenVerifyingForMethodThatWasCalledThatWasMadeThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
 	[mock methodReturningInt];
@@ -25,7 +25,7 @@
 	XCTAssertTrue(result.successful);
 }
 
-- (void)testWhenVerifyingForMethodThatWasNotTheLastMethodCalledThenNoExceptionIsThrown {
+- (void)testWhenVerifyingForMethodThatWasNotTheLastMethodCalledThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodReturningString];
@@ -36,7 +36,7 @@
 	XCTAssertTrue(result.successful);
 }
 
-- (void)testWhenVerifyingForMethodWithVoidReturnTypeThenNoExceptionThrown {
+- (void)testWhenVerifyingForMethodWithVoidReturnTypeThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodWithNoReturn];
@@ -45,7 +45,7 @@
 	XCTAssertTrue(result.successful);
 }
 
-- (void)testWhenVerifyingForMethodWithCorrectParametersThenNoExceptionThrown {
+- (void)testWhenVerifyingForMethodWithCorrectParametersThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
@@ -56,14 +56,14 @@
 
 #pragma mark - Verify Times Tests
 
-- (void)testWhenVerifyingExactlyZeroTimes_WhenNotCalled_ThenNoExceptionIsThrown {
+- (void)testWhenVerifyingExactlyZeroTimes_WhenNotCalled_ThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
 	SBLVerificationResult *result = SBLVerifyTimesImpl(times(0), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
 	XCTAssertTrue(result.successful);
 }
 
-- (void)testWhenVerifyingExactlyOneTime_WhenCalledOneTime_ThenNoExceptionIsThrown {
+- (void)testWhenVerifyingExactlyOneTime_WhenCalledOneTime_ThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
@@ -72,7 +72,7 @@
 	XCTAssertTrue(result.successful);
 }
 
-- (void)testWhenVerifyingExactlyTwoTimes_WhenCalledTwoTimes_ThenNoExceptionIsThrown {
+- (void)testWhenVerifyingExactlyTwoTimes_WhenCalledTwoTimes_ThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
@@ -82,7 +82,7 @@
 	XCTAssertTrue(result.successful);
 }
 
-- (void)testWhenVerifyingAtLeastOneTime_WhenCalledTwoTimes_ThenNoExceptionIsThrown {
+- (void)testWhenVerifyingAtLeastOneTime_WhenCalledTwoTimes_ThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
@@ -92,7 +92,7 @@
 	XCTAssertTrue(result.successful);
 }
 
-- (void)testWhenVerifyingAtLeastOneTime_WhenCalledLotsOfTimes_ThenNoExceptionIsThrown {
+- (void)testWhenVerifyingAtLeastOneTime_WhenCalledLotsOfTimes_ThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
@@ -108,15 +108,14 @@
 	XCTAssertTrue(result.successful);
 }
 
-// TODO: Possible line to be drawn to only allow at least 1 time for between matches.
-- (void)testWhenVerifyingBetwenZeroAndZeroTimes_WhenCalledZeroTimes_ThenNoExceptionIsThrown {
+- (void)testWhenVerifyingBetwenZeroAndZeroTimes_WhenCalledZeroTimes_ThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
 	SBLVerificationResult *result = SBLVerifyTimesImpl(between(0, 0), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
 	XCTAssertTrue(result.successful);
 }
 
-- (void)testWhenVerifyingBetwenOneAndOneTime_WhenCalledOneTime_ThenNoExceptionIsThrown {
+- (void)testWhenVerifyingBetwenOneAndOneTime_WhenCalledOneTime_ThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
@@ -125,7 +124,7 @@
 	XCTAssertTrue(result.successful);
 }
 
-- (void)testWhenVerifyingBetweenOneAndThreeTimes_WhenCalledValidNumberOfTimes_ThenNoExceptionIsThrown {
+- (void)testWhenVerifyingBetweenOneAndThreeTimes_WhenCalledValidNumberOfTimes_ThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodWithArray:@[@"arg1"]];
