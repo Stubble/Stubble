@@ -213,7 +213,7 @@
 	
     [mock methodWithManyArguments:@"1" primitive:2 number:@3];
 
-    NSString *expectedFailureMessageFormat = @"Method 'methodWithManyArguments:primitive:number:' was called, but with differing parameters. Expected: %@ \rActual: %@";
+    NSString *expectedFailureMessageFormat = @"Method 'methodWithManyArguments:primitive:number:' was called, but with differing arguments. Expected: %@ \rActual: %@";
 	SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"2" primitive:2 number:@3]);
 	XCTAssertFalse(result.successful);
     NSArray *expectedArray = @[@"1", @"2", @"3"];
@@ -250,7 +250,7 @@
                                   uCharArg:(unsigned char)123
                                    boolArg:(bool)YES];
 
-    NSString *expectedFailureMessageFormat = @"Method 'methodWithManyPrimitiveArguments:shortArg:longArg:longLongArg:doubleArg:floatArg:uIntArg:uShortArg:uLongArg:charArg:uCharArg:boolArg:' was called, but with differing parameters. Expected: %@ \rActual: %@";
+    NSString *expectedFailureMessageFormat = @"Method 'methodWithManyPrimitiveArguments:shortArg:longArg:longLongArg:doubleArg:floatArg:uIntArg:uShortArg:uLongArg:charArg:uCharArg:boolArg:' was called, but with differing arguments. Expected: %@ \rActual: %@";
     SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyPrimitiveArguments:(int)234
         shortArg:(short)234
         longArg:(long)234
