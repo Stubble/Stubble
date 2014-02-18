@@ -34,14 +34,16 @@
         unsigned long unwrappedValue;
         return [self convertValue:value intoContainer:unwrappedValue formatSpecifier:@"%lu"];
     } else if (strcmp(type, @encode(char)) == 0) {
-        char unwrappedValue;
-        [value getValue:&unwrappedValue];
-        if (unwrappedValue == '\0') {
-            return @"NO";
-        } else if (unwrappedValue == '\x01') {
+        BOOL unwrappedBoolValue;
+        [value getValue:&unwrappedBoolValue];
+        if (unwrappedBoolValue == YES) {
             return @"YES";
+        } else if (unwrappedBoolValue == NO) {
+            return @"NO";
         }
-        return [NSString stringWithFormat:@"%c", unwrappedValue];
+        char unwrappedCharValue;
+        [value getValue:&unwrappedCharValue];
+        return [NSString stringWithFormat:@"%c", unwrappedCharValue];
     } else if (strcmp(type, @encode(unsigned char)) == 0) {
         unsigned char unwrappedValue;
         return [self convertValue:value intoContainer:unwrappedValue formatSpecifier:@"%hhu"];
