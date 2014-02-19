@@ -3,7 +3,7 @@
 #import "SBLTestingClass.h"
 #import "SBLVerificationResult.h"
 #import "SBLErrors.h"
-
+    
 @interface SBLVerifyTest : XCTestCase
 
 @end
@@ -274,9 +274,62 @@
 - (void)testWhenVerifyingForMethodWithVoidReturnTypeNotCalledThenTestFailsWithTheCorrectMessage {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
-	SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithNoReturn]);
-	XCTAssertFalse(result.successful);
+    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithNoReturn]);
+    XCTAssertFalse(result.successful);
     XCTAssertNotNil(result.failureDescription);
+}
+
+- (void)testWhenVerifyingForMethodWithDifferentStructParametersThenHelpfulMessageIsReturned {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    [mock methodWithTimeInterval:12.3];
+
+    NSString *expectedFailureMessageFormat = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
+    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithTimeInterval:12.4]);
+    XCTAssertFalse(result.successful);
+    NSArray *expectedArray = @[@"12.3"];
+    NSArray *actualArray = @[@"12.4"];
+    NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithTimeInterval:", expectedArray, actualArray];
+    XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
+
+    [mock methodWithInteger:123];
+
+    result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithInteger:124]);
+    XCTAssertFalse(result.successful);
+    expectedArray = @[@"123"];
+    actualArray = @[@"124"];
+    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithInteger:", expectedArray, actualArray];
+    XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
+
+    // Following currently do not have useful logging for expected/actual
+    [mock methodWithPrimitiveReference:(NSInteger *)1];
+
+    result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithPrimitiveReference:(NSInteger *)2]);
+    XCTAssertFalse(result.successful);
+    expectedArray = @[@"struct"];
+    actualArray = @[@"struct"];
+    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithPrimitiveReference:", expectedArray, actualArray];
+    XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
+
+    [mock methodWithCGRect:CGRectZero];
+
+    result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithCGRect:CGRectMake(0,1,0,1)]);
+    XCTAssertFalse(result.successful);
+    expectedArray = @[@"struct"];
+    actualArray = @[@"struct"];
+    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithCGRect:", expectedArray, actualArray];
+    XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
+
+    SBLTestingStruct testingStruct1 = { 1, YES, "other stuff" };
+    SBLTestingStruct testingStruct2 = { 2, NO, "aefaef" };
+    [mock methodWithStruct:testingStruct1];
+
+    result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithStruct:testingStruct2]);
+    XCTAssertFalse(result.successful);
+    expectedArray = @[@"struct"];
+    actualArray = @[@"struct"];
+    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithStruct:", expectedArray, actualArray];
+    XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 }
 
 #pragma mark - Verify Times Tests

@@ -111,7 +111,9 @@
         if (invocationMatchResult.invocationMatches) {
             invocationCount++;
         } else {
-            [mismatchedMethodCalls addObject:invocationMatchResult.argumentMatcherResults];
+            if ([invocationMatchResult.argumentMatcherResults count]) {
+                [mismatchedMethodCalls addObject:invocationMatchResult.argumentMatcherResults];
+            }
         }
     }
 
@@ -137,10 +139,20 @@
             NSMutableArray *expectedArguments = [NSMutableArray array];
             NSMutableArray *actualArguments = [NSMutableArray array];
             for (SBLArgumentMatcherResult *argumentMatcherResult in mismatchedMethodCalls[0]) {
-                [expectedArguments addObject:argumentMatcherResult.expectedArgumentStringValue];
+                if (argumentMatcherResult.expectedArgumentStringValue) {
+                    [expectedArguments addObject:argumentMatcherResult.expectedArgumentStringValue];
+                } else {
+                    // need support for unboxed structs
+                    [expectedArguments addObject:@"struct"];
+                }
             }
             for (SBLArgumentMatcherResult *argumentMatcherResult in mismatchedMethodCalls[0]) {
-                [actualArguments addObject:argumentMatcherResult.actualArgumentStringValue];
+                if (argumentMatcherResult.actualArgumentStringValue) {
+                    [actualArguments addObject:argumentMatcherResult.actualArgumentStringValue];
+                } else {
+                    // need support for unboxed structs
+                    [actualArguments addObject:@"struct"];
+                }
             }
             NSString *differingArgumentsMessage = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
             failureMessage = [NSString stringWithFormat:differingArgumentsMessage, NSStringFromSelector(self.sblVerifyInvocation.selector), expectedArguments, actualArguments];

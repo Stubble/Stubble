@@ -62,15 +62,15 @@
 		74F93DBA18525FA100214852 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74F93DB818525FA100214852 /* InfoPlist.strings */; };
 		74F93DBC18525FA100214852 /* SBLStubTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 74F93DBB18525FA100214852 /* SBLStubTest.m */; };
 		75EAF7541873808E00C1FB5F /* Stubble.h in Headers */ = {isa = PBXBuildFile; fileRef = 75EAF7531873808E00C1FB5F /* Stubble.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AAFD41575C3906917DB3B296 /* SBLInvocationMatchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4F9F2BB34D38DB5317A6 /* SBLInvocationMatchResult.h */; };
-		AAFD456B9E434F788AD7FA4A /* SBLValueLoggingHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4ECB9CA6481AFFAF849E /* SBLValueLoggingHelper.h */; };
+		AAFD41575C3906917DB3B296 /* SBLInvocationMatchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4F9F2BB34D38DB5317A6 /* SBLInvocationMatchResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AAFD456B9E434F788AD7FA4A /* SBLValueLoggingHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4ECB9CA6481AFFAF849E /* SBLValueLoggingHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AAFD457357101BF8EFFA38A7 /* SBLArgumentMatcherResult.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD49C9A0A7E574CC16048B /* SBLArgumentMatcherResult.m */; };
 		AAFD4B749CC89E374F1F7245 /* SBLInvocationMatchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD432360F5D4B73F8A79B6 /* SBLInvocationMatchResult.m */; };
 		AAFD4BBA86C957E1C735243C /* SBLValueLoggingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD48CCFBD6BC48364A7801 /* SBLValueLoggingHelper.m */; };
 		AAFD4BCD39B355447029F235 /* SBLTimesMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD431560AC3BD461C4B3D1 /* SBLTimesMatcher.m */; };
 		AAFD4BE30957D2DC3CFD42B6 /* SBLValueLoggingHelperTest.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD4916AAC6AAA9584FDB1A /* SBLValueLoggingHelperTest.m */; };
 		AAFD4E581C8800002923FDEC /* SBLExceptionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD4746845E28C0CBF4683E /* SBLExceptionTest.m */; };
-		AAFD4FC42EF9EAE772B93D67 /* SBLArgumentMatcherResult.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4BBB523D1485AC4AD7D9 /* SBLArgumentMatcherResult.h */; };
+		AAFD4FC42EF9EAE772B93D67 /* SBLArgumentMatcherResult.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4BBB523D1485AC4AD7D9 /* SBLArgumentMatcherResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -330,11 +330,11 @@
 				4DD1ACBA1874691300A5FEC4 /* SBLVerificationResult.h in Headers */,
 				5A5472EC1877290A004A4A04 /* SBLMockObject.h in Headers */,
 				4DE7829B18A1CD7E002C0470 /* SBLHelpers.h in Headers */,
-				5A7F2CAE18A96E44000B5AAD /* SBLInvocationArgument.h in Headers */,
-				5AA4A97B18689FFB0033BAE0 /* SBLProtocolMockObjectBehavior.h in Headers */,
 				AAFD4FC42EF9EAE772B93D67 /* SBLArgumentMatcherResult.h in Headers */,
 				AAFD456B9E434F788AD7FA4A /* SBLValueLoggingHelper.h in Headers */,
 				AAFD41575C3906917DB3B296 /* SBLInvocationMatchResult.h in Headers */,
+				5A7F2CAE18A96E44000B5AAD /* SBLInvocationArgument.h in Headers */,
+				5AA4A97B18689FFB0033BAE0 /* SBLProtocolMockObjectBehavior.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
