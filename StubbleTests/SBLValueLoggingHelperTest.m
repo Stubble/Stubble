@@ -26,8 +26,6 @@
     unsigned long uLongV = 123;
     char charV = 'a';
     unsigned char uCharV = 123;
-    bool boolV = NO;
-    BOOL bigBoolV = YES;
     const char *type = @encode(int);
     NSValue *value = [NSValue valueWithBytes:&intV objCType:type];
     XCTAssertEqualObjects([testObject stringValueForValue:value type:type], @"123");
@@ -73,19 +71,19 @@
     XCTAssertEqualObjects([testObject stringValueForValue:value type:type], @"123");
 
     type = @encode(bool);
-    value = [NSNumber numberWithBool:NO];
+    value = [NSNumber numberWithBool:(bool)NO];
     XCTAssertEqualObjects([testObject stringValueForValue:value type:type], @"NO");
 
     type = @encode(bool);
-    value = [NSNumber numberWithBool:YES];
+    value = [NSNumber numberWithBool:(bool)YES];
     XCTAssertEqualObjects([testObject stringValueForValue:value type:type], @"YES");
 
     type = @encode(BOOL);
-    value = [NSNumber numberWithBool:NO];
+    value = [NSNumber numberWithBool:(BOOL)NO];
     XCTAssertEqualObjects([testObject stringValueForValue:value type:type], @"NO");
 
     type = @encode(BOOL);
-    value = [NSNumber numberWithBool:YES];
+    value = [NSNumber numberWithBool:(BOOL)YES];
     XCTAssertEqualObjects([testObject stringValueForValue:value type:type], @"YES");
 }
 
