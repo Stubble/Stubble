@@ -22,7 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		4D092D5E18A9A89100D90322 /* SBLTransactionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D092D5C18A9A89100D90322 /* SBLTransactionManager.h */; };
+		4D092D5E18A9A89100D90322 /* SBLTransactionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D092D5C18A9A89100D90322 /* SBLTransactionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D092D5F18A9A89100D90322 /* SBLTransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D092D5D18A9A89100D90322 /* SBLTransactionManager.m */; };
 		4D0E754F185BBD3B00C681BE /* SBLMatcherTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0E754E185BBD3B00C681BE /* SBLMatcherTest.m */; };
 		4D80408E186403BE001DE9FE /* SBLClassMockObjectBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D80408D186403BE001DE9FE /* SBLClassMockObjectBehavior.m */; };
@@ -321,7 +321,6 @@
 				5AA4A97618689FFB0033BAE0 /* SBLMatcher.h in Headers */,
 				5AA4A97718689FFB0033BAE0 /* SBLErrors.h in Headers */,
 				5AA4A97818689FFB0033BAE0 /* SBLTimesMatcher.h in Headers */,
-				4D092D5E18A9A89100D90322 /* SBLTransactionManager.h in Headers */,
 				5ABCBF8718A965D0001E2306 /* SBLMockCore.h in Headers */,
 				5ABCBF8618A965D0001E2306 /* SBLMock.h in Headers */,
 				5AA4A97918689FFB0033BAE0 /* SBLMockObjectBehavior.h in Headers */,
@@ -334,6 +333,7 @@
 				AAFD456B9E434F788AD7FA4A /* SBLValueLoggingHelper.h in Headers */,
 				AAFD41575C3906917DB3B296 /* SBLInvocationMatchResult.h in Headers */,
 				5A7F2CAE18A96E44000B5AAD /* SBLInvocationArgument.h in Headers */,
+				4D092D5E18A9A89100D90322 /* SBLTransactionManager.h in Headers */,
 				5AA4A97B18689FFB0033BAE0 /* SBLProtocolMockObjectBehavior.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
