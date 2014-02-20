@@ -136,29 +136,33 @@
         failureMessage = [actualString stringByAppendingString:expectedString];
 
         if ([mismatchedMethodCalls count]) {
-            NSMutableArray *expectedArguments = [NSMutableArray array];
-            NSMutableArray *actualArguments = [NSMutableArray array];
-            for (SBLArgumentMatcherResult *argumentMatcherResult in mismatchedMethodCalls[0]) {
-                if (argumentMatcherResult.expectedArgumentStringValue) {
-                    [expectedArguments addObject:argumentMatcherResult.expectedArgumentStringValue];
-                } else {
-                    // need support for unboxed structs
-                    [expectedArguments addObject:@"struct"];
-                }
-            }
-            for (SBLArgumentMatcherResult *argumentMatcherResult in mismatchedMethodCalls[0]) {
-                if (argumentMatcherResult.actualArgumentStringValue) {
-                    [actualArguments addObject:argumentMatcherResult.actualArgumentStringValue];
-                } else {
-                    // need support for unboxed structs
-                    [actualArguments addObject:@"struct"];
-                }
-            }
-            NSString *differingArgumentsMessage = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
-            failureMessage = [NSString stringWithFormat:differingArgumentsMessage, NSStringFromSelector(self.sblVerifyInvocation.selector), expectedArguments, actualArguments];
+            failureMessage = [self buildMismatchedArgumentsMessageWithArgMatcherResults:mismatchedMethodCalls[0]];
         }
     }
 	return [[SBLVerificationResult alloc] initWithSuccess:success failureDescription:failureMessage];
+}
+
+- (NSString *)buildMismatchedArgumentsMessageWithArgMatcherResults:(NSArray *)argMatcherResults {
+    NSMutableArray *expectedArguments = [NSMutableArray array];
+    NSMutableArray *actualArguments = [NSMutableArray array];
+    for (SBLArgumentMatcherResult *argumentMatcherResult in argMatcherResults) {
+        if (argumentMatcherResult.expectedArgumentStringValue) {
+            [expectedArguments addObject:argumentMatcherResult.expectedArgumentStringValue];
+        } else {
+            // need support for unboxed structs
+            [expectedArguments addObject:@"struct"];
+        }
+    }
+    for (SBLArgumentMatcherResult *argumentMatcherResult in argMatcherResults) {
+        if (argumentMatcherResult.actualArgumentStringValue) {
+            [actualArguments addObject:argumentMatcherResult.actualArgumentStringValue];
+        } else {
+            // need support for unboxed structs
+            [actualArguments addObject:@"struct"];
+        }
+    }
+    NSString *differingArgumentsMessage = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
+    return [NSString stringWithFormat:differingArgumentsMessage, NSStringFromSelector(self.sblVerifyInvocation.selector), expectedArguments, actualArguments];
 }
 
 - (void)sblValidateTimesMatcherUsage:(SBLTimesMatcher *)timesMatcher {

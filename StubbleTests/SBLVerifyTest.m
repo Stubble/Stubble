@@ -216,20 +216,20 @@
     NSString *expectedFailureMessageFormat = @"Method 'methodWithManyArguments:primitive:number:' was called, but with differing arguments. Expected: %@ \rActual: %@";
 	SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"2" primitive:2 number:@3]);
 	XCTAssertFalse(result.successful);
-    NSArray *expectedArray = @[@"1", @"2", @"3"];
-    NSArray *actualArray = @[@"2", @"2", @"3"];
+    NSArray *actualArray = @[@"1", @"2", @"3"];
+    NSArray *expectedArray = @[@"2", @"2", @"3"];
     NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 
 	result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"1" primitive:1 number:@3]);
 	XCTAssertFalse(result.successful);
-    actualArray = @[@"1", @"1", @"3"];
+    expectedArray = @[@"1", @"1", @"3"];
     expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 
     result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"1" primitive:2 number:@1]);
     XCTAssertFalse(result.successful);
-    actualArray = @[@"1", @"2", @"1"];
+    expectedArray = @[@"1", @"2", @"1"];
     expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 }
@@ -265,8 +265,8 @@
         boolArg:(bool)NO]);
 
     XCTAssertFalse(result.successful);
-    NSArray *expectedArray = @[@"123", @"123", @"123", @"123", @"12.3", @"12.3", @"123", @"123", @"123", @"w", @"123", @"YES"];
-    NSArray *actualArray = @[@"234", @"234", @"234", @"234", @"23.4", @"23.4", @"234", @"234", @"234", @"x", @"234", @"NO"];
+    NSArray *expectedArray = @[@"234", @"234", @"234", @"234", @"23.4", @"23.4", @"234", @"234", @"234", @"x", @"234", @"NO"];
+    NSArray *actualArray = @[@"123", @"123", @"123", @"123", @"12.3", @"12.3", @"123", @"123", @"123", @"w", @"123", @"YES"];
     NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 }
@@ -287,8 +287,8 @@
     NSString *expectedFailureMessageFormat = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
     SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithTimeInterval:12.4]);
     XCTAssertFalse(result.successful);
-    NSArray *expectedArray = @[@"12.3"];
-    NSArray *actualArray = @[@"12.4"];
+    NSArray *expectedArray = @[@"12.4"];
+    NSArray *actualArray = @[@"12.3"];
     NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithTimeInterval:", expectedArray, actualArray];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 
@@ -296,8 +296,8 @@
 
     result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithInteger:124]);
     XCTAssertFalse(result.successful);
-    expectedArray = @[@"123"];
-    actualArray = @[@"124"];
+    expectedArray = @[@"124"];
+    actualArray = @[@"123"];
     expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithInteger:", expectedArray, actualArray];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 

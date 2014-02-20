@@ -46,8 +46,8 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
 	return [SBLMatcher matcherWithBlock:^SBLArgumentMatcherResult *(SBLInvocationArgument *argument) {
         BOOL argumentMatches = [object isEqual:argument.argument] || (!object && !argument.argument);
         SBLArgumentMatcherResult *argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches
-                                                         expectedArgument:argument.argument
-                                                           actualArgument:object];
+                                                         expectedArgument:object
+                                                           actualArgument:argument.argument];
         return argumentMatcherResult;
 	}];
 }
@@ -62,8 +62,8 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
 	return [SBLMatcher matcherWithBlock:^SBLArgumentMatcherResult *(SBLInvocationArgument *argument) {
         BOOL argumentMatches = [value isEqual:argument.argument];
         SBLValueLoggingHelper *valueLoggingHelper = [[SBLValueLoggingHelper alloc] init];
-        NSString *expectedArgument = [valueLoggingHelper stringValueForValue:argument.argument type:argument.type];
-        NSString *actualArgument = [valueLoggingHelper stringValueForValue:value type:argument.type];
+        NSString *actualArgument = [valueLoggingHelper stringValueForValue:argument.argument type:argument.type];
+        NSString *expectedArgument = [valueLoggingHelper stringValueForValue:value type:argument.type];
         SBLArgumentMatcherResult *argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches
                                                                  expectedArgument:expectedArgument
                                                                    actualArgument:actualArgument];
