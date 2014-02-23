@@ -6,9 +6,6 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
 
 @interface SBLMatcher ()<NSCopying>
 
-@property (nonatomic, readonly) BOOL matches;
-@property (nonatomic) NSString *expectedArgument;
-@property (nonatomic) NSString *actualArgument;
 @property (nonatomic, copy) SBLMatcherBlock matcherBlock;
 @property (nonatomic, copy) SBLMatcherPostInvocationMatchBlock postInvocationMatchBlock;
 @property (nonatomic, readonly) NSUUID *uuid;
