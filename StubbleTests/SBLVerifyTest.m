@@ -208,7 +208,7 @@
     XCTAssertNotNil(result.failureDescription);
 }
 
-- (void)testWhenVerifyingForMethodWithDifferentParametersThenHelpfulMessageIsReturned {
+- (void)testWhenVerifyingForMethodWithDifferentArgumentsThenHelpfulMessageIsReturned {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 	
     [mock methodWithManyArguments:@"1" primitive:2 number:@3];
@@ -271,14 +271,6 @@
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 }
 
-- (void)testWhenVerifyingForMethodWithVoidReturnTypeNotCalledThenTestFailsWithTheCorrectMessage {
-    SBLTestingClass *mock = mock(SBLTestingClass.class);
-
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithNoReturn]);
-    XCTAssertFalse(result.successful);
-    XCTAssertNotNil(result.failureDescription);
-}
-
 - (void)testWhenVerifyingForMethodWithDifferentStructParametersThenHelpfulMessageIsReturned {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
@@ -330,6 +322,28 @@
     actualArray = @[@"struct"];
     expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithStruct:", expectedArray, actualArray];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
+}
+
+- (void)testWhenVerifyingForMethodWithDifferentArgumentsIncludingAnyThenHelpfulMessageIsReturned {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    [mock methodWithManyArguments:@"1" primitive:2 number:@3];
+
+    NSString *expectedFailureMessageFormat = @"Method 'methodWithManyArguments:primitive:number:' was called, but with differing arguments. Expected: %@ \rActual: %@";
+    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:any() primitive:3 number:any()]);
+    XCTAssertFalse(result.successful);
+    NSArray *expectedArray = @[@"(any)", @"3", @"(any)"];
+    NSArray *actualArray = @[@"1", @"2", @"3"];
+    NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
+    XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
+}
+
+- (void)testWhenVerifyingForMethodWithVoidReturnTypeNotCalledThenTestFailsWithTheCorrectMessage {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithNoReturn]);
+    XCTAssertFalse(result.successful);
+    XCTAssertNotNil(result.failureDescription);
 }
 
 #pragma mark - Verify Times Tests

@@ -6,6 +6,9 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
 
 @interface SBLMatcher ()<NSCopying>
 
+@property (nonatomic, readonly) BOOL matches;
+@property (nonatomic) NSString *expectedArgument;
+@property (nonatomic) NSString *actualArgument;
 @property (nonatomic, copy) SBLMatcherBlock matcherBlock;
 @property (nonatomic, copy) SBLMatcherPostInvocationMatchBlock postInvocationMatchBlock;
 @property (nonatomic, readonly) NSUUID *uuid;
@@ -18,7 +21,7 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
 
 + (instancetype)any {
 	return [SBLMatcher matcherWithBlock:^SBLArgumentMatcherResult *(SBLInvocationArgument *argument) {
-        return [[SBLArgumentMatcherResult alloc] initWithMatches:YES];
+        return [[SBLArgumentMatcherResult alloc] initWithMatches:YES expectedArgument:@"(any)" actualArgument:argument.argument];
 	}];
 }
 
@@ -67,6 +70,7 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
         SBLArgumentMatcherResult *argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches
                                                                  expectedArgument:expectedArgument
                                                                    actualArgument:actualArgument];
+
         return argumentMatcherResult;
 	}];
 }
