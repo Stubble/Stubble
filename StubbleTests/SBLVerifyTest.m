@@ -388,6 +388,19 @@
 	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningInt' was called 1 time (expected no calls)");
 }
 
+- (void)testWhenVerifyNeverIsCalledButWithDifferingParametersThenTheTestPasses {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    [mock methodWithInteger:2];
+
+    SBLVerificationResult *result = SBLVerifyTimesImpl(never(), [mock methodWithInteger:1]);
+    XCTAssertTrue(result.successful);
+    result = SBLVerifyTimesImpl(never(), [mock methodWithInteger:3]);
+    XCTAssertTrue(result.successful);
+    result = SBLVerifyTimesImpl(never(), [mock methodWithInteger:4]);
+    XCTAssertTrue(result.successful);
+}
+
 - (void)testWhenVerifyingAtLeastAndTheMethodIsCalledFewerTimesThenTheTestFailsWithTheCorrectMessage {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 	

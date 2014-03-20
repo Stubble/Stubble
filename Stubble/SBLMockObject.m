@@ -117,7 +117,8 @@
         }
     }
 
-	BOOL success = atLeastTimes <= invocationCount && invocationCount <= atMostTimes;
+    BOOL mismatchedMethodButNeverExpected = [mismatchedMethodCalls count] && atLeastTimes == 0 && atMostTimes == 0;
+	BOOL success = (atLeastTimes <= invocationCount && invocationCount <= atMostTimes) || mismatchedMethodButNeverExpected;
 	NSString *failureMessage = nil;
     if (!success) {
         NSString *countString = invocationCount == 1 ? @"1 time" : [NSString stringWithFormat:@"%ld times", (long)invocationCount];
