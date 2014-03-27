@@ -1,9 +1,9 @@
 #import "SBLMockObject.h"
 #import "SBLTransactionManager.h"
 #import "SBLErrors.h"
-#import "SBLTimesMatcher.h"
 #import "SBLProtocolMockObjectBehavior.h"
 #import "SBLClassMockObjectBehavior.h"
+#import "SBLInvocationMatchResult.h"
 
 @interface SBLMockObject ()
 
@@ -66,7 +66,8 @@
 		// Find Matching Stub
 		SBLStubbedInvocation *matchingWhen = nil;
 		for (SBLStubbedInvocation *ongoingWhen in self.sblStubbedInvocations.reverseObjectEnumerator) {
-			if ([ongoingWhen matchesInvocation:invocationRecord]) {
+            SBLInvocationMatchResult *invocationMatchResult = [ongoingWhen matchResultForInvocation:invocationRecord];
+			if (invocationMatchResult.invocationMatches) {
 				matchingWhen = ongoingWhen;
 				break;
 			}
@@ -104,18 +105,26 @@
     NSInteger atLeastTimes = timesMatcher.atLeast;
     NSInteger atMostTimes = timesMatcher.atMost;
     NSInteger invocationCount = 0;
+    NSMutableArray *mismatchedMethodCalls = [NSMutableArray array];
     for (SBLInvocationRecord *actualInvocation in self.sblActualInvocations) {
-        if ([self.sblVerifyInvocation matchesInvocation:actualInvocation]) {
+        SBLInvocationMatchResult *invocationMatchResult = [self.sblVerifyInvocation matchResultForInvocation:actualInvocation];
+        if (invocationMatchResult.invocationMatches) {
             invocationCount++;
+        } else {
+            if ([invocationMatchResult.argumentMatcherResults count]) {
+                [mismatchedMethodCalls addObject:invocationMatchResult.argumentMatcherResults];
+            }
         }
     }
-	
-	BOOL success = atLeastTimes <= invocationCount && invocationCount <= atMostTimes;
+
+    BOOL mismatchedMethodButNeverExpected = [mismatchedMethodCalls count] && atLeastTimes == 0 && atMostTimes == 0;
+	BOOL success = (atLeastTimes <= invocationCount && invocationCount <= atMostTimes) || mismatchedMethodButNeverExpected;
 	NSString *failureMessage = nil;
     if (!success) {
         NSString *countString = invocationCount == 1 ? @"1 time" : [NSString stringWithFormat:@"%ld times", (long)invocationCount];
         NSString *actualString = [NSString stringWithFormat:@"Method '%@' was called %@ ", NSStringFromSelector(self.sblVerifyInvocation.selector), countString];
         NSString *expectedString;
+
         if (atMostTimes == 0) {
             expectedString = @"(expected no calls)";
         } else if (atMostTimes == NSIntegerMax) {
@@ -126,8 +135,35 @@
             expectedString = [NSString stringWithFormat:@"(expected between %ld and %ld)", (long)atLeastTimes, (long)atMostTimes];
         }
         failureMessage = [actualString stringByAppendingString:expectedString];
+
+        if ([mismatchedMethodCalls count]) {
+            failureMessage = [self buildMismatchedArgumentsMessageWithArgMatcherResults:mismatchedMethodCalls[0]];
+        }
     }
 	return [[SBLVerificationResult alloc] initWithSuccess:success failureDescription:failureMessage];
+}
+
+- (NSString *)buildMismatchedArgumentsMessageWithArgMatcherResults:(NSArray *)argMatcherResults {
+    NSMutableArray *expectedArguments = [NSMutableArray array];
+    NSMutableArray *actualArguments = [NSMutableArray array];
+    for (SBLArgumentMatcherResult *argumentMatcherResult in argMatcherResults) {
+        if (argumentMatcherResult.expectedArgumentStringValue) {
+            [expectedArguments addObject:argumentMatcherResult.expectedArgumentStringValue];
+        } else {
+            // need support for unboxed structs
+            [expectedArguments addObject:@"struct"];
+        }
+    }
+    for (SBLArgumentMatcherResult *argumentMatcherResult in argMatcherResults) {
+        if (argumentMatcherResult.actualArgumentStringValue) {
+            [actualArguments addObject:argumentMatcherResult.actualArgumentStringValue];
+        } else {
+            // need support for unboxed structs
+            [actualArguments addObject:@"struct"];
+        }
+    }
+    NSString *differingArgumentsMessage = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
+    return [NSString stringWithFormat:differingArgumentsMessage, NSStringFromSelector(self.sblVerifyInvocation.selector), expectedArguments, actualArguments];
 }
 
 - (void)sblValidateTimesMatcherUsage:(SBLTimesMatcher *)timesMatcher {

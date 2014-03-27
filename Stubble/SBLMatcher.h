@@ -1,7 +1,8 @@
 #import "SBLHelpers.h"
 #import "SBLInvocationArgument.h"
+#import "SBLArgumentMatcherResult.h"
 
-typedef BOOL(^SBLMatcherBlock)(SBLInvocationArgument *argument);
+typedef SBLArgumentMatcherResult *(^SBLMatcherBlock)(SBLInvocationArgument *argument);
 
 @class SBLMatcher;
 typedef SBLMatcher *(^SBLMatcherPlaceholderBlock)(void);
@@ -16,7 +17,7 @@ typedef SBLMatcher *(^SBLMatcherPlaceholderBlock)(void);
 + (instancetype)matcherWithBlock:(SBLMatcherBlock)matcher;
 
 - (BOOL)isBlockPlaceholderForMatcher:(SBLMatcherPlaceholderBlock)block;
-- (BOOL)matchesArgument:(SBLInvocationArgument *)argument;
+- (SBLArgumentMatcherResult *)matchesArgument:(SBLInvocationArgument *)argument;
 - (void *)placeholder;
 - (NSValue *)placeholderWithType:(char[])type;
 - (void)getValue:(id *)value;

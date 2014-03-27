@@ -1,5 +1,7 @@
 #import "SBLMatcher.h"
 
+@class SBLInvocationMatchResult;
+
 @interface SBLInvocationRecord : NSObject
 
 @property (nonatomic, readonly) SEL selector;
@@ -9,7 +11,7 @@
 
 - (void)setMatchers:(NSArray *)matchers;
 
-- (BOOL)matchesInvocation:(SBLInvocationRecord *)invocationRecord;
+- (SBLInvocationMatchResult *)matchResultForInvocation:(SBLInvocationRecord *)invocationRecord;
 - (const char *)returnType;
 
 
