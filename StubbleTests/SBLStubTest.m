@@ -2,6 +2,7 @@
 #import "Stubble.h"
 #import "SBLTestingClass.h"
 #import "SBLTestingProtocol.h"
+#import <UIKit/UIKit.h>
 
 @interface SBLStubTest : XCTestCase
 
