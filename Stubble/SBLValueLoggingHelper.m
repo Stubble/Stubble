@@ -39,14 +39,15 @@
         unsigned long unwrappedValue;
         [value getValue:&unwrappedValue];
         return [NSString stringWithFormat:@"%lu", unwrappedValue];
+    } else if (strcmp(type, @encode(bool)) == 0) {
+        BOOL unwrappedValue;
+        [value getValue:&unwrappedValue];
+        return [NSString stringWithFormat:@"%@", unwrappedValue ? @"YES" : @"NO"];
+    }  else if (strcmp(type, @encode(BOOL)) == 0 && [value isKindOfClass:[NSNumber class]]) {
+        BOOL unwrappedValue;
+        [value getValue:&unwrappedValue];
+        return [NSString stringWithFormat:@"%@", unwrappedValue ? @"YES" : @"NO"];
     } else if (strcmp(type, @encode(char)) == 0) {
-        BOOL unwrappedBoolValue;
-        [value getValue:&unwrappedBoolValue];
-        if (unwrappedBoolValue == YES) {
-            return @"YES";
-        } else if (unwrappedBoolValue == NO) {
-            return @"NO";
-        }
         char unwrappedCharValue;
         [value getValue:&unwrappedCharValue];
         return [NSString stringWithFormat:@"%c", unwrappedCharValue];
@@ -54,10 +55,6 @@
         unsigned char unwrappedValue;
         [value getValue:&unwrappedValue];
         return [NSString stringWithFormat:@"%hhu", unwrappedValue];
-    } else if (strcmp(type, @encode(bool)) == 0) {
-        BOOL unwrappedValue;
-        [value getValue:&unwrappedValue];
-        return [NSString stringWithFormat:@"%@", unwrappedValue ? @"YES" : @"NO"];
     }
     return nil;
 }
