@@ -12,7 +12,7 @@ Using stubble
 
 Project Setup
 -------
-Stubble can be imported as a subproject in Xcode or as a .framework.
+Stubble can be imported as a subproject in Xcode or as a .framework. If imported as a subproject, make sure you update the Header Search Paths in the build settings for your Test target, and to update the Link Binary With Libraries in Build Phases.
 
 In the build settings for your Test target, under `OtherLinkerFlags` add `-ObjC` and `-all_load`.
 
