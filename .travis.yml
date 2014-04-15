@@ -1,0 +1,4 @@
+language: objective-c
+xcode_project: Stubble.xcodeproj
+xcode_scheme: Stubble
+xcode_sdk: iphonesimulator
