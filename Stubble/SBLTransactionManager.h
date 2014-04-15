@@ -21,7 +21,6 @@ typedef enum {
 
 - (void)prepareForVerify;
 - (void)verifyMethodInvokedForMock:(SBLMockObject *)mock;
-- (void)verifyMockCalled:(NSString *)errorMessage;
 - (SBLVerificationResult *)performVerifyNumberOfTimes:(SBLTimesMatcher *)timesMatcher;
 
 - (void)addMatcher:(SBLMatcher *)matcher;

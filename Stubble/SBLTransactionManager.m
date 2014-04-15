@@ -4,9 +4,10 @@
 
 @interface SBLTransactionManager ()
 
-@property (nonatomic, readwrite) SBLTransactionManagerState state;
+@property (nonatomic) SBLTransactionManagerState state;
 @property (nonatomic) SBLMockObject *currentMock;
 @property (nonatomic, readonly) NSMutableArray *matchers;
+@property (nonatomic) int numberOfCallsDuringTransaction;
 
 @end
 
@@ -37,14 +38,14 @@
 
 - (void)whenMethodInvokedForMock:(SBLMockObject *)mock {
     [self verifyState:SBLTransactionManagerStateStubInProgress];
+    self.numberOfCallsDuringTransaction++;
     self.currentMock = mock;
 	[self.currentMock.sblCurrentStubbedInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }
 
 - (SBLStubbedInvocation *)performWhen {
     [self verifyState:SBLTransactionManagerStateStubInProgress];
-    [self verifyMockCalled:SBLBadWhenErrorMessage];
-
+    [self verifyTransactionCallCountWithLowError:SBLBadWhenNoCallsErrorMessage highError:SBLBadWhenTooManyCallsErrorMessage];
     SBLStubbedInvocation *when = self.currentMock.sblCurrentStubbedInvocation;
     [self clear];
     return when;
@@ -54,6 +55,7 @@
     self.currentMock = nil;
 	[self.matchers removeAllObjects];
     self.state = SBLTransactionManagerStateAtRest;
+    self.numberOfCallsDuringTransaction = 0;
 }
 
 - (void)addMatcher:(SBLMatcher *)matcher {
@@ -70,13 +72,15 @@
 }
 
 - (void)verifyMethodInvokedForMock:(SBLMockObject *)mock {
-	self.currentMock = mock;
-	[self.currentMock.sblVerifyInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
+    [self verifyState:SBLTransactionManagerStateVerifyInProgress];
+    self.numberOfCallsDuringTransaction++;
+    self.currentMock = mock;
+    [self.currentMock.sblVerifyInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }
 
 - (SBLVerificationResult *)performVerifyNumberOfTimes:(SBLTimesMatcher *)timesMatcher {
     [self verifyState:SBLTransactionManagerStateVerifyInProgress];
-    [self verifyMockCalled:SBLBadVerifyErrorMessage];
+    [self verifyTransactionCallCountWithLowError:SBLBadVerifyNoCallsErrorMessage highError:SBLBadVerifyTooManyCallsErrorMessage];
     SBLVerificationResult *result = nil;
 	@try {
          result = [self.currentMock sblVerifyInvocationOccurredNumberOfTimes:timesMatcher];
@@ -86,9 +90,11 @@
 	return result;
 }
 
-- (void)verifyMockCalled:(NSString *)errorMessage {
-    if (!self.currentMock) {
-        [self throwUsage:errorMessage];
+- (void)verifyTransactionCallCountWithLowError:(NSString *)lowError highError:(NSString *)highError {
+    if (self.numberOfCallsDuringTransaction == 0) {
+        [self throwUsage:lowError];
+    } else if (self.numberOfCallsDuringTransaction > 1) {
+        [self throwUsage:highError];
     }
 }
 
