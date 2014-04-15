@@ -27,4 +27,35 @@
     XCTAssertTrue([result2.failureDescription.lowercaseString rangeOfString:@"order"].location != NSNotFound);
 }
 
+- (void)testWhenVerifingMultipleCallsOnASingleMockAndTheyAreInTheCorrectOrderThenVerifyPasses {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    [mock methodReturningBool];
+    [mock methodReturningInt];
+    [mock methodReturningInt];
+
+    SBLOrderToken *orderToken = orderToken();
+    SBLVerifyImpl(atLeast(1), orderToken, [mock methodReturningBool]);
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), orderToken, [mock methodReturningInt]);
+    XCTAssertTrue(result.successful);
+}
+
+- (void)testWhenCallsAreInterleavedOnASingleMockAndOrderIsBeingCheckedThenVerifyFails {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    [mock methodReturningInt];
+    [mock methodReturningBool];
+    [mock methodReturningInt];
+
+    SBLOrderToken *orderToken1 = orderToken();
+    SBLVerifyImpl(atLeast(1), orderToken1, [mock methodReturningBool]);
+    SBLVerificationResult *result1 = SBLVerifyImpl(atLeast(1), orderToken1, [mock methodReturningInt]);
+    XCTAssertFalse(result1.successful);
+
+    SBLOrderToken *orderToken2 = orderToken();
+    SBLVerifyImpl(atLeast(1), orderToken2, [mock methodReturningInt]);
+    SBLVerificationResult *result2 = SBLVerifyImpl(atLeast(1), orderToken2, [mock methodReturningBool]);
+    XCTAssertFalse(result2.successful);
+}
+
 @end

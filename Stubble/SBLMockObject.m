@@ -108,11 +108,13 @@
     NSInteger atMostTimes = timesMatcher.atMost;
     NSInteger invocationCount = 0;
     long largestCallOrder = 0L;
+    long smallestCallOrder = LONG_MAX;
     NSMutableArray *mismatchedMethodCalls = [NSMutableArray array];
     for (SBLInvocationRecord *actualInvocation in self.sblActualInvocations) {
         SBLInvocationMatchResult *invocationMatchResult = [self.sblVerifyInvocation matchResultForInvocation:actualInvocation];
         if (invocationMatchResult.invocationMatches) {
             largestCallOrder = MAX(actualInvocation.callOrder, largestCallOrder);
+            smallestCallOrder = MIN(actualInvocation.callOrder, smallestCallOrder);
             invocationCount++;
         } else {
             if ([invocationMatchResult.argumentMatcherResults count]) {
@@ -134,7 +136,7 @@
     NSString *callDescription = [NSString stringWithFormat:@"%@ %@", NSStringFromSelector(self.sblVerifyInvocation.selector), expectedString];
     [orderToken addActualCallDescription:callDescription];
 
-    BOOL violatesOrder = orderToken.currentCallOrder > largestCallOrder;
+    BOOL violatesOrder = orderToken.currentCallOrder > smallestCallOrder;
     orderToken.currentCallOrder = largestCallOrder;
 
     BOOL mismatchedMethodButNeverExpected = [mismatchedMethodCalls count] && atLeastTimes == 0 && atMostTimes == 0;
