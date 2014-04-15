@@ -27,7 +27,7 @@
 #define SBLAny(...) _SBLAny(SBLNumberOfArgs(__VA_ARGS__), __VA_ARGS__)
 #define _SBLAny(ARGC, ARGS...) __SBLAny(ARGC, ARGS)
 #define __SBLAny(ARGC, ARGS...) SBLAny_ ## ARGC (ARGS)
-#define SBLAny_0(argumentType...) ({ SBLMatcher *matcher = [SBLMatcher any]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; [matcher placeholder]; })
+#define SBLAny_0(argumentType...) ({ SBLMatcher *matcher = [SBLMatcher any]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; (__bridge id)[matcher placeholder]; })
 #define SBLAny_1(argumentType...) ({ SBLMatcher *matcher = [SBLMatcher any]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; NSValue *placeholderValue = [matcher placeholderWithType:@encode(argumentType)]; argumentType placeholder; [placeholderValue getValue:&placeholder]; placeholder; })
 
 #define SBLCapture(captorReference) ({ SBLMatcher *matcher = [SBLMatcher captor:captorReference]; [SBLTransactionManager.currentTransactionManager addMatcher:matcher]; NSValue *placeholderValue = [matcher placeholderWithType:@encode(typeof(*(captorReference)))]; typeof(*(captorReference)) placeholder; [placeholderValue getValue:&placeholder]; placeholder; })
