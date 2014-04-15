@@ -85,6 +85,8 @@ typedef void(^SBLTestingBlock)(int integer, NSObject *object);
 
 - (NSString *)methodWithObject:(NSNumber *)number;
 
+- (void)methodWithCArray:(const char **)cArray;
+
 #pragma mark - Multiple Arguments
 
 - (NSString *)methodWithArgument:(NSString *)string block:(SBLTestingBlock)block;

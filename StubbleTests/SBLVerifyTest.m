@@ -54,6 +54,52 @@
 	XCTAssertTrue(result.successful);
 }
 
+- (void)testWhenVerifyingForMethodWithPointerThatMatchesThenResultIsSuccessful {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    NSInteger *integerPointer = (NSInteger *)1;
+    [mock methodWithPrimitiveReference:integerPointer];
+
+    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithPrimitiveReference:integerPointer]);
+    XCTAssertTrue(result.successful);
+    XCTAssertNil(result.failureDescription);
+}
+
+- (void)testWhenVerifyingForMethodWithStructThatMatchesThenResultIsSuccessful {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    NSInteger *integerPointer = (NSInteger *)1;
+    [mock methodWithPrimitiveReference:integerPointer];
+
+    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithPrimitiveReference:integerPointer]);
+    XCTAssertTrue(result.successful);
+    XCTAssertNil(result.failureDescription);
+
+    [mock methodWithCGRect:CGRectZero];
+
+    result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithCGRect:CGRectZero]);
+    XCTAssertTrue(result.successful);
+    XCTAssertNil(result.failureDescription);
+
+    SBLTestingStruct testingStruct1 = { 1, YES, "other stuff" };
+    [mock methodWithStruct:testingStruct1];
+
+    result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithStruct:testingStruct1]);
+    XCTAssertTrue(result.successful);
+    XCTAssertNil(result.failureDescription);
+}
+
+- (void)testWhenVerifyingForMethodWithUnknownTypeThatMatchesThenResultIsSuccessful {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    const char ** cArray1[1] =  {"something"};
+    [mock methodWithCArray:cArray1];
+
+    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithCArray:cArray1]);
+    XCTAssertTrue(result.successful);
+    XCTAssertNil(result.failureDescription);
+}
+
 #pragma mark - Verify Times Tests
 
 - (void)testWhenVerifyingExactlyZeroTimes_WhenNotCalled_ThenResultIsSuccessful {
@@ -293,13 +339,13 @@
     expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithInteger:", expectedArray, actualArray];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 
-    // Following currently do not have useful logging for expected/actual
+    // Following may need some fine tuning. Pointers, structs and unknown types are called out
     [mock methodWithPrimitiveReference:(NSInteger *)1];
 
     result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithPrimitiveReference:(NSInteger *)2]);
     XCTAssertFalse(result.successful);
-    expectedArray = @[@"struct"];
-    actualArray = @[@"struct"];
+    expectedArray = @[@"pointer"];
+    actualArray = @[@"pointer"];
     expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithPrimitiveReference:", expectedArray, actualArray];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 
@@ -321,6 +367,17 @@
     expectedArray = @[@"struct"];
     actualArray = @[@"struct"];
     expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithStruct:", expectedArray, actualArray];
+    XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
+
+    const char ** cArray1[1] =  {"something"};
+    const char ** cArray2[1] = {"something else"};
+    [mock methodWithCArray:cArray1];
+
+    result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithCArray:cArray2]);
+    XCTAssertFalse(result.successful);
+    expectedArray = @[@"unknown type"];
+    actualArray = @[@"unknown type"];
+    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithCArray:", expectedArray, actualArray];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 }
 

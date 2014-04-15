@@ -58,12 +58,24 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
 	return matcher;
 }
 
+#define Pointer @"pointer"
+#define Struct @"struct"
+
 + (instancetype)valueIsEqualMatcher:(NSValue *)value {
 	return [SBLMatcher matcherWithBlock:^SBLArgumentMatcherResult *(SBLInvocationArgument *argument) {
         BOOL argumentMatches = [value isEqual:argument.argument];
         SBLValueLoggingHelper *valueLoggingHelper = [[SBLValueLoggingHelper alloc] init];
         NSString *actualArgument = [valueLoggingHelper stringValueForValue:argument.argument type:argument.type];
         NSString *expectedArgument = [valueLoggingHelper stringValueForValue:value type:argument.type];
+        if (!argumentMatches) {
+            if (argument.type[0] == '^') {
+                expectedArgument = Pointer;
+                actualArgument = Pointer;
+            } else if (argument.type[0] == '{') {
+                expectedArgument = Struct;
+                actualArgument = Struct;
+            }
+        }
         SBLArgumentMatcherResult *argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches
                                                                  expectedArgument:expectedArgument
                                                                    actualArgument:actualArgument];

@@ -150,16 +150,14 @@
         if (argumentMatcherResult.expectedArgumentStringValue) {
             [expectedArguments addObject:argumentMatcherResult.expectedArgumentStringValue];
         } else {
-            // need support for unboxed structs
-            [expectedArguments addObject:@"struct"];
+            [expectedArguments addObject:@"unknown type"];
         }
     }
     for (SBLArgumentMatcherResult *argumentMatcherResult in argMatcherResults) {
         if (argumentMatcherResult.actualArgumentStringValue) {
             [actualArguments addObject:argumentMatcherResult.actualArgumentStringValue];
         } else {
-            // need support for unboxed structs
-            [actualArguments addObject:@"struct"];
+            [actualArguments addObject:@"unknown type"];
         }
     }
     NSString *differingArgumentsMessage = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";

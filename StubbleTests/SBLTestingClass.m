@@ -98,6 +98,10 @@
 	return @"123";
 }
 
+- (void)methodWithCArray:(const char **)cArray {
+
+}
+
 - (NSString *)methodWithArgument:(NSString *)string block:(SBLTestingBlock)block {
     return @"123";
 }
