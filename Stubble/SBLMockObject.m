@@ -136,13 +136,12 @@
     NSString *callDescription = [NSString stringWithFormat:@"%@ %@", NSStringFromSelector(self.sblVerifyInvocation.selector), expectedString];
     [orderToken addActualCallDescription:callDescription];
 
-    BOOL violatesOrder = orderToken.currentCallOrder > smallestCallOrder;
+    BOOL correctOrder = orderToken.currentCallOrder < smallestCallOrder;
     orderToken.currentCallOrder = largestCallOrder;
 
-    BOOL mismatchedMethodButNeverExpected = [mismatchedMethodCalls count] && atLeastTimes == 0 && atMostTimes == 0;
-	BOOL success = (atLeastTimes <= invocationCount && invocationCount <= atMostTimes) || mismatchedMethodButNeverExpected;
+	BOOL correctCallCount = atLeastTimes <= invocationCount && invocationCount <= atMostTimes;
 	NSString *failureMessage = nil;
-    if (!success) {
+    if (!correctCallCount) {
         NSString *countString = invocationCount == 1 ? @"1 time" : [NSString stringWithFormat:@"%ld times", (long)invocationCount];
         NSString *actualString = [NSString stringWithFormat:@"Method '%@' was called %@ ", NSStringFromSelector(self.sblVerifyInvocation.selector), countString];
 
@@ -151,11 +150,11 @@
         if ([mismatchedMethodCalls count]) {
             failureMessage = [self buildMismatchedArgumentsMessageWithArgMatcherResults:mismatchedMethodCalls[0]];
         }
-    } else if (violatesOrder) {
+    } else if (!correctOrder) {
         NSString *expectedOrder = [orderToken.actualCallDescriptions componentsJoinedByString:@", "];
         failureMessage = [NSString stringWithFormat:@"Method '%@' was called out of order.  Expected (%@)", NSStringFromSelector(self.sblVerifyInvocation.selector), expectedOrder];
     }
-	return [[SBLVerificationResult alloc] initWithSuccess:success && !violatesOrder failureDescription:failureMessage];
+	return [[SBLVerificationResult alloc] initWithSuccess:correctCallCount && correctOrder failureDescription:failureMessage];
 }
 
 - (NSString *)buildMismatchedArgumentsMessageWithArgMatcherResults:(NSArray *)argMatcherResults {
