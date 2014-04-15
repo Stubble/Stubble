@@ -3,10 +3,6 @@ stubble
 
 An iOS mocking framework in the spirit of Mockito.
 
-Advantages over OCMock:
-
-* Sane syntax
-
 Using stubble
 =======
 
