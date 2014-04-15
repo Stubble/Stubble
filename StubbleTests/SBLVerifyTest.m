@@ -342,20 +342,18 @@
     // Following may need some fine tuning. Pointers, structs and unknown types are called out
     [mock methodWithPrimitiveReference:(NSInteger *)1];
 
+    NSArray *arrayWithPointerArg = @[@"pointer"];
     result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithPrimitiveReference:(NSInteger *)2]);
     XCTAssertFalse(result.successful);
-    expectedArray = @[@"pointer"];
-    actualArray = @[@"pointer"];
-    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithPrimitiveReference:", expectedArray, actualArray];
+    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithPrimitiveReference:", arrayWithPointerArg, arrayWithPointerArg];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 
     [mock methodWithCGRect:CGRectZero];
 
+    NSArray *arrayWithStructArg = @[@"struct"];
     result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithCGRect:CGRectMake(0,1,0,1)]);
     XCTAssertFalse(result.successful);
-    expectedArray = @[@"struct"];
-    actualArray = @[@"struct"];
-    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithCGRect:", expectedArray, actualArray];
+    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithCGRect:", arrayWithStructArg, arrayWithStructArg];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 
     SBLTestingStruct testingStruct1 = { 1, YES, "other stuff" };
@@ -364,20 +362,17 @@
 
     result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithStruct:testingStruct2]);
     XCTAssertFalse(result.successful);
-    expectedArray = @[@"struct"];
-    actualArray = @[@"struct"];
-    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithStruct:", expectedArray, actualArray];
+    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithStruct:", arrayWithStructArg, arrayWithStructArg];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 
     const char ** cArray1[1] =  {"something"};
     const char ** cArray2[1] = {"something else"};
     [mock methodWithCArray:cArray1];
 
+    NSArray *arrayWithUnknownArg = @[@"unknown type"];
     result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithCArray:cArray2]);
     XCTAssertFalse(result.successful);
-    expectedArray = @[@"unknown type"];
-    actualArray = @[@"unknown type"];
-    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithCArray:", expectedArray, actualArray];
+    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithCArray:", arrayWithUnknownArg, arrayWithUnknownArg];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 }
 
