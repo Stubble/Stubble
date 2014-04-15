@@ -1,0 +1,3 @@
+@interface SBLOrderToken : NSObject
+
+@end

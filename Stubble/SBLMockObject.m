@@ -4,6 +4,8 @@
 #import "SBLProtocolMockObjectBehavior.h"
 #import "SBLClassMockObjectBehavior.h"
 #import "SBLInvocationMatchResult.h"
+#import "SBLOrderTokenInternal.h"
+#import "SBLMock.h"
 
 @interface SBLMockObject ()
 
@@ -99,16 +101,18 @@
 	return [self.sblStubbedInvocations lastObject];
 }
 
-- (SBLVerificationResult *)sblVerifyInvocationOccurredNumberOfTimes:(SBLTimesMatcher *)timesMatcher {
+- (SBLVerificationResult *)sblVerifyInvocationOccurredNumberOfTimes:(SBLTimesMatcher *)timesMatcher orderToken:(SBLOrderTokenInternal *)orderToken {
 	[self sblValidateTimesMatcherUsage:timesMatcher];
 
     NSInteger atLeastTimes = timesMatcher.atLeast;
     NSInteger atMostTimes = timesMatcher.atMost;
     NSInteger invocationCount = 0;
+    long largestCallOrder = 0L;
     NSMutableArray *mismatchedMethodCalls = [NSMutableArray array];
     for (SBLInvocationRecord *actualInvocation in self.sblActualInvocations) {
         SBLInvocationMatchResult *invocationMatchResult = [self.sblVerifyInvocation matchResultForInvocation:actualInvocation];
         if (invocationMatchResult.invocationMatches) {
+            largestCallOrder = MAX(actualInvocation.callOrder, largestCallOrder);
             invocationCount++;
         } else {
             if ([invocationMatchResult.argumentMatcherResults count]) {
@@ -117,30 +121,39 @@
         }
     }
 
+    NSString *expectedString;
+    if (atMostTimes == 0) {
+        expectedString = @"(expected no calls)";
+    } else if (atMostTimes == NSIntegerMax) {
+        expectedString = [NSString stringWithFormat:@"(expected at least %ld)", (long)atLeastTimes];
+    } else if (atMostTimes == atLeastTimes) {
+        expectedString = [NSString stringWithFormat:@"(expected exactly %ld)", (long)atLeastTimes];
+    } else {
+        expectedString = [NSString stringWithFormat:@"(expected between %ld and %ld)", (long)atLeastTimes, (long)atMostTimes];
+    }
+    NSString *callDescription = [NSString stringWithFormat:@"%@ %@", NSStringFromSelector(self.sblVerifyInvocation.selector), expectedString];
+    [orderToken addActualCallDescription:callDescription];
+
+    BOOL violatesOrder = orderToken.currentCallOrder > largestCallOrder;
+    orderToken.currentCallOrder = largestCallOrder;
+
     BOOL mismatchedMethodButNeverExpected = [mismatchedMethodCalls count] && atLeastTimes == 0 && atMostTimes == 0;
 	BOOL success = (atLeastTimes <= invocationCount && invocationCount <= atMostTimes) || mismatchedMethodButNeverExpected;
 	NSString *failureMessage = nil;
     if (!success) {
         NSString *countString = invocationCount == 1 ? @"1 time" : [NSString stringWithFormat:@"%ld times", (long)invocationCount];
         NSString *actualString = [NSString stringWithFormat:@"Method '%@' was called %@ ", NSStringFromSelector(self.sblVerifyInvocation.selector), countString];
-        NSString *expectedString;
 
-        if (atMostTimes == 0) {
-            expectedString = @"(expected no calls)";
-        } else if (atMostTimes == NSIntegerMax) {
-            expectedString = [NSString stringWithFormat:@"(expected at least %ld)", (long)atLeastTimes];
-        } else if (atMostTimes == atLeastTimes) {
-            expectedString = [NSString stringWithFormat:@"(expected exactly %ld)", (long)atLeastTimes];
-        } else {
-            expectedString = [NSString stringWithFormat:@"(expected between %ld and %ld)", (long)atLeastTimes, (long)atMostTimes];
-        }
         failureMessage = [actualString stringByAppendingString:expectedString];
 
         if ([mismatchedMethodCalls count]) {
             failureMessage = [self buildMismatchedArgumentsMessageWithArgMatcherResults:mismatchedMethodCalls[0]];
         }
+    } else if (violatesOrder) {
+        NSString *expectedOrder = [orderToken.actualCallDescriptions componentsJoinedByString:@", "];
+        failureMessage = [NSString stringWithFormat:@"Method '%@' was called out of order.  Expected (%@)", NSStringFromSelector(self.sblVerifyInvocation.selector), expectedOrder];
     }
-	return [[SBLVerificationResult alloc] initWithSuccess:success failureDescription:failureMessage];
+	return [[SBLVerificationResult alloc] initWithSuccess:success && !violatesOrder failureDescription:failureMessage];
 }
 
 - (NSString *)buildMismatchedArgumentsMessageWithArgMatcherResults:(NSArray *)argMatcherResults {

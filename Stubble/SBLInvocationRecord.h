@@ -5,6 +5,7 @@
 @interface SBLInvocationRecord : NSObject
 
 @property (nonatomic, readonly) SEL selector;
+@property (nonatomic, readonly) long callOrder;
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithInvocation:(NSInvocation *)invocation;

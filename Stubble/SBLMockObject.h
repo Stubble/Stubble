@@ -1,6 +1,7 @@
 #import "SBLStubbedInvocation.h"
 #import "SBLTimesMatcher.h"
 #import "SBLVerificationResult.h"
+#import "SBLOrderTokenInternal.h"
 
 @interface SBLMockObject : NSProxy
 
@@ -12,7 +13,8 @@
 @property (nonatomic, readonly) NSUInteger *sblNumberOfInvocations;
 
 - (SBLVerificationResult *)sblVerifyMockNotCalled;
-- (SBLVerificationResult *)sblVerifyInvocationOccurredNumberOfTimes:(SBLTimesMatcher *)times;
+
+- (SBLVerificationResult *)sblVerifyInvocationOccurredNumberOfTimes:(SBLTimesMatcher *)times orderToken:(SBLOrderTokenInternal *)orderToken;
 - (void)sblResetMock;
 
 @end
