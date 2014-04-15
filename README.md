@@ -1,7 +1,7 @@
 stubble
 =======
 
-An iOS mocking framework in the spirit of Mockito.
+Mocking Objective-C since [NSDate dateWithTimeIntervalSinceReferenceDate:408029584]
 
 Using stubble
 =======
