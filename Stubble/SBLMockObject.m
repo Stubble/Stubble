@@ -4,8 +4,6 @@
 #import "SBLProtocolMockObjectBehavior.h"
 #import "SBLClassMockObjectBehavior.h"
 #import "SBLInvocationMatchResult.h"
-#import "SBLOrderTokenInternal.h"
-#import "SBLMock.h"
 
 @interface SBLMockObject ()
 
@@ -29,65 +27,69 @@
 
 - (instancetype)initWithBehavior:(id<SBLMockObjectBehavior>)behavior {
     _sblBehavior = behavior;
-	_sblStubbedInvocations = [NSMutableArray array];
+    _sblStubbedInvocations = [NSMutableArray array];
     _sblActualInvocations = [NSMutableArray array];
     _sblNumberOfInvocations = 0;
-	return self;
+    return self;
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
-	return [self.sblBehavior mockObjectMethodSignatureForSelector:aSelector];
+    return [self.sblBehavior mockObjectMethodSignatureForSelector:aSelector];
 }
 
 - (BOOL)respondsToSelector:(SEL)selector {
-	return [self.sblBehavior mockObjectRespondsToSelector:selector];
+    return [self.sblBehavior mockObjectRespondsToSelector:selector];
 }
 
 - (BOOL)isKindOfClass:(Class)aClass {
-	return [self.sblBehavior mockObjectIsKindOfClass:aClass];
+    return [self.sblBehavior mockObjectIsKindOfClass:aClass];
 }
 
 - (BOOL)conformsToProtocol:(Protocol *)aProtocol {
-	return [self.sblBehavior mockObjectConformsToProtocol:aProtocol];
+    return [self.sblBehavior mockObjectConformsToProtocol:aProtocol];
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
     self.sblNumberOfInvocations++;
 
-	if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateStubInProgress) {
-		[self.sblStubbedInvocations addObject:[[SBLStubbedInvocation alloc] initWithInvocation:invocation]];
-		[SBLTransactionManager.currentTransactionManager whenMethodInvokedForMock:self];
-	} else if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateVerifyInProgress) {
+    if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateStubInProgress) {
+        [self.sblStubbedInvocations addObject:[[SBLStubbedInvocation alloc] initWithInvocation:invocation]];
+        [SBLTransactionManager.currentTransactionManager whenMethodInvokedForMock:self];
+    } else if (SBLTransactionManager.currentTransactionManager.state == SBLTransactionManagerStateVerifyInProgress) {
         self.sblVerifyInvocation = [[SBLInvocationRecord alloc] initWithInvocation:invocation];
         [SBLTransactionManager.currentTransactionManager verifyMethodInvokedForMock:self];
     } else {
-		// Record Invocation
-		SBLInvocationRecord *invocationRecord = [[SBLInvocationRecord alloc] initWithInvocation:invocation];
-        [self.sblActualInvocations addObject:invocationRecord];
-		
-		// Find Matching Stub
-		SBLStubbedInvocation *matchingWhen = nil;
-		for (SBLStubbedInvocation *ongoingWhen in self.sblStubbedInvocations.reverseObjectEnumerator) {
-            SBLInvocationMatchResult *invocationMatchResult = [ongoingWhen matchResultForInvocation:invocationRecord];
-			if (invocationMatchResult.invocationMatches) {
-				matchingWhen = ongoingWhen;
-				break;
-			}
-		}
-		
-		// Perform Actions
-		for (SBLInvocationActionBlock action in matchingWhen.actionBlocks) {
-			action(invocation);
-		}
-		
-		// Invoke Invocation
-		[invocation invokeWithTarget:nil];
-	}
+        [self sblPerformMockInvocation:invocation];
+    }
+}
+
+- (void)sblPerformMockInvocation:(NSInvocation *)invocation {
+    // Record Invocation
+    SBLInvocationRecord *invocationRecord = [[SBLInvocationRecord alloc] initWithInvocation:invocation];
+    [self.sblActualInvocations addObject:invocationRecord];
+
+    // Find Matching Stub
+    SBLStubbedInvocation *matchingWhen = nil;
+    for (SBLStubbedInvocation *ongoingWhen in self.sblStubbedInvocations.reverseObjectEnumerator) {
+        SBLInvocationMatchResult *invocationMatchResult = [ongoingWhen matchResultForInvocation:invocationRecord];
+        if (invocationMatchResult.invocationMatches) {
+            matchingWhen = ongoingWhen;
+            break;
+        }
+    }
+
+    // Perform Actions
+    for (SBLInvocationActionBlock action in matchingWhen.actionBlocks) {
+        action(invocation);
+    }
+
+    // Invoke Invocation
+    [invocation invokeWithTarget:nil];
 }
 
 - (void)sblResetMock {
-	[self.sblActualInvocations removeAllObjects];
-	[self.sblStubbedInvocations removeAllObjects];
+    [self.sblActualInvocations removeAllObjects];
+    [self.sblStubbedInvocations removeAllObjects];
 }
 
 - (SBLVerificationResult *)sblVerifyMockNotCalled {
@@ -98,11 +100,11 @@
 }
 
 - (SBLStubbedInvocation *)sblCurrentStubbedInvocation {
-	return [self.sblStubbedInvocations lastObject];
+    return [self.sblStubbedInvocations lastObject];
 }
 
 - (SBLVerificationResult *)sblVerifyInvocationOccurredNumberOfTimes:(SBLTimesMatcher *)timesMatcher orderToken:(SBLOrderTokenInternal *)orderToken {
-	[self sblValidateTimesMatcherUsage:timesMatcher];
+    [self sblValidateTimesMatcherUsage:timesMatcher];
 
     NSInteger atLeastTimes = timesMatcher.atLeast;
     NSInteger atMostTimes = timesMatcher.atMost;
@@ -131,56 +133,50 @@
     BOOL correctOrder = orderToken.currentCallOrder < smallestCallOrder;
     orderToken.currentCallOrder = largestCallOrder;
 
-	BOOL correctCallCount = atLeastTimes <= invocationCount && invocationCount <= atMostTimes;
-	NSString *failureMessage = nil;
+    BOOL correctCallCount = atLeastTimes <= invocationCount && invocationCount <= atMostTimes;
+    NSString *failureMessage = nil;
     if (!correctCallCount) {
-        NSString *countString = invocationCount == 1 ? @"1 time" : [NSString stringWithFormat:@"%ld times", (long)invocationCount];
-        NSString *actualString = [NSString stringWithFormat:@"Method '%@' was called %@ ", NSStringFromSelector(self.sblVerifyInvocation.selector), countString];
-        failureMessage = [NSString stringWithFormat:@"%@(expected %@)", actualString, formattedTimes];
-
-        if ([mismatchedMethodCalls count]) {
-            failureMessage = [self buildMismatchedArgumentsMessageWithArgMatcherResults:mismatchedMethodCalls[0]];
-        }
+        failureMessage = [self sblCallCountFailureMessageForInvocationCount:invocationCount mismatchedMethodCalls:mismatchedMethodCalls formattedExpectedTimes:formattedTimes];
     } else if (!correctOrder) {
-        NSArray *orderedActualCalls = orderToken.actualCalls;
-        NSMutableArray *actualCallDescriptions = [NSMutableArray array];
-        for (int index = 0; index < orderedActualCalls.count; index++) {
-            SBLInvocationRecord *call = orderedActualCalls[index];
-            int sameCallCount = 1;
-            while (index + 1 < orderedActualCalls.count && ((SBLInvocationRecord *)orderedActualCalls[index + 1]).selector == call.selector) {
-                sameCallCount++;
-                index++;
-            }
-            NSString *actualDescription = sameCallCount == 1 ? NSStringFromSelector(call.selector) : [NSString stringWithFormat:@"%@ (%d times)", NSStringFromSelector(call.selector), sameCallCount];
-            [actualCallDescriptions addObject:actualDescription];
-        }
-        NSString *expectedOrder = [orderToken.expectedCallDescriptions componentsJoinedByString:@", "];
-        NSString *actualOrder = [actualCallDescriptions componentsJoinedByString:@", "];
-
-        failureMessage = [NSString stringWithFormat:@"Method '%@' was called out of order. Expected %@ but got %@", NSStringFromSelector(self.sblVerifyInvocation.selector), expectedOrder, actualOrder];
+        failureMessage = [self sblOrderingFailureMessageForOrderToken:orderToken];
     }
-	return [[SBLVerificationResult alloc] initWithSuccess:correctCallCount && correctOrder failureDescription:failureMessage];
+    return [[SBLVerificationResult alloc] initWithSuccess:correctCallCount && correctOrder failureDescription:failureMessage];
 }
 
-- (NSString *)buildMismatchedArgumentsMessageWithArgMatcherResults:(NSArray *)argMatcherResults {
-    NSMutableArray *expectedArguments = [NSMutableArray array];
-    NSMutableArray *actualArguments = [NSMutableArray array];
-    for (SBLArgumentMatcherResult *argumentMatcherResult in argMatcherResults) {
-        if (argumentMatcherResult.expectedArgumentStringValue) {
+- (NSString *)sblCallCountFailureMessageForInvocationCount:(NSInteger)invocationCount mismatchedMethodCalls:(NSArray *)mismatchedMethodCalls formattedExpectedTimes:(NSString *)formattedTimes {
+    NSString *failureMessage;
+    if (mismatchedMethodCalls.count) {
+        NSMutableArray *expectedArguments = [NSMutableArray array];
+        NSMutableArray *actualArguments = [NSMutableArray array];
+        for (SBLArgumentMatcherResult *argumentMatcherResult in mismatchedMethodCalls[0]) {
             [expectedArguments addObject:argumentMatcherResult.expectedArgumentStringValue];
-        } else {
-            [expectedArguments addObject:@"unknown type"];
-        }
-    }
-    for (SBLArgumentMatcherResult *argumentMatcherResult in argMatcherResults) {
-        if (argumentMatcherResult.actualArgumentStringValue) {
             [actualArguments addObject:argumentMatcherResult.actualArgumentStringValue];
-        } else {
-            [actualArguments addObject:@"unknown type"];
         }
+        failureMessage = [NSString stringWithFormat:@"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@", NSStringFromSelector(self.sblVerifyInvocation.selector), expectedArguments, actualArguments];
+    } else {
+        NSString *countString = invocationCount == 1 ? @"1 time" : [NSString stringWithFormat:@"%ld times", (long) invocationCount];
+        NSString *actualString = [NSString stringWithFormat:@"Method '%@' was called %@ ", NSStringFromSelector(self.sblVerifyInvocation.selector), countString];
+        failureMessage = [NSString stringWithFormat:@"%@(expected %@)", actualString, formattedTimes];
     }
-    NSString *differingArgumentsMessage = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
-    return [NSString stringWithFormat:differingArgumentsMessage, NSStringFromSelector(self.sblVerifyInvocation.selector), expectedArguments, actualArguments];
+    return failureMessage;
+}
+
+- (NSString *)sblOrderingFailureMessageForOrderToken:(SBLOrderTokenInternal *)orderToken {
+    NSArray *orderedActualCalls = orderToken.actualCalls;
+    NSMutableArray *actualCallDescriptions = [NSMutableArray array];
+    for (int index = 0; index < orderedActualCalls.count; index++) {
+        SBLInvocationRecord *call = orderedActualCalls[index];
+        int sameCallCount = 1;
+        while (index + 1 < orderedActualCalls.count && ((SBLInvocationRecord *) orderedActualCalls[index + 1]).selector == call.selector) {
+            sameCallCount++;
+            index++;
+        }
+        NSString *actualDescription = sameCallCount == 1 ? NSStringFromSelector(call.selector) : [NSString stringWithFormat:@"%@ (%d times)", NSStringFromSelector(call.selector), sameCallCount];
+        [actualCallDescriptions addObject:actualDescription];
+    }
+    NSString *expectedOrder = [orderToken.expectedCallDescriptions componentsJoinedByString:@", "];
+    NSString *actualOrder = [actualCallDescriptions componentsJoinedByString:@", "];
+    return [NSString stringWithFormat:@"Method '%@' was called out of order. Expected %@ but got %@", NSStringFromSelector(self.sblVerifyInvocation.selector), expectedOrder, actualOrder];
 }
 
 - (void)sblValidateTimesMatcherUsage:(SBLTimesMatcher *)timesMatcher {
