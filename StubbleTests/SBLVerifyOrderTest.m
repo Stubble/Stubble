@@ -58,4 +58,45 @@
     XCTAssertFalse(result2.successful);
 }
 
+- (void)testWhenOrderIsCheckedOnMultipleMocksAndTheOrderIsNotCorrectThenVerifyFails {
+    SBLTestingClass *mock1 = mock(SBLTestingClass.class);
+    SBLTestingClass *mock2 = mock(SBLTestingClass.class);
+    SBLTestingClass *mock3 = mock(SBLTestingClass.class);
+
+    [mock1 methodReturningBool];
+    [mock3 methodReturningInt];
+    [mock2 methodReturningInt];
+
+    SBLOrderToken *orderToken = orderToken();
+    SBLVerificationResult *result1 = SBLVerifyImpl(once(), orderToken, [mock1 methodReturningBool]);
+    SBLVerificationResult *result2 = SBLVerifyImpl(once(), orderToken, [mock2 methodReturningInt]);
+    SBLVerificationResult *result3 = SBLVerifyImpl(once(), orderToken, [mock3 methodReturningInt]);
+    XCTAssertTrue(result1.successful);
+    XCTAssertTrue(result2.successful);
+    XCTAssertFalse(result3.successful);
+}
+
+- (void)testWhenOrderVerificationFailsThenMessageIncludesActualAndExpectedCalls {
+    SBLTestingClass *mock1 = mock(SBLTestingClass.class);
+    SBLTestingClass *mock2 = mock(SBLTestingClass.class);
+    SBLTestingClass *mock3 = mock(SBLTestingClass.class);
+
+    [mock1 methodReturningBool];
+    [mock1 methodReturningBool];
+    [mock3 methodReturningString];
+    [mock2 methodReturningInt];
+    [mock2 methodReturningInt];
+
+    SBLOrderToken *orderToken = orderToken();
+    SBLVerifyImpl(between(1, 4), orderToken, [mock1 methodReturningBool]);
+    SBLVerifyImpl(times(2), orderToken, [mock2 methodReturningInt]);
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), orderToken, [mock3 methodReturningString]);
+
+    NSString *message = result.failureDescription;
+    XCTAssertEqualObjects(message, @"Method 'methodReturningString' was called out of order. Expected "
+            "methodReturningBool (between 1 and 4), methodReturningInt (exactly 2), methodReturningString (at least 1)"
+            " but got "
+            "methodReturningBool (2 times), methodReturningString, methodReturningInt (2 times)");
+}
+
 @end

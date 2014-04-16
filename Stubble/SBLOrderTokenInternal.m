@@ -1,8 +1,10 @@
 #import "SBLOrderTokenInternal.h"
+#import "SBLInvocationRecord.h"
 
 @interface SBLOrderTokenInternal()
 
-@property (nonatomic, readonly) NSMutableArray *descriptions;
+@property (nonatomic, readonly) NSMutableArray *expectedDescriptionArray;
+@property (nonatomic, readonly) NSMutableArray *actualCallArray;
 
 @end
 
@@ -10,16 +12,27 @@
 
 - (instancetype)init {
     self = [super init];
-    _descriptions = [NSMutableArray array];
+    _expectedDescriptionArray = [NSMutableArray array];
+    _actualCallArray = [NSMutableArray array];
     return self;
 }
 
-- (void)addActualCallDescription:(NSString *)callDescription {
-    [self.descriptions addObject:callDescription];
+- (void)addExpectedCallDescription:(NSString *)callDescription {
+    [self.expectedDescriptionArray addObject:callDescription];
 }
 
-- (NSArray *)actualCallDescriptions {
-    return self.descriptions;
+- (NSArray *)expectedCallDescriptions {
+    return self.expectedDescriptionArray;
+}
+
+- (void)addActualCall:(SBLInvocationRecord *)actualCall {
+    [self.actualCallArray addObject:actualCall];
+}
+
+- (NSArray *)actualCalls {
+    return [self.actualCallArray sortedArrayUsingComparator:^NSComparisonResult(SBLInvocationRecord *first, SBLInvocationRecord *second) {
+        return [@(first.callOrder) compare:@(second.callOrder)];
+    }];
 }
 
 @end
