@@ -99,4 +99,32 @@
             "methodReturningBool (2 times), methodReturningString, methodReturningInt (2 times)");
 }
 
+- (void)testWhenMethodsWithParametersCalledInTheCorrectOrderThenVerifyPasses {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    [mock methodWithInteger:15];
+    [mock methodWithInteger:30];
+
+    SBLOrderToken *orderToken = orderToken();
+    SBLVerificationResult *result1 = SBLVerifyImpl(atLeast(1), orderToken, [mock methodWithInteger:15]);
+    XCTAssertTrue(result1.successful);
+
+    SBLVerificationResult *result2 = SBLVerifyImpl(atLeast(1), orderToken, [mock methodWithInteger:30]);
+    XCTAssertTrue(result2.successful);
+}
+
+- (void)testWhenMethodsWithParametersAreCalledOutOfOrderThenVerifyFails {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    [mock methodWithInteger:30];
+    [mock methodWithInteger:15];
+
+    SBLOrderToken *orderToken = orderToken();
+    SBLVerificationResult *result1 = SBLVerifyImpl(atLeast(1), orderToken, [mock methodWithInteger:15]);
+    XCTAssertTrue(result1.successful);
+
+    SBLVerificationResult *result2 = SBLVerifyImpl(atLeast(1), orderToken, [mock methodWithInteger:30]);
+    XCTAssertFalse(result2.successful);
+}
+
 @end

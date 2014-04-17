@@ -6,7 +6,7 @@
 + (long)nextCallOrder {
     static int64_t callOrder = 0;
     OSAtomicIncrement64(&callOrder);
-    return callOrder;
+    return (long) callOrder;
 }
 
 @end
