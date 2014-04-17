@@ -17,10 +17,10 @@ Creating a Mock
 
     mock([ClassToMock class]);
 
-### Note with ESCOberserver
+### Note with ESCObserver
 If you are using ESCObserver, you'll want to do this to your mock objects:
 
-    ClassToMock<ESCOberserverInternal> *mockClass;
+    ClassToMock<ESCObserverInternal> *mockClass;
 
 Creating a stub
 ------
