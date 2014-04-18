@@ -3,6 +3,7 @@
 #import "SBLHelpers.h"
 #import "SBLInvocationArgument.h"
 #import "SBLInvocationMatchResult.h"
+#import "SBLCallOrderTracker.h"
 
 @interface SBLInvocationRecord ()
 
@@ -20,6 +21,7 @@
 		_invocationSelector = invocation.selector;
 		_methodSignature = invocation.methodSignature;
 		_arguments = [self.class argumentsFromInvocation:invocation];
+        _callOrder = [SBLCallOrderTracker nextCallOrder];
 	}
 	return self;
 }

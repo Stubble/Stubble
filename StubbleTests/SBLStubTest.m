@@ -241,15 +241,6 @@
 	XCTAssertEqualObjects([mock protocolMethodWithInteger:3], @"1");
 }
 
-- (void)testEncode {
-	const char *encodingClass = @encode(__typeof__([NSObject class]));
-	const char *encodingProtocol = @encode(__typeof__(@protocol(NSObject)));
-	
-	NSLog(@"class: %s", encodingClass);
-	NSLog(@"protocol: %s", encodingProtocol);
-	NSLog(@"protocol class: %@", NSStringFromClass([(id)@protocol(NSObject) class]));
-}
-
 - (void)testWhenIntegerNumberIsReturnedFromStubMethodThatReturnsADoubleThenTheCorrectValueIsReturned {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 

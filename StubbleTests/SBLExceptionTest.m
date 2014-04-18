@@ -18,7 +18,21 @@
         [when(string.length) thenReturn:@1];
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e) {
-        [self verifyException:e ofName:SBLBadUsage reason:SBLBadWhenErrorMessage];
+        [self verifyException:e ofName:SBLBadUsage reason:SBLBadWhenNoCallsErrorMessage];
+    }
+}
+
+- (void)testWhenMultipleStubsAreCalledInASingleWhenThenAnErrorIsThrown {
+    SBLTestingClass *mock1 = mock(SBLTestingClass.class);
+    SBLTestingClass *mock2 = mock(SBLTestingClass.class);
+
+    [when(mock1.methodReturningInt) thenReturn:@1];
+
+    @try {
+        [when([mock2 methodWithInteger:mock1.methodReturningInt]) thenReturn:@"1 passed in"];
+        XCTFail(@"mock1 and mock2 were both called in the same when, but no error was thrown");
+    } @catch (NSException *e) {
+        [self verifyException:e ofName:SBLBadUsage reason:SBLBadWhenTooManyCallsErrorMessage];
     }
 }
 
@@ -29,7 +43,23 @@
         verify(string.length);
         XCTFail(@"Should have thrown NSException!");
     } @catch (NSException *e){
-        [self verifyException:e ofName:SBLBadUsage reason:SBLBadVerifyErrorMessage];
+        [self verifyException:e ofName:SBLBadUsage reason:SBLBadVerifyNoCallsErrorMessage];
+    }
+}
+
+- (void)testWhenMultipleStubsAreCalledInASingleVerifyThenAnErrorIsThrown {
+    SBLTestingClass *mock1 = mock(SBLTestingClass.class);
+    SBLTestingClass *mock2 = mock(SBLTestingClass.class);
+
+    [when(mock1.methodReturningInt) thenReturn:@1];
+
+    [mock2 methodWithInteger:mock2.methodReturningInt];
+
+    @try {
+        verifyCalled([mock2 methodWithInteger:mock1.methodReturningInt]);
+        XCTFail(@"mock1 and mock2 were both called in the same verify, but no error was thrown");
+    } @catch (NSException *e) {
+        [self verifyException:e ofName:SBLBadUsage reason:SBLBadVerifyTooManyCallsErrorMessage];
     }
 }
 

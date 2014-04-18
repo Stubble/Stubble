@@ -1,12 +1,16 @@
 #import "SBLTransactionManager.h"
 #import "SBLErrors.h"
 #import "SBLTimesMatcher.h"
+#import "SBLOrderTokenInternal.h"
+#import "SBLMock.h"
 
 @interface SBLTransactionManager ()
 
-@property (nonatomic, readwrite) SBLTransactionManagerState state;
+@property (nonatomic) SBLTransactionManagerState state;
 @property (nonatomic) SBLMockObject *currentMock;
+@property (nonatomic) SBLOrderTokenInternal *currentOrderToken;
 @property (nonatomic, readonly) NSMutableArray *matchers;
+@property (nonatomic) int numberOfCallsDuringTransaction;
 
 @end
 
@@ -37,14 +41,14 @@
 
 - (void)whenMethodInvokedForMock:(SBLMockObject *)mock {
     [self verifyState:SBLTransactionManagerStateStubInProgress];
+    self.numberOfCallsDuringTransaction++;
     self.currentMock = mock;
 	[self.currentMock.sblCurrentStubbedInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }
 
 - (SBLStubbedInvocation *)performWhen {
     [self verifyState:SBLTransactionManagerStateStubInProgress];
-    [self verifyMockCalled:SBLBadWhenErrorMessage];
-
+    [self verifyTransactionCallCountWithLowError:SBLBadWhenNoCallsErrorMessage highError:SBLBadWhenTooManyCallsErrorMessage];
     SBLStubbedInvocation *when = self.currentMock.sblCurrentStubbedInvocation;
     [self clear];
     return when;
@@ -52,8 +56,10 @@
 
 - (void)clear {
     self.currentMock = nil;
+    self.currentOrderToken = nil;
 	[self.matchers removeAllObjects];
     self.state = SBLTransactionManagerStateAtRest;
+    self.numberOfCallsDuringTransaction = 0;
 }
 
 - (void)addMatcher:(SBLMatcher *)matcher {
@@ -63,32 +69,40 @@
 	[self.matchers addObject:matcher];
 }
 
-- (void)prepareForVerify {
+- (void)prepareForVerify:(SBLOrderToken *)orderToken {
     [self verifyState:SBLTransactionManagerStateAtRest];
-
+    self.currentOrderToken = (SBLOrderTokenInternal *)orderToken;
     self.state = SBLTransactionManagerStateVerifyInProgress;
 }
 
 - (void)verifyMethodInvokedForMock:(SBLMockObject *)mock {
-	self.currentMock = mock;
-	[self.currentMock.sblVerifyInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
+    [self verifyState:SBLTransactionManagerStateVerifyInProgress];
+    self.numberOfCallsDuringTransaction++;
+    self.currentMock = mock;
+    [self.currentMock.sblVerifyInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
 }
 
 - (SBLVerificationResult *)performVerifyNumberOfTimes:(SBLTimesMatcher *)timesMatcher {
     [self verifyState:SBLTransactionManagerStateVerifyInProgress];
-    [self verifyMockCalled:SBLBadVerifyErrorMessage];
+    [self verifyTransactionCallCountWithLowError:SBLBadVerifyNoCallsErrorMessage highError:SBLBadVerifyTooManyCallsErrorMessage];
     SBLVerificationResult *result = nil;
 	@try {
-         result = [self.currentMock sblVerifyInvocationOccurredNumberOfTimes:timesMatcher];
+         result = [self.currentMock sblVerifyInvocationOccurredNumberOfTimes:timesMatcher orderToken:self.currentOrderToken];
 	} @finally {
 		[self clear];
 	}
 	return result;
 }
 
-- (void)verifyMockCalled:(NSString *)errorMessage {
-    if (!self.currentMock) {
-        [self throwUsage:errorMessage];
+- (SBLOrderTokenInternal *)createOrderToken {
+    return [[SBLOrderTokenInternal alloc] init];
+}
+
+- (void)verifyTransactionCallCountWithLowError:(NSString *)lowError highError:(NSString *)highError {
+    if (self.numberOfCallsDuringTransaction == 0) {
+        [self throwUsage:lowError];
+    } else if (self.numberOfCallsDuringTransaction > 1) {
+        [self throwUsage:highError];
     }
 }
 

@@ -21,6 +21,20 @@
     return self;
 }
 
+- (NSString *)formattedTimes {
+    NSString *formattedTimes;
+    if (self.atMost == 0) {
+        formattedTimes = @"no calls";
+    } else if (self.atMost == NSIntegerMax) {
+        formattedTimes = [NSString stringWithFormat:@"at least %ld", (long)self.atLeast];
+    } else if (self.atMost == self.atLeast) {
+        formattedTimes = [NSString stringWithFormat:@"exactly %ld", (long)self.atLeast];
+    } else {
+        formattedTimes = [NSString stringWithFormat:@"between %ld and %ld", (long)self.atLeast, (long)self.atMost];
+    }
+    return formattedTimes;
+}
+
 + (instancetype)never {
     return [[SBLTimesMatcher alloc] init];
 }

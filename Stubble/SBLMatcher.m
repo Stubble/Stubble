@@ -47,7 +47,7 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
         BOOL argumentMatches = [object isEqual:argument.argument] || (!object && !argument.argument);
         SBLArgumentMatcherResult *argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches
                                                          expectedArgument:object
-                                                           actualArgument:argument.argument];
+                                                           actualArgument:[argument.argument description]];
         return argumentMatcherResult;
 	}];
 }

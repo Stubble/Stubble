@@ -19,10 +19,10 @@
 - (void)testWhenVerifyingForMethodThatWasCalledThatWasMadeThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
-    [mock methodReturningInt];
-
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodReturningInt]);
-    XCTAssertTrue(result.successful);
+	[mock methodReturningInt];
+	
+	SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodReturningInt]);
+	XCTAssertTrue(result.successful);
 }
 
 - (void)testWhenVerifyingForMethodThatWasNotTheLastMethodCalledThenResultIsSuccessful {
@@ -32,8 +32,8 @@
     [mock methodReturningInt];
     [mock methodReturningString];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodReturningInt]);
-    XCTAssertTrue(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodReturningInt]);
+	XCTAssertTrue(result.successful);
 }
 
 - (void)testWhenVerifyingForMethodWithVoidReturnTypeThenResultIsSuccessful {
@@ -41,8 +41,8 @@
 
     [mock methodWithNoReturn];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithNoReturn]);
-    XCTAssertTrue(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithNoReturn]);
+	XCTAssertTrue(result.successful);
 }
 
 - (void)testWhenVerifyingForMethodWithCorrectParametersThenResultIsSuccessful {
@@ -50,8 +50,8 @@
 
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
-    XCTAssertTrue(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
+	XCTAssertTrue(result.successful);
 }
 
 - (void)testWhenVerifyingForMethodWithPointerThatMatchesThenResultIsSuccessful {
@@ -60,7 +60,7 @@
     NSInteger *integerPointer = (NSInteger *) 1;
     [mock methodWithPrimitiveReference:integerPointer];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithPrimitiveReference:integerPointer]);
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithPrimitiveReference:integerPointer]);
     XCTAssertTrue(result.successful);
     XCTAssertNil(result.failureDescription);
 }
@@ -71,20 +71,20 @@
     NSInteger *integerPointer = (NSInteger *) 1;
     [mock methodWithPrimitiveReference:integerPointer];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithPrimitiveReference:integerPointer]);
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithPrimitiveReference:integerPointer]);
     XCTAssertTrue(result.successful);
     XCTAssertNil(result.failureDescription);
 
     [mock methodWithCGRect:CGRectZero];
 
-    result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithCGRect:CGRectZero]);
+    result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithCGRect:CGRectZero]);
     XCTAssertTrue(result.successful);
     XCTAssertNil(result.failureDescription);
 
     SBLTestingStruct testingStruct1 = {1, YES, "other stuff"};
     [mock methodWithStruct:testingStruct1];
 
-    result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithStruct:testingStruct1]);
+    result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithStruct:testingStruct1]);
     XCTAssertTrue(result.successful);
     XCTAssertNil(result.failureDescription);
 }
@@ -95,7 +95,7 @@
     const char **cArray1[1] = {"something"};
     [mock methodWithCArray:cArray1];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithCArray:cArray1]);
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithCArray:cArray1]);
     XCTAssertTrue(result.successful);
     XCTAssertNil(result.failureDescription);
 }
@@ -105,8 +105,8 @@
 - (void)testWhenVerifyingExactlyZeroTimes_WhenNotCalled_ThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(times(0), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
-    XCTAssertTrue(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(times(0), nil, [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
+	XCTAssertTrue(result.successful);
 }
 
 - (void)testWhenVerifyingExactlyOneTime_WhenCalledOneTime_ThenResultIsSuccessful {
@@ -114,8 +114,8 @@
 
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(times(1), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
-    XCTAssertTrue(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(times(1), nil, [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
+	XCTAssertTrue(result.successful);
 }
 
 - (void)testWhenVerifyingExactlyTwoTimes_WhenCalledTwoTimes_ThenResultIsSuccessful {
@@ -124,8 +124,8 @@
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(times(2), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
-    XCTAssertTrue(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(times(2), nil, [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
+	XCTAssertTrue(result.successful);
 }
 
 - (void)testWhenVerifyingAtLeastOneTime_WhenCalledTwoTimes_ThenResultIsSuccessful {
@@ -134,8 +134,8 @@
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
-    XCTAssertTrue(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
+	XCTAssertTrue(result.successful);
 }
 
 - (void)testWhenVerifyingAtLeastOneTime_WhenCalledLotsOfTimes_ThenResultIsSuccessful {
@@ -150,15 +150,15 @@
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
-    XCTAssertTrue(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
+	XCTAssertTrue(result.successful);
 }
 
 - (void)testWhenVerifyingBetwenZeroAndZeroTimes_WhenCalledZeroTimes_ThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(between(0, 0), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
-    XCTAssertTrue(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(between(0, 0), nil, [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
+	XCTAssertTrue(result.successful);
 }
 
 - (void)testWhenVerifyingBetwenOneAndOneTime_WhenCalledOneTime_ThenResultIsSuccessful {
@@ -166,36 +166,36 @@
 
     [mock methodWithManyArguments:@"arg1" primitive:2 number:@3];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(between(1, 1), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
-    XCTAssertTrue(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(between(1, 1), nil, [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
+	XCTAssertTrue(result.successful);
 }
 
 - (void)testWhenVerifyingBetweenOneAndThreeTimes_WhenCalledValidNumberOfTimes_ThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
     [mock methodWithArray:@[@"arg1"]];
-    SBLVerificationResult *result = SBLVerifyTimesImpl(between(1, 3), [mock methodWithArray:@[@"arg1"]]);
-    XCTAssertTrue(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(between(1, 3), nil, [mock methodWithArray:@[@"arg1"]]);
+	XCTAssertTrue(result.successful);
 
     mock = mock(SBLTestingClass.class);
     [mock methodWithArray:@[@"arg1"]];
     [mock methodWithArray:@[@"arg1"]];
-    result = SBLVerifyTimesImpl(between(1, 3), [mock methodWithArray:@[@"arg1"]]);
-    XCTAssertTrue(result.successful);
+	result = SBLVerifyImpl(between(1, 3), nil, [mock methodWithArray:@[@"arg1"]]);
+	XCTAssertTrue(result.successful);
 
     mock = mock(SBLTestingClass.class);
     [mock methodWithArray:@[@"arg1"]];
     [mock methodWithArray:@[@"arg1"]];
     [mock methodWithArray:@[@"arg1"]];
-    result = SBLVerifyTimesImpl(between(1, 3), [mock methodWithArray:@[@"arg1"]]);
-    XCTAssertTrue(result.successful);
+	result = SBLVerifyImpl(between(1, 3), nil, [mock methodWithArray:@[@"arg1"]]);
+	XCTAssertTrue(result.successful);
 }
 
 - (void)testWhenVerifyingNeverWhenNotCalledThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(never(), [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
-    XCTAssertTrue(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(never(), nil, [mock methodWithManyArguments:@"arg1" primitive:2 number:@3]);
+	XCTAssertTrue(result.successful);
     XCTAssertNil(result.failureDescription);
 }
 
@@ -209,14 +209,14 @@
     [mock methodReturningString];
     [mock methodReturningInt];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(times(1), [mock methodWithNoReturn]);
-    XCTAssertTrue(result.successful);
-    result = SBLVerifyTimesImpl(times(2), [mock methodReturningInt]);
-    XCTAssertTrue(result.successful);
-    result = SBLVerifyTimesImpl(times(3), [mock methodReturningString]);
-    XCTAssertTrue(result.successful);
-    result = SBLVerifyTimesImpl(never(), [mock methodReturningNSValue]);
-    XCTAssertTrue(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(times(1), nil, [mock methodWithNoReturn]);
+	XCTAssertTrue(result.successful);
+	result = SBLVerifyImpl(times(2), nil, [mock methodReturningInt]);
+	XCTAssertTrue(result.successful);
+	result = SBLVerifyImpl(times(3), nil, [mock methodReturningString]);
+	XCTAssertTrue(result.successful);
+	result = SBLVerifyImpl(never(), nil, [mock methodReturningNSValue]);
+	XCTAssertTrue(result.successful);
 }
 
 - (void)testVerifyCanBeCalledWithCommas {
@@ -249,8 +249,8 @@
 - (void)testWhenVerifyingForMethodThatWasNeverCalledThenTheTestFailsWithTheCorrectMessage {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodReturningInt]);
-    XCTAssertFalse(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodReturningInt]);
+	XCTAssertFalse(result.successful);
     XCTAssertNotNil(result.failureDescription);
 }
 
@@ -260,20 +260,20 @@
     [mock methodWithManyArguments:@"1" primitive:2 number:@3];
 
     NSString *expectedFailureMessageFormat = @"Method 'methodWithManyArguments:primitive:number:' was called, but with differing arguments. Expected: %@ \rActual: %@";
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"2" primitive:2 number:@3]);
-    XCTAssertFalse(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithManyArguments:@"2" primitive:2 number:@3]);
+	XCTAssertFalse(result.successful);
     NSArray *actualArray = @[@"1", @"2", @"3"];
     NSArray *expectedArray = @[@"2", @"2", @"3"];
     NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 
-    result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"1" primitive:1 number:@3]);
-    XCTAssertFalse(result.successful);
+	result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithManyArguments:@"1" primitive:1 number:@3]);
+	XCTAssertFalse(result.successful);
     expectedArray = @[@"1", @"1", @"3"];
     expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 
-    result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"1" primitive:2 number:@1]);
+    result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithManyArguments:@"1" primitive:2 number:@1]);
     XCTAssertFalse(result.successful);
     expectedArray = @[@"1", @"2", @"1"];
     expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
@@ -297,18 +297,18 @@
                                    boolArg:(bool) YES];
 
     NSString *expectedFailureMessageFormat = @"Method 'methodWithManyPrimitiveArguments:shortArg:longArg:longLongArg:doubleArg:floatArg:uIntArg:uShortArg:uLongArg:charArg:uCharArg:boolArg:' was called, but with differing arguments. Expected: %@ \rActual: %@";
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyPrimitiveArguments:(int) 234
-                                                                                                 shortArg:(short) 234
-                                                                                                  longArg:(long) 234
-                                                                                              longLongArg:(long long) 234
-                                                                                                doubleArg:(double) 23.4f
-                                                                                                 floatArg:(float) 23.4f
-                                                                                                  uIntArg:(unsigned int) 234
-                                                                                                uShortArg:(unsigned short) 234
-                                                                                                 uLongArg:(unsigned long) 234
-                                                                                                  charArg:(char) 'x'
-                                                                                                 uCharArg:(unsigned char) 234
-                                                                                                  boolArg:(bool) NO]);
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithManyPrimitiveArguments:(int)234
+        shortArg:(short)234
+        longArg:(long)234
+        longLongArg:(long long)234
+        doubleArg:(double)23.4f
+        floatArg:(float)23.4f
+        uIntArg:(unsigned int)234
+        uShortArg:(unsigned short)234
+        uLongArg:(unsigned long)234
+        charArg:(char)'x'
+        uCharArg:(unsigned char)234
+        boolArg:(bool)NO]);
 
     XCTAssertFalse(result.successful);
     NSArray *expectedArray = @[@"234", @"234", @"234", @"234", @"23.4", @"23.4", @"234", @"234", @"234", @"x", @"234", @"NO"];
@@ -320,10 +320,10 @@
 - (void)testWhenVerifyingForMethodWithDifferentPointerParametersThenHelpfulMessageIsReturned {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
-    [mock methodWithPrimitiveReference:(NSInteger *) 1];
+    [mock methodWithPrimitiveReference:(NSInteger *)1];
 
     NSArray *arrayWithPointerArg = @[@"pointer"];
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithPrimitiveReference:(NSInteger *) 2]);
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithPrimitiveReference:(NSInteger *)2]);
     XCTAssertFalse(result.successful);
     NSString *expectedFailureMessageFormat = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
     NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithPrimitiveReference:", arrayWithPointerArg, arrayWithPointerArg];
@@ -336,7 +336,7 @@
 
     NSArray *arrayWithStructArg = @[@"struct"];
     NSString *expectedFailureMessageFormat = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithCGRect:CGRectMake(0, 1, 0, 1)]);
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithCGRect:CGRectMake(0, 1, 0, 1)]);
     XCTAssertFalse(result.successful);
     NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithCGRect:", arrayWithStructArg, arrayWithStructArg];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
@@ -345,7 +345,8 @@
     SBLTestingStruct testingStruct2 = {2, NO, "aefaef"};
     [mock methodWithStruct:testingStruct1];
 
-    result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithStruct:testingStruct2]);
+    result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithStruct:testingStruct2]);
+
     XCTAssertFalse(result.successful);
     expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithStruct:", arrayWithStructArg, arrayWithStructArg];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
@@ -358,7 +359,7 @@
     NSArray *expected = @[@"1", @"2", @"nil"];
     NSArray *actual = @[@"nil", @"2", @"3"];
     NSString *expectedFailureMessageFormat = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:@"1" primitive:2 number:nil]);
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithManyArguments:@"1" primitive:2 number:nil]);
     XCTAssertFalse(result.successful);
     NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithManyArguments:primitive:number:", expected, actual];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
@@ -370,7 +371,7 @@
     [mock methodWithTimeInterval:12.3];
 
     NSString *expectedFailureMessageFormat = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithTimeInterval:12.4]);
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithTimeInterval:12.4]);
     XCTAssertFalse(result.successful);
     NSArray *expectedArray = @[@"12.4"];
     NSArray *actualArray = @[@"12.3"];
@@ -379,7 +380,7 @@
 
     [mock methodWithInteger:123];
 
-    result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithInteger:124]);
+    result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithInteger:124]);
     XCTAssertFalse(result.successful);
     expectedArray = @[@"124"];
     actualArray = @[@"123"];
@@ -393,7 +394,7 @@
     [mock methodWithManyArguments:@"1" primitive:2 number:@3];
 
     NSString *expectedFailureMessageFormat = @"Method 'methodWithManyArguments:primitive:number:' was called, but with differing arguments. Expected: %@ \rActual: %@";
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithManyArguments:any() primitive:3 number:any()]);
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithManyArguments:any() primitive:3 number:any()]);
     XCTAssertFalse(result.successful);
     NSArray *expectedArray = @[@"(any)", @"3", @"(any)"];
     NSArray *actualArray = @[@"1", @"2", @"3"];
@@ -404,7 +405,7 @@
 - (void)testWhenVerifyingForMethodWithVoidReturnTypeNotCalledThenTestFailsWithTheCorrectMessage {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodWithNoReturn]);
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithNoReturn]);
     XCTAssertFalse(result.successful);
     XCTAssertNotNil(result.failureDescription);
 }
@@ -414,8 +415,8 @@
 - (void)testWhenVerifyIsCalledZeroTimesThenTheTestFailsWithTheCorrectMessage {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(1), [mock methodReturningInt]);
-    XCTAssertFalse(result.successful);
+	SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodReturningInt]);
+	XCTAssertFalse(result.successful);
     XCTAssertNotNil(result.failureDescription);
 }
 
@@ -424,9 +425,9 @@
 
     [mock methodReturningInt];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(times(2), [mock methodReturningInt]);
-    XCTAssertFalse(result.successful);
-    XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningInt' was called 1 time (expected exactly 2)");
+	SBLVerificationResult *result = SBLVerifyImpl(times(2), nil, [mock methodReturningInt]);
+	XCTAssertFalse(result.successful);
+	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningInt' was called 1 time (expected exactly 2)");
 }
 
 - (void)testWhenVerifyingExactNumberOfTimesAndMethodIsCalledTooManyTimesThenTheTestFailsWithTheCorrectMessage {
@@ -436,9 +437,9 @@
     [mock methodReturningInt];
     [mock methodReturningInt];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(times(1), [mock methodReturningInt]);
-    XCTAssertFalse(result.successful);
-    XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningInt' was called 3 times (expected exactly 1)");
+	SBLVerificationResult *result = SBLVerifyImpl(times(1), nil, [mock methodReturningInt]);
+	XCTAssertFalse(result.successful);
+	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningInt' was called 3 times (expected exactly 1)");
 }
 
 - (void)testWhenVerifyNeverIsCalledAndMethodIsCalledOnceThenTheTestFailsWithTheCorrectMessage {
@@ -446,9 +447,9 @@
 
     [mock methodReturningInt];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(never(), [mock methodReturningInt]);
-    XCTAssertFalse(result.successful);
-    XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningInt' was called 1 time (expected no calls)");
+	SBLVerificationResult *result = SBLVerifyImpl(never(), nil, [mock methodReturningInt]);
+	XCTAssertFalse(result.successful);
+	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningInt' was called 1 time (expected no calls)");
 }
 
 - (void)testWhenVerifyNeverIsCalledButWithDifferingParametersThenTheTestPasses {
@@ -456,11 +457,11 @@
 
     [mock methodWithInteger:2];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(never(), [mock methodWithInteger:1]);
+    SBLVerificationResult *result = SBLVerifyImpl(never(), nil, [mock methodWithInteger:1]);
     XCTAssertTrue(result.successful);
-    result = SBLVerifyTimesImpl(never(), [mock methodWithInteger:3]);
+    result = SBLVerifyImpl(never(), nil, [mock methodWithInteger:3]);
     XCTAssertTrue(result.successful);
-    result = SBLVerifyTimesImpl(never(), [mock methodWithInteger:4]);
+    result = SBLVerifyImpl(never(), nil, [mock methodWithInteger:4]);
     XCTAssertTrue(result.successful);
 }
 
@@ -470,9 +471,9 @@
     [mock methodReturningString];
     [mock methodReturningString];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(atLeast(3), [mock methodReturningString]);
-    XCTAssertFalse(result.successful);
-    XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningString' was called 2 times (expected at least 3)");
+	SBLVerificationResult *result = SBLVerifyImpl(atLeast(3), nil, [mock methodReturningString]);
+	XCTAssertFalse(result.successful);
+	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningString' was called 2 times (expected at least 3)");
 }
 
 - (void)testWhenVerifyingBetweenAndMethodIsCalledTooFewTimesThenTheTestFailsWithTheCorrectMessage {
@@ -480,9 +481,9 @@
 
     [mock methodReturningString];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(between(2, 3), [mock methodReturningString]);
-    XCTAssertFalse(result.successful);
-    XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningString' was called 1 time (expected between 2 and 3)");
+	SBLVerificationResult *result = SBLVerifyImpl(between(2, 3), nil, [mock methodReturningString]);
+	XCTAssertFalse(result.successful);
+	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningString' was called 1 time (expected between 2 and 3)");
 }
 
 - (void)testWhenVerifyingBetweenAndMethodIsCalledTooManyTimesThenTheTestFailsWithTheCorrectMessage {
@@ -492,9 +493,9 @@
     [mock methodReturningString];
     [mock methodReturningString];
 
-    SBLVerificationResult *result = SBLVerifyTimesImpl(between(1, 2), [mock methodReturningString]);
-    XCTAssertFalse(result.successful);
-    XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningString' was called 3 times (expected between 1 and 2)");
+	SBLVerificationResult *result = SBLVerifyImpl(between(1, 2), nil, [mock methodReturningString]);
+	XCTAssertFalse(result.successful);
+	XCTAssertEqualObjects(result.failureDescription, @"Method 'methodReturningString' was called 3 times (expected between 1 and 2)");
 }
 
 #pragma mark - Verify No Interactions Tests
@@ -548,11 +549,11 @@
 
     [mock methodReturningBool];
 
-    SBLVerificationResult *result1 = SBLVerifyTimesImpl(times(1), [mock methodReturningBool]);
+	SBLVerificationResult *result1 = SBLVerifyImpl(times(1), nil, [mock methodReturningBool]);
 
     resetMock(mock);
 
-    SBLVerificationResult *result2 = SBLVerifyTimesImpl(times(1), [mock methodReturningBool]);
+	SBLVerificationResult *result2 = SBLVerifyImpl(times(1), nil, [mock methodReturningBool]);
 
     XCTAssertTrue(result1.successful);
     XCTAssertFalse(result2.successful);
