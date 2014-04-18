@@ -149,16 +149,8 @@
         NSMutableArray *expectedArguments = [NSMutableArray array];
         NSMutableArray *actualArguments = [NSMutableArray array];
         for (SBLArgumentMatcherResult *argumentMatcherResult in mismatchedMethodCalls[0]) {
-            if (argumentMatcherResult.expectedArgumentStringValue) {
-                [expectedArguments addObject:argumentMatcherResult.expectedArgumentStringValue];
-            } else {
-                [expectedArguments addObject:@"nil"];
-            }
-            if (argumentMatcherResult.actualArgumentStringValue) {
-                [actualArguments addObject:argumentMatcherResult.actualArgumentStringValue];
-            } else {
-                [actualArguments addObject:@"nil"];
-            }
+            [expectedArguments addObject:[self nilSafeStringValue:argumentMatcherResult.expectedArgumentStringValue]];
+            [actualArguments addObject:[self nilSafeStringValue:argumentMatcherResult.actualArgumentStringValue]];
         }
         failureMessage = [NSString stringWithFormat:@"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@", NSStringFromSelector(self.sblVerifyInvocation.selector), expectedArguments, actualArguments];
     } else {
@@ -167,6 +159,10 @@
         failureMessage = [NSString stringWithFormat:@"%@(expected %@)", actualString, formattedTimes];
     }
     return failureMessage;
+}
+
+- (NSString *)nilSafeStringValue:(NSString *)stringValue {
+    return stringValue ?: @"nil";
 }
 
 - (NSString *)sblOrderingFailureMessageForOrderToken:(SBLOrderTokenInternal *)orderToken {
