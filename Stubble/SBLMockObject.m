@@ -150,14 +150,14 @@
         if (argumentMatcherResult.expectedArgumentStringValue) {
             [expectedArguments addObject:argumentMatcherResult.expectedArgumentStringValue];
         } else {
-            [expectedArguments addObject:@"unknown type"];
+            [expectedArguments addObject:@"nil"];
         }
     }
     for (SBLArgumentMatcherResult *argumentMatcherResult in argMatcherResults) {
         if (argumentMatcherResult.actualArgumentStringValue) {
             [actualArguments addObject:argumentMatcherResult.actualArgumentStringValue];
         } else {
-            [actualArguments addObject:@"unknown type"];
+            [actualArguments addObject:@"nil"];
         }
     }
     NSString *differingArgumentsMessage = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
