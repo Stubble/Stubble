@@ -1,4 +1,7 @@
 language: objective-c
 xcode_project: Stubble.xcodeproj
 xcode_scheme: Stubble
-xcode_sdk: iphonesimulator
+xcode_sdk: iphonesimulator7.1
+before_install:
+  - brew update
+  - brew upgrade xctool
