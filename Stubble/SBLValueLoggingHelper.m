@@ -1,4 +1,5 @@
 #import "SBLValueLoggingHelper.h"
+#import <UIKit/UIKit.h>
 
 @implementation SBLValueLoggingHelper
 
@@ -55,8 +56,27 @@
         unsigned char unwrappedValue;
         [value getValue:&unwrappedValue];
         return [NSString stringWithFormat:@"%hhu", unwrappedValue];
+    } else if (strcmp(type, @encode(CGRect)) == 0) {
+        CGRect unwrappedValue;
+        [value getValue:&unwrappedValue];
+        return NSStringFromCGRect(unwrappedValue);
+    } else if (strcmp(type, @encode(CGSize)) == 0) {
+        CGSize unwrappedValue;
+        [value getValue:&unwrappedValue];
+        return NSStringFromCGSize(unwrappedValue);
+    } else if (strcmp(type, @encode(CGPoint)) == 0) {
+        CGPoint unwrappedValue;
+        [value getValue:&unwrappedValue];
+        return NSStringFromCGPoint(unwrappedValue);
+    } else if (strcmp(type, @encode(NSRange)) == 0) {
+        NSRange unwrappedValue;
+        [value getValue:&unwrappedValue];
+        return NSStringFromRange(unwrappedValue);
+    } else if (type[0] == '{' || strcmp(type, "@?") == 0) {
+        // structs and blocks will translate to nil value as not to crash on pointer value translation
+        return nil;
     }
-    return nil;
+    return [NSString stringWithFormat:@"%p", value.pointerValue];
 }
 
 @end

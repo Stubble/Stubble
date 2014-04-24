@@ -3,6 +3,7 @@
 #import "SBLTestingClass.h"
 #import "SBLVerificationResult.h"
 #import "SBLErrors.h"
+#import <UIKit/UIKit.h>
 
 @interface SBLVerifyTest : XCTestCase
 
@@ -319,36 +320,56 @@
 
 - (void)testWhenVerifyingForMethodWithDifferentPointerParametersThenHelpfulMessageIsReturned {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
+    NSInteger *primitivePointer1 = 1;
+    NSInteger *primitivePointer2 = 2;
 
-    [mock methodWithPrimitiveReference:(NSInteger *)1];
+    [mock methodWithPrimitiveReference:primitivePointer1];
 
-    NSArray *arrayWithPointerArg = @[@"pointer"];
-    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithPrimitiveReference:(NSInteger *)2]);
+    NSArray *actual = @[[NSString stringWithFormat:@"%p", primitivePointer1]];
+    NSArray *expected = @[[NSString stringWithFormat:@"%p", primitivePointer2]];
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithPrimitiveReference:primitivePointer2]);
     XCTAssertFalse(result.successful);
     NSString *expectedFailureMessageFormat = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
-    NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithPrimitiveReference:", arrayWithPointerArg, arrayWithPointerArg];
+    NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithPrimitiveReference:", expected, actual];
+    XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
+
+    const char* cArray1 = (const char *){1};
+    const char* cArray2 = (const char *){2};
+    [mock methodWithCArray:cArray1];
+    expectedFailureMessageFormat = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
+    actual = @[[NSString stringWithFormat:@"%p", cArray1]];
+    expected = @[[NSString stringWithFormat:@"%p", cArray2]];
+    result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithCArray:(const char *){2}]);
+    XCTAssertFalse(result.successful);
+    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithCArray:", expected, actual];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 }
 
 - (void)testWhenVerifyingForMethodWithDifferentStructParametersThenHelpfulMessageIsReturned {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
-    [mock methodWithCGRect:CGRectZero];
+    CGRect expectedRect = CGRectMake(0, 1, 0, 1);
+    CGRect actualRect = CGRectZero;
 
-    NSArray *arrayWithStructArg = @[@"struct"];
+    [mock methodWithCGRect:actualRect];
+
+    NSArray *actual = @[NSStringFromCGRect(CGRectZero)];
+    NSArray *expected = @[NSStringFromCGRect(expectedRect)];
     NSString *expectedFailureMessageFormat = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
-    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithCGRect:CGRectMake(0, 1, 0, 1)]);
+
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithCGRect:expectedRect]);
     XCTAssertFalse(result.successful);
-    NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithCGRect:", arrayWithStructArg, arrayWithStructArg];
+    NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithCGRect:", expected, actual];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 
-    SBLTestingStruct testingStruct1 = {1, YES, "other stuff"};
+    SBLTestingStruct testingStruct1 = {1, NO, "aefaef"};
     SBLTestingStruct testingStruct2 = {2, NO, "aefaef"};
     [mock methodWithStruct:testingStruct1];
 
     result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithStruct:testingStruct2]);
-
+    expected = @[@"struct"];
+    actual = @[@"struct"];
     XCTAssertFalse(result.successful);
-    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithStruct:", arrayWithStructArg, arrayWithStructArg];
+    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithStruct:", expected, actual];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 }
 

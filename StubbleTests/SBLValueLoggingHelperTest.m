@@ -1,5 +1,7 @@
 #import <XCTest/XCTest.h>
 #import "SBLValueLoggingHelper.h"
+#import "SBLTestingClass.h"
+#import <UIKit/UIKit.h>
 
 @interface SBLValueLoggingHelperTest : XCTestCase {
     SBLValueLoggingHelper *testObject;
@@ -85,6 +87,32 @@
     type = @encode(BOOL);
     value = [NSNumber numberWithBool:(BOOL)YES];
     XCTAssertEqualObjects([testObject stringValueForValue:value type:type], @"YES");
+
+    type = @encode(CGRect);
+    value = [NSValue valueWithCGRect:CGRectZero];
+    XCTAssertEqualObjects([testObject stringValueForValue:value type:type], NSStringFromCGRect(CGRectZero));
+
+    type = @encode(CGPoint);
+    value = [NSValue valueWithCGPoint:CGPointZero];
+    XCTAssertEqualObjects([testObject stringValueForValue:value type:type], NSStringFromCGPoint(CGPointZero));
+
+    type = @encode(CGSize);
+    value = [NSValue valueWithCGSize:CGSizeZero];
+    XCTAssertEqualObjects([testObject stringValueForValue:value type:type], NSStringFromCGSize(CGSizeZero));
+
+    type = @encode(SBLTestingStruct);
+    SBLTestingStruct testingStruct = {1, NO, "a"};
+    value = [NSValue value:&testingStruct withObjCType:type];
+    XCTAssertNil([testObject stringValueForValue:value type:type]);
+
+    // support for blocks... not sure of this implementation
+    type = "@?";
+    SBLTestingBlock block = ^(int integer, NSObject *object) {
+        NSLog(@"block");
+    };
+    value = [NSValue value:&block withObjCType:type];
+    XCTAssertNil([testObject stringValueForValue:value type:type]);
+
 }
 
 @end
