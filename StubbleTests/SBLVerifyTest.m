@@ -93,7 +93,7 @@
 - (void)testWhenVerifyingForMethodWithUnknownTypeThatMatchesThenResultIsSuccessful {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
-    const char **cArray1[1] = {"something"};
+    const char *cArray1[1] = {"a"};
     [mock methodWithCArray:cArray1];
 
     SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithCArray:cArray1]);
@@ -320,8 +320,8 @@
 
 - (void)testWhenVerifyingForMethodWithDifferentPointerParametersThenHelpfulMessageIsReturned {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
-    NSInteger *primitivePointer1 = 1;
-    NSInteger *primitivePointer2 = 2;
+    NSInteger *primitivePointer1 = (NSInteger *)1;
+    NSInteger *primitivePointer2 = (NSInteger *)2;
 
     [mock methodWithPrimitiveReference:primitivePointer1];
 
@@ -333,13 +333,13 @@
     NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithPrimitiveReference:", expected, actual];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 
-    const char* cArray1 = (const char *){1};
-    const char* cArray2 = (const char *){2};
-    [mock methodWithCArray:cArray1];
+    const char* cArray1 = (const char *){"1"};
+    const char* cArray2 = (const char *){"2"};
+    [mock methodWithCArray:&cArray1];
     expectedFailureMessageFormat = @"Method '%@' was called, but with differing arguments. Expected: %@ \rActual: %@";
-    actual = @[[NSString stringWithFormat:@"%p", cArray1]];
-    expected = @[[NSString stringWithFormat:@"%p", cArray2]];
-    result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithCArray:(const char *){2}]);
+    actual = @[[NSString stringWithFormat:@"%p", &cArray1]];
+    expected = @[[NSString stringWithFormat:@"%p", &cArray2]];
+    result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithCArray:&cArray2]);
     XCTAssertFalse(result.successful);
     expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, @"methodWithCArray:", expected, actual];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
