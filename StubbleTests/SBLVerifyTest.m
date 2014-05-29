@@ -258,14 +258,24 @@
 - (void)testWhenVerifyingForMethodWithDifferentArgumentsThenHelpfulMessageIsReturned {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
+    [mock methodWithBool:YES];
+
+    NSString *expectedFailureMessageFormat = @"Method 'methodWithBool:' was called, but with differing arguments. Expected: %@ \rActual: %@";
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithBool:NO]);
+    XCTAssertFalse(result.successful);
+    NSArray *actualArray = @[@"YES"];
+    NSArray *expectedArray = @[@"NO"];
+    NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
+    XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
+
     [mock methodWithManyArguments:@"1" primitive:2 number:@3];
 
-    NSString *expectedFailureMessageFormat = @"Method 'methodWithManyArguments:primitive:number:' was called, but with differing arguments. Expected: %@ \rActual: %@";
-	SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithManyArguments:@"2" primitive:2 number:@3]);
+    expectedFailureMessageFormat = @"Method 'methodWithManyArguments:primitive:number:' was called, but with differing arguments. Expected: %@ \rActual: %@";
+	result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithManyArguments:@"2" primitive:2 number:@3]);
 	XCTAssertFalse(result.successful);
-    NSArray *actualArray = @[@"1", @"2", @"3"];
-    NSArray *expectedArray = @[@"2", @"2", @"3"];
-    NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
+    actualArray = @[@"1", @"2", @"3"];
+    expectedArray = @[@"2", @"2", @"3"];
+    expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 
 	result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithManyArguments:@"1" primitive:1 number:@3]);
