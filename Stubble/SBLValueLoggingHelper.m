@@ -49,17 +49,21 @@
         [value getValue:&unwrappedValue];
         return [NSString stringWithFormat:@"%@", unwrappedValue ? @"YES" : @"NO"];
     } else if (strcmp(type, @encode(char)) == 0) {
-        BOOL unwrappedBoolValue;
-        [value getValue:&unwrappedBoolValue];
         char unwrappedCharValue;
         [value getValue:&unwrappedCharValue];
         #ifdef __LP64__
             return [NSString stringWithFormat:@"%c", unwrappedCharValue];
         #endif
-        if (unwrappedBoolValue) {
-            return @"YES";
-        } else if (!unwrappedBoolValue) {
+        NSValue *noBoolValue = [NSNumber numberWithBool:NO];
+        char noBoolAsChar;
+        [noBoolValue getValue:&noBoolAsChar];
+        NSValue *yesBoolValue = [NSNumber numberWithBool:YES];
+        char yesBoolAsChar;
+        [yesBoolValue getValue:&yesBoolAsChar];
+        if (unwrappedCharValue == noBoolAsChar) {
             return @"NO";
+        } else if (unwrappedCharValue == yesBoolAsChar) {
+            return @"YES";
         }
         return [NSString stringWithFormat:@"%c", unwrappedCharValue];
 
