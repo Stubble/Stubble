@@ -18,16 +18,17 @@ Creating a Mock
     mock([ClassToMock class]);
 
 ### Note with ESCObserver
-If you are using ESCObserver, you'll want to do this to your mock objects:
+If you are using ESCObservable and intend to fire events from your mock object, you'll need to declare your mock objects as:
 
-    ClassToMock<ESCObserverInternal> *mockClass;
+    ClassToMock<ESCObserverInternal> *mockObject = mock(ClassToMock);
+    [mockObject escRegisterObserverProtocol:@protocol(ClassToMockObserver)];
 
 Creating a stub
 ------
 
     [when([ClassToMock methodToStub]) thenReturn:@"string"];
 
-### Note with ESCObserver
+### Note with ESCObservable
 You can do something like this:
 
     [mockObject.escNotifier notificationMethod];
