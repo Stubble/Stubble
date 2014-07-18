@@ -17,10 +17,10 @@ Creating a Mock
 
     mock([ClassToMock class]);
 
-### Note with ESCObserver
+### Note with ESCObservable
 If you are using ESCObservable and intend to fire events from your mock object, you'll need to declare your mock objects as:
 
-    ClassToMock<ESCObserverInternal> *mockObject = mock(ClassToMock);
+    ClassToMock<ESCObservableInternal> *mockObject = mock(ClassToMock);
     [mockObject escRegisterObserverProtocol:@protocol(ClassToMockObserver)];
 
 Creating a stub
