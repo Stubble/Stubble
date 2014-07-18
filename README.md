@@ -25,7 +25,7 @@ If you are using ESCObserver, you'll want to do this to your mock objects:
 Creating a stub
 ------
 
-    [when([ClassToMock methodToStub] thenReturn:@"string")];
+    [when([ClassToMock methodToStub]) thenReturn:@"string"];
 
 ### Note with ESCObserver
 You can do something like this:
