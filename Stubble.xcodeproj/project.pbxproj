@@ -453,7 +453,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n${PROJECT_DIR}/${PROJECT_NAME}/Scripts/framework-builder";
+			shellScript = "set -e\nSTATIC_LIB_HEADER_DIR=include/Stubble ${PROJECT_DIR}/${PROJECT_NAME}/Scripts/framework-builder";
 		};
 /* End PBXShellScriptBuildPhase section */
 
