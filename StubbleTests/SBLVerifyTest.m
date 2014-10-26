@@ -550,6 +550,15 @@
     XCTAssertNil(result.failureDescription);
 }
 
+- (void)testWhenVerifyingNoInteractionsWhenMethodStubbedThenResultIsSuccessful {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+    [when([mock methodReturningBool]) thenReturn:@YES];
+    
+    SBLVerificationResult *result = SBLVerifyNoInteractionsImpl(mock);
+    XCTAssertTrue(result.successful);
+    XCTAssertNil(result.failureDescription);
+}
+
 - (void)testWhenVerifyingNoInteractionsWhenMockCalledThenTestFailsWithTheCorrectMessage {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
