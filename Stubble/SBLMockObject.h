@@ -10,7 +10,6 @@
 
 @property (nonatomic, readonly) SBLStubbedInvocation *sblCurrentStubbedInvocation;
 @property (nonatomic, readonly) SBLInvocationRecord *sblVerifyInvocation;
-@property (nonatomic, readonly) NSUInteger *sblNumberOfInvocations;
 
 - (SBLVerificationResult *)sblVerifyMockNotCalled;
 
