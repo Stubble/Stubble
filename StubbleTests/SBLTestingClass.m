@@ -18,6 +18,10 @@
 	return array;
 }
 
+- (NSDictionary *)methodWithDictionary:(NSDictionary *)dictionary {
+    return dictionary;
+}
+
 - (id)methodWithVariableNumberOfArguments:(id)argument1, ... {
 	return @"";
 }
