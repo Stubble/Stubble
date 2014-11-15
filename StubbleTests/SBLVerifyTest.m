@@ -291,6 +291,20 @@
     XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
 }
 
+- (void)testWhenVerifyingForMethodWithDifferentDictionaryParametersThenHelpfulMessageIsReturned {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    [mock methodWithDictionary:@{@"key" : @"badValue"}];
+
+    NSString *expectedFailureMessageFormat = @"Method 'methodWithDictionary:' was called, but with differing arguments. Expected: %@ \rActual: %@";
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithDictionary:@{@"key" : @"goodValue"}]);
+    XCTAssertFalse(result.successful);
+    NSArray *actualArray = @[@{@"key" : @"badValue"}];
+    NSArray *expectedArray = @[@{@"key" : @"goodValue"}];
+    NSString *expectedFailureDescription = [NSString stringWithFormat:expectedFailureMessageFormat, expectedArray, actualArray];
+    XCTAssertEqualObjects(result.failureDescription, expectedFailureDescription);
+}
+
 - (void)testWhenVerifyingForMethodWithDifferentPrimitiveParametersThenHelpfulMessageIsReturned {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 
