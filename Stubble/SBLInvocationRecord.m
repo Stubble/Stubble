@@ -48,7 +48,9 @@
 						break;
 					}
 				}
-			} else {
+			}
+
+            if (!objectMatcher) {
 				objectMatcher = [SBLMatcher objectIsEqualMatcher:argument];
 			}
 		}
