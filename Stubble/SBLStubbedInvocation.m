@@ -1,6 +1,8 @@
 #import "SBLStubbedInvocation.h"
 #import "SBLTransactionManager.h"
 
+typedef void (^SBLInternalInvocationActionBlock)(NSInvocation *invocation, BOOL allowUnboxing);
+
 @interface SBLStubbedInvocation ()
 
 @property (nonatomic, readwrite) NSArray *actionBlocks;
@@ -20,9 +22,9 @@
     char const *returnType = self.returnType;
     BOOL shouldUnboxReturnValue = [returnValue isKindOfClass:NSValue.class] && strcmp(returnType, "@") != 0;
 
-    [self thenDoWithInvocation:^(NSInvocation *invocation) {
+    [self thenDoWithInternalInvocation:^(NSInvocation *invocation, BOOL allowUnboxing) {
 		NSUInteger methodReturnLength = [[invocation methodSignature] methodReturnLength];
-		if (shouldUnboxReturnValue) {
+		if (shouldUnboxReturnValue && allowUnboxing) {
             NSValue *value = returnValue;
             if ([returnValue isKindOfClass:NSNumber.class]) {
                 NSNumber *numberValue = returnValue;
@@ -59,15 +61,27 @@
 
 - (SBLStubbedInvocation *)thenDo:(SBLActionBlock)actionBlock {
 	SBLActionBlock block = [actionBlock copy];
-	[self thenDoWithInvocation:^(NSInvocation *invocation) {
+	[self thenDoWithInternalInvocation:^(NSInvocation *invocation, BOOL allowUnboxing) {
 		block();
 	}];
 	return self;
 }
 
 - (SBLStubbedInvocation *)thenDoWithInvocation:(SBLInvocationActionBlock)actionBlock {
+	return [self thenDoWithInternalInvocation:^(NSInvocation *invocation, BOOL allowUnboxing) {
+		actionBlock(invocation);
+	}];
+}
+
+- (SBLStubbedInvocation *)thenDoWithInternalInvocation:(SBLInternalInvocationActionBlock)actionBlock {
 	self.actionBlocks = [self.actionBlocks arrayByAddingObject:[actionBlock copy]];
 	return self;
+}
+
+- (void)performActionBlocksWithInvocation:(NSInvocation *)invocation allowingUnboxing:(BOOL)allowUnboxing {
+	for (SBLInternalInvocationActionBlock action in self.actionBlocks) {
+		action(invocation, allowUnboxing);
+	}
 }
 
 @end

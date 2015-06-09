@@ -51,6 +51,7 @@
 		5AA4A97B18689FFB0033BAE0 /* SBLProtocolMockObjectBehavior.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D80408F186404F6001DE9FE /* SBLProtocolMockObjectBehavior.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5ABCBF8618A965D0001E2306 /* SBLMock.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ABCBF8418A965D0001E2306 /* SBLMock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5ABCBF8718A965D0001E2306 /* SBLMockCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ABCBF8518A965D0001E2306 /* SBLMockCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5AE0E3C01B274A5B00A583DD /* SBLKeyValueCodingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE0E3BF1B274A5B00A583DD /* SBLKeyValueCodingTest.m */; };
 		6313C3CA77A4C3741B2FBA03 /* SBLOrderToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C3841B4835E6033E428E /* SBLOrderToken.m */; };
 		6313C8BB61AA6B1FE997974E /* SBLOrderTokenInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 6313CE59D05F7B3DC22E014D /* SBLOrderTokenInternal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6313C8EA384977BF2D5469D1 /* SBLCallOrderTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 6313C8BDED7E64AD0503ABD4 /* SBLCallOrderTracker.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -139,6 +140,7 @@
 		5A9837B018A98A42001E2501 /* SBLTestingBlockCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLTestingBlockCreator.m; sourceTree = "<group>"; };
 		5ABCBF8418A965D0001E2306 /* SBLMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLMock.h; sourceTree = "<group>"; };
 		5ABCBF8518A965D0001E2306 /* SBLMockCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLMockCore.h; sourceTree = "<group>"; };
+		5AE0E3BF1B274A5B00A583DD /* SBLKeyValueCodingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLKeyValueCodingTest.m; sourceTree = "<group>"; };
 		6313C082B67BDB77399B202D /* SBLStubbedInvocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLStubbedInvocation.m; sourceTree = "<group>"; };
 		6313C161E0D825D0BFE24D74 /* SBLVerifyOrderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLVerifyOrderTest.m; sourceTree = "<group>"; };
 		6313C3841B4835E6033E428E /* SBLOrderToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLOrderToken.m; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				5A9837B018A98A42001E2501 /* SBLTestingBlockCreator.m */,
 				AAFD4916AAC6AAA9584FDB1A /* SBLValueLoggingHelperTest.m */,
 				6313C161E0D825D0BFE24D74 /* SBLVerifyOrderTest.m */,
+				5AE0E3BF1B274A5B00A583DD /* SBLKeyValueCodingTest.m */,
 			);
 			path = StubbleTests;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				AAFD4E581C8800002923FDEC /* SBLExceptionTest.m in Sources */,
 				AAFD4BE30957D2DC3CFD42B6 /* SBLValueLoggingHelperTest.m in Sources */,
 				6313CA4802AB4F228E88D8F1 /* SBLVerifyOrderTest.m in Sources */,
+				5AE0E3C01B274A5B00A583DD /* SBLKeyValueCodingTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
