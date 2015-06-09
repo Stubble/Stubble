@@ -1,4 +1,3 @@
-#import "SBLMockObject.h"
 #import "SBLTransactionManager.h"
 #import "SBLErrors.h"
 #import "SBLProtocolMockObjectBehavior.h"
@@ -65,6 +64,7 @@
     [self.sblActualInvocations addObject:invocationRecord];
 
     // Find Matching Stub
+	BOOL allowUnboxing = YES;
     SBLStubbedInvocation *matchingWhen = nil;
     for (SBLStubbedInvocation *ongoingWhen in self.sblStubbedInvocations.reverseObjectEnumerator) {
         SBLInvocationMatchResult *invocationMatchResult = [ongoingWhen matchResultForInvocation:invocationRecord];
@@ -74,10 +74,23 @@
         }
     }
 
+	if (!matchingWhen && invocation.selector == @selector(valueForKey:)) {
+		NSLog(@"found no matching, but it's value for key!");
+		for (SBLStubbedInvocation *ongoingWhen in self.sblStubbedInvocations.reverseObjectEnumerator) {
+			matchingWhen = ongoingWhen; // Hey, that's a big assumption!
+			allowUnboxing = NO;
+			break;
+//			SBLInvocationMatchResult *invocationMatchResult = [ongoingWhen matchResultForInvocation:invocationRecord];
+//			if (invocationMatchResult.invocationMatches) {
+//				matchingWhen = ongoingWhen;
+//				break;
+//			}
+		}
+
+	}
+
     // Perform Actions
-    for (SBLInvocationActionBlock action in matchingWhen.actionBlocks) {
-        action(invocation);
-    }
+	[matchingWhen performActionBlocksWithInvocation:invocation allowingUnboxing:allowUnboxing];
 
     // Invoke Invocation
     [invocation invokeWithTarget:nil];
