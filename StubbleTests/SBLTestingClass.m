@@ -18,6 +18,10 @@
 	return array;
 }
 
+- (NSArray *)methodWithArray:(NSArray *)array block:(SBLTestingBlock)block {
+    return array;
+}
+
 - (id)methodWithVariableNumberOfArguments:(id)argument1, ... {
 	return @"";
 }

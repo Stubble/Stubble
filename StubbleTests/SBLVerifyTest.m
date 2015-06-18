@@ -611,4 +611,45 @@
     XCTAssertNil(string);
 }
 
+- (void)testWhenArrayOfMocksIsPartOfAnArgumentItCanBeVerified {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+    SBLTestingClass *child1 = mock(SBLTestingClass.class);
+    SBLTestingClass *child2 = mock(SBLTestingClass.class);
+    SBLTestingClass *child3 = mock(SBLTestingClass.class);
+
+    [mock methodWithArray:@[child1, child2, child3]];
+    
+    SBLVerificationResult *result = SBLVerifyImpl(SBLTimes(1), nil, [mock methodWithArray:@[child1, child2, child3]]);
+    
+    XCTAssertTrue(result.successful);
+}
+
+- (void)testWhenCapturingBlockWithAnotherMockArgumentAsWellThenTheCallCanBeVerified {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+    NSString *mockString = mock(NSString.class);
+    
+    [mock methodWithArgument:mockString block:^(int integer, NSObject *object) {}];
+    
+    SBLTestingBlock block = NULL;
+    SBLVerificationResult *result = SBLVerifyImpl(SBLTimes(1), nil, [mock methodWithArgument:mockString block:capture(&block)]);
+    
+    XCTAssertTrue(result.successful);
+}
+
+- (void)testWhenCapturingBlockWithAnArrayOfMocksArgumentAsWellThenTheCallCanBeVerified {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+    SBLTestingClass *child1 = mock(SBLTestingClass.class);
+    SBLTestingClass *child2 = mock(SBLTestingClass.class);
+    SBLTestingClass *child3 = mock(SBLTestingClass.class);
+
+    [mock methodWithArray:@[child1, child2, child3] block:^(int integer, NSObject *object) {}];
+    
+    SBLTestingBlock block = NULL;
+    SBLVerificationResult *result = SBLVerifyImpl(SBLTimes(1), nil, [mock methodWithArray:@[child1, child2, child3] block:capture(&block)]);
+    
+    XCTAssertTrue(result.successful);
+}
+
+
+
 @end

@@ -83,6 +83,8 @@ typedef void(^SBLTestingBlock)(int integer, NSObject *object);
 
 - (NSArray *)methodWithArray:(NSArray *)array;
 
+- (NSArray *)methodWithArray:(NSArray *)array block:(SBLTestingBlock)block;
+
 - (NSString *)methodWithObject:(NSNumber *)number;
 
 - (void)methodWithCArray:(const char **)cArray;
