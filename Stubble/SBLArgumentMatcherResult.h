@@ -7,6 +7,6 @@
 @property (nonatomic, readonly) NSString *actualArgumentStringValue;
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
-- (instancetype)initWithMatches:(BOOL)matches expectedArgument:(NSString *)expectedArgument actualArgument:(NSString *)actualArgument;
+- (instancetype)initWithMatches:(BOOL)matches expectedArgumentForLogging:(NSObject *)expectedArgument actualArgumentForLogging:(NSObject *)actualArgument;
 
 @end

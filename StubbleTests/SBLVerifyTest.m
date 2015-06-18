@@ -650,6 +650,19 @@
     XCTAssertTrue(result.successful);
 }
 
-
+- (void)testWhenCapturingBlockWithAnArrayOfMocksArgumentAsWellThenAHelpfulErrorMessageIsReturned {
+	
+	SBLTestingClass *mock = mock(SBLTestingClass.class);
+	SBLTestingClass *child1 = mock(SBLTestingClass.class);
+	SBLTestingClass *child2 = mock(SBLTestingClass.class);
+	SBLTestingClass *child3 = mock(SBLTestingClass.class);
+	
+	[mock methodWithArray:@[child1, child2, child3] block:^(int integer, NSObject *object) {}];
+	
+	SBLTestingBlock block = NULL;
+	SBLVerificationResult *result = SBLVerifyImpl(SBLTimes(1), nil, [mock methodWithArray:@[child1, child3] block:capture(&block)]);
+	
+	XCTAssertFalse(result.successful);
+}
 
 @end

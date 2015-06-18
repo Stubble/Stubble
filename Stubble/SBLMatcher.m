@@ -18,7 +18,7 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
 
 + (instancetype)any {
 	return [SBLMatcher matcherWithBlock:^SBLArgumentMatcherResult *(SBLInvocationArgument *argument) {
-        return [[SBLArgumentMatcherResult alloc] initWithMatches:YES expectedArgument:@"(any)" actualArgument:argument.argument];
+        return [[SBLArgumentMatcherResult alloc] initWithMatches:YES expectedArgumentForLogging:@"(any)" actualArgumentForLogging:argument.argument];
 	}];
 }
 
@@ -46,8 +46,8 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
 	return [SBLMatcher matcherWithBlock:^SBLArgumentMatcherResult *(SBLInvocationArgument *argument) {
         BOOL argumentMatches = [object isEqual:argument.argument] || (!object && !argument.argument);
         SBLArgumentMatcherResult *argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches
-                                                         expectedArgument:object
-                                                           actualArgument:[argument.argument description]];
+                                                         expectedArgumentForLogging:object
+                                                           actualArgumentForLogging:argument.argument];
         return argumentMatcherResult;
 	}];
 }
@@ -73,8 +73,8 @@ typedef void(^SBLMatcherPostInvocationMatchBlock)(SBLInvocationArgument *argumen
             }
         }
         SBLArgumentMatcherResult *argumentMatcherResult = [[SBLArgumentMatcherResult alloc] initWithMatches:argumentMatches
-                                                                 expectedArgument:expectedArgument
-                                                                   actualArgument:actualArgument];
+                                                                 expectedArgumentForLogging:expectedArgument
+                                                                   actualArgumentForLogging:actualArgument];
 
         return argumentMatcherResult;
 	}];

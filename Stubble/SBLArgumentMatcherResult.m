@@ -2,11 +2,11 @@
 
 @implementation SBLArgumentMatcherResult
 
-- (instancetype)initWithMatches:(BOOL)matches expectedArgument:(NSString *)expectedArgument actualArgument:(NSString *)actualArgument {
+- (instancetype)initWithMatches:(BOOL)matches expectedArgumentForLogging:(NSObject *)expectedArgument actualArgumentForLogging:(NSObject *)actualArgument {
     if (self = [super init]) {
         _matches = matches;
-        _expectedArgumentStringValue = expectedArgument;
-        _actualArgumentStringValue = actualArgument;
+        _expectedArgumentStringValue = expectedArgument.debugDescription;
+        _actualArgumentStringValue = actualArgument.debugDescription;
     }
     return self;
 }
