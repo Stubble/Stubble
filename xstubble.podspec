@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name                  = "Stubble"
+  s.name                  = "stubble"
   s.version               = "1.0.0"
   s.summary               = "An iOS mocking framework in the spirit of Mockito."
   s.homepage              = "https://github.com/Stubble/stubble"
