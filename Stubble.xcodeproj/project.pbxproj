@@ -155,6 +155,7 @@
 		5ADC131D1B7BD8D600CB9AC9 /* SBLTestingDynamicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLTestingDynamicObject.h; sourceTree = "<group>"; };
 		5ADC131E1B7BD8D600CB9AC9 /* SBLTestingDynamicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLTestingDynamicObject.m; sourceTree = "<group>"; };
 		5ADC13201B7BD8D600CB9AC9 /* SBLTestsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SBLTestsModel.xcdatamodel; sourceTree = "<group>"; };
+		5ADC13271B7BDE8600CB9AC9 /* Stubble.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = Stubble.podspec; sourceTree = "<group>"; };
 		5AE0E3BF1B274A5B00A583DD /* SBLKeyValueCodingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLKeyValueCodingTest.m; sourceTree = "<group>"; };
 		6313C082B67BDB77399B202D /* SBLStubbedInvocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLStubbedInvocation.m; sourceTree = "<group>"; };
 		6313C161E0D825D0BFE24D74 /* SBLVerifyOrderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLVerifyOrderTest.m; sourceTree = "<group>"; };
@@ -240,6 +241,7 @@
 		74F93D9318525FA100214852 = {
 			isa = PBXGroup;
 			children = (
+				5ADC13271B7BDE8600CB9AC9 /* Stubble.podspec */,
 				74F93DA118525FA100214852 /* Stubble */,
 				74F93DB518525FA100214852 /* StubbleTests */,
 				74F93D9E18525FA100214852 /* Frameworks */,
