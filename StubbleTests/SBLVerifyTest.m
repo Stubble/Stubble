@@ -11,10 +11,6 @@
 
 @implementation SBLVerifyTest
 
-- (void)setUp {
-    [super setUp];
-}
-
 #pragma mark - Verify Success Tests
 
 - (void)testWhenVerifyingForMethodThatWasCalledThatWasMadeThenResultIsSuccessful {

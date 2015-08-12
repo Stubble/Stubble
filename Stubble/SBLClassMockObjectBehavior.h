@@ -3,7 +3,7 @@
 
 @interface SBLClassMockObjectBehavior : NSObject<SBLMockObjectBehavior>
 
-- (id)init UNAVAILABLE_ATTRIBUTE;
-- (instancetype)initWithClass:(Class)aClass;
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (instancetype)initWithClass:(Class)aClass dynamic:(BOOL)dynamic;
 
 @end

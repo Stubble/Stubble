@@ -26,4 +26,5 @@
 #define capture(captorReference) SBLCapture(captorReference)
 
 #define mock(classOrProtocol) SBLMock(classOrProtocol)
+#define dynamicMock(classOnly) SBLDynamicMock(classOnly)
 #define orderToken() SBLOrderToken()

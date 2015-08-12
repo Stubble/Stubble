@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="SBLCoreDataChild" representedClassName="SBLCoreDataChild" syncable="YES">
+        <attribute name="string1" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SBLCoreDataParent" inverseName="children" inverseEntity="SBLCoreDataParent" syncable="YES"/>
+    </entity>
+    <entity name="SBLCoreDataParent" representedClassName="SBLCoreDataParent" syncable="YES">
+        <attribute name="booleanObject" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="booleanValue" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="doubleObject" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="intValue" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="longValue" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="stringObject" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="children" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SBLCoreDataChild" inverseName="parent" inverseEntity="SBLCoreDataChild" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="SBLCoreDataParent" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="SBLCoreDataChild" positionX="-54" positionY="-9" width="128" height="75"/>
+    </elements>
+</model>

@@ -11,6 +11,7 @@
 @property (nonatomic) SBLOrderTokenInternal *currentOrderToken;
 @property (nonatomic, readonly) NSMutableArray *matchers;
 @property (nonatomic) int numberOfCallsDuringTransaction;
+@property (nonatomic) NSString *currentWhenReturnType;
 
 @end
 
@@ -27,16 +28,16 @@
     return core;
 }
 
-- (id)init {
-	if (self = [super init]) {
-		_matchers = [NSMutableArray array];
-	}
+- (instancetype)init {
+	self = [super init];
+	_matchers = [NSMutableArray array];
 	return self;
 }
 
-- (void)prepareForWhen {
+- (void)prepareForWhenWithReturnType:(NSString *)returnType {
     [self verifyState:SBLTransactionManagerStateAtRest];
     self.state = SBLTransactionManagerStateStubInProgress;
+	self.currentWhenReturnType = returnType;
 }
 
 - (void)whenMethodInvokedForMock:(SBLMockObject *)mock {
@@ -44,6 +45,7 @@
     self.numberOfCallsDuringTransaction++;
     self.currentMock = mock;
 	[self.currentMock.sblCurrentStubbedInvocation setMatchers:[NSArray arrayWithArray:self.matchers]];
+	self.currentWhenReturnType = nil;
 }
 
 - (SBLStubbedInvocation *)performWhen {

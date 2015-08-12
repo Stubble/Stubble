@@ -51,6 +51,12 @@
 		5AA4A97B18689FFB0033BAE0 /* SBLProtocolMockObjectBehavior.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D80408F186404F6001DE9FE /* SBLProtocolMockObjectBehavior.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5ABCBF8618A965D0001E2306 /* SBLMock.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ABCBF8418A965D0001E2306 /* SBLMock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5ABCBF8718A965D0001E2306 /* SBLMockCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ABCBF8518A965D0001E2306 /* SBLMockCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5ADC13211B7BD8D600CB9AC9 /* SBLCoreDataChild.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC13181B7BD8D600CB9AC9 /* SBLCoreDataChild.m */; };
+		5ADC13221B7BD8D600CB9AC9 /* SBLCoreDataParent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC131A1B7BD8D600CB9AC9 /* SBLCoreDataParent.m */; };
+		5ADC13231B7BD8D600CB9AC9 /* SBLCoreDataTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC131B1B7BD8D600CB9AC9 /* SBLCoreDataTest.m */; };
+		5ADC13241B7BD8D600CB9AC9 /* SBLDynamicMockTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC131C1B7BD8D600CB9AC9 /* SBLDynamicMockTest.m */; };
+		5ADC13251B7BD8D600CB9AC9 /* SBLTestingDynamicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC131E1B7BD8D600CB9AC9 /* SBLTestingDynamicObject.m */; };
+		5ADC13261B7BD8D600CB9AC9 /* SBLTestsModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC131F1B7BD8D600CB9AC9 /* SBLTestsModel.xcdatamodeld */; };
 		5AE0E3C01B274A5B00A583DD /* SBLKeyValueCodingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE0E3BF1B274A5B00A583DD /* SBLKeyValueCodingTest.m */; };
 		6313C3CA77A4C3741B2FBA03 /* SBLOrderToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C3841B4835E6033E428E /* SBLOrderToken.m */; };
 		6313C8BB61AA6B1FE997974E /* SBLOrderTokenInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 6313CE59D05F7B3DC22E014D /* SBLOrderTokenInternal.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -140,6 +146,15 @@
 		5A9837B018A98A42001E2501 /* SBLTestingBlockCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLTestingBlockCreator.m; sourceTree = "<group>"; };
 		5ABCBF8418A965D0001E2306 /* SBLMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLMock.h; sourceTree = "<group>"; };
 		5ABCBF8518A965D0001E2306 /* SBLMockCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLMockCore.h; sourceTree = "<group>"; };
+		5ADC13171B7BD8D600CB9AC9 /* SBLCoreDataChild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLCoreDataChild.h; sourceTree = "<group>"; };
+		5ADC13181B7BD8D600CB9AC9 /* SBLCoreDataChild.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLCoreDataChild.m; sourceTree = "<group>"; };
+		5ADC13191B7BD8D600CB9AC9 /* SBLCoreDataParent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLCoreDataParent.h; sourceTree = "<group>"; };
+		5ADC131A1B7BD8D600CB9AC9 /* SBLCoreDataParent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLCoreDataParent.m; sourceTree = "<group>"; };
+		5ADC131B1B7BD8D600CB9AC9 /* SBLCoreDataTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLCoreDataTest.m; sourceTree = "<group>"; };
+		5ADC131C1B7BD8D600CB9AC9 /* SBLDynamicMockTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLDynamicMockTest.m; sourceTree = "<group>"; };
+		5ADC131D1B7BD8D600CB9AC9 /* SBLTestingDynamicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLTestingDynamicObject.h; sourceTree = "<group>"; };
+		5ADC131E1B7BD8D600CB9AC9 /* SBLTestingDynamicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLTestingDynamicObject.m; sourceTree = "<group>"; };
+		5ADC13201B7BD8D600CB9AC9 /* SBLTestsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SBLTestsModel.xcdatamodel; sourceTree = "<group>"; };
 		5AE0E3BF1B274A5B00A583DD /* SBLKeyValueCodingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLKeyValueCodingTest.m; sourceTree = "<group>"; };
 		6313C082B67BDB77399B202D /* SBLStubbedInvocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLStubbedInvocation.m; sourceTree = "<group>"; };
 		6313C161E0D825D0BFE24D74 /* SBLVerifyOrderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLVerifyOrderTest.m; sourceTree = "<group>"; };
@@ -272,6 +287,15 @@
 		74F93DB518525FA100214852 /* StubbleTests */ = {
 			isa = PBXGroup;
 			children = (
+				5ADC13171B7BD8D600CB9AC9 /* SBLCoreDataChild.h */,
+				5ADC13181B7BD8D600CB9AC9 /* SBLCoreDataChild.m */,
+				5ADC13191B7BD8D600CB9AC9 /* SBLCoreDataParent.h */,
+				5ADC131A1B7BD8D600CB9AC9 /* SBLCoreDataParent.m */,
+				5ADC131B1B7BD8D600CB9AC9 /* SBLCoreDataTest.m */,
+				5ADC131C1B7BD8D600CB9AC9 /* SBLDynamicMockTest.m */,
+				5ADC131D1B7BD8D600CB9AC9 /* SBLTestingDynamicObject.h */,
+				5ADC131E1B7BD8D600CB9AC9 /* SBLTestingDynamicObject.m */,
+				5ADC131F1B7BD8D600CB9AC9 /* SBLTestsModel.xcdatamodeld */,
 				74678C401857D5AD00BD75E3 /* SBLVerifyTest.m */,
 				74F93DBB18525FA100214852 /* SBLStubTest.m */,
 				4D0E754E185BBD3B00C681BE /* SBLMatcherTest.m */,
@@ -490,13 +514,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5ADC13231B7BD8D600CB9AC9 /* SBLCoreDataTest.m in Sources */,
+				5ADC13241B7BD8D600CB9AC9 /* SBLDynamicMockTest.m in Sources */,
+				5ADC13251B7BD8D600CB9AC9 /* SBLTestingDynamicObject.m in Sources */,
 				74678C441857D5E900BD75E3 /* SBLTestingClass.m in Sources */,
+				5ADC13211B7BD8D600CB9AC9 /* SBLCoreDataChild.m in Sources */,
 				4DF0042F185AB833003171E5 /* SBLStubbleCoreThreadingTest.m in Sources */,
 				4D0E754F185BBD3B00C681BE /* SBLMatcherTest.m in Sources */,
+				5ADC13261B7BD8D600CB9AC9 /* SBLTestsModel.xcdatamodeld in Sources */,
 				5A9837B118A98A42001E2501 /* SBLTestingBlockCreator.m in Sources */,
 				74678C411857D5AD00BD75E3 /* SBLVerifyTest.m in Sources */,
 				74F93DBC18525FA100214852 /* SBLStubTest.m in Sources */,
 				AAFD4E581C8800002923FDEC /* SBLExceptionTest.m in Sources */,
+				5ADC13221B7BD8D600CB9AC9 /* SBLCoreDataParent.m in Sources */,
 				AAFD4BE30957D2DC3CFD42B6 /* SBLValueLoggingHelperTest.m in Sources */,
 				6313CA4802AB4F228E88D8F1 /* SBLVerifyOrderTest.m in Sources */,
 				5AE0E3C01B274A5B00A583DD /* SBLKeyValueCodingTest.m in Sources */,
@@ -720,6 +750,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		5ADC131F1B7BD8D600CB9AC9 /* SBLTestsModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5ADC13201B7BD8D600CB9AC9 /* SBLTestsModel.xcdatamodel */,
+			);
+			currentVersion = 5ADC13201B7BD8D600CB9AC9 /* SBLTestsModel.xcdatamodel */;
+			path = SBLTestsModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 74F93D9418525FA100214852 /* Project object */;
 }

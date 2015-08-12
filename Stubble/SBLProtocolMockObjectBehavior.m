@@ -10,9 +10,8 @@
 @implementation SBLProtocolMockObjectBehavior
 
 - (instancetype)initWithProtocol:(Protocol *)aProtocol {
-	if (self = [super init]) {
-		_mockedProtocol = aProtocol;
-	}
+	self = [super init];
+	_mockedProtocol = aProtocol;
 	return self;
 }
 

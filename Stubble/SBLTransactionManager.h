@@ -11,12 +11,13 @@ typedef enum {
 @interface SBLTransactionManager : NSObject
 
 @property (nonatomic, readonly) SBLTransactionManagerState state;
+@property (nonatomic, readonly) NSString *currentWhenReturnType;
 
 + (instancetype)currentTransactionManager;
 
 - (void)clear;
 
-- (void)prepareForWhen;
+- (void)prepareForWhenWithReturnType:(NSString *)returnType;
 - (void)whenMethodInvokedForMock:(SBLMockObject *)mock;
 - (SBLStubbedInvocation *)performWhen;
 

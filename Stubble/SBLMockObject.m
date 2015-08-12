@@ -15,11 +15,15 @@
 
 @implementation SBLMockObject
 
-+ (id)sblMockForClass:(Class)class {
-    return [[SBLMockObject alloc] initWithBehavior:[[SBLClassMockObjectBehavior alloc] initWithClass:class]];
++ (instancetype)sblMockForClass:(Class)class {
+	return [[SBLMockObject alloc] initWithBehavior:[[SBLClassMockObjectBehavior alloc] initWithClass:class dynamic:NO]];
 }
 
-+ (id)sblMockForProtocol:(Protocol *)protocol {
++ (instancetype)sblDynamicMockForClass:(Class)class {
+	return [[SBLMockObject alloc] initWithBehavior:[[SBLClassMockObjectBehavior alloc] initWithClass:class dynamic:YES]];
+}
+
++ (instancetype)sblMockForProtocol:(Protocol *)protocol {
     return [[SBLMockObject alloc] initWithBehavior:[[SBLProtocolMockObjectBehavior alloc] initWithProtocol:protocol]];
 }
 
@@ -31,7 +35,7 @@
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
-    return [self.sblBehavior mockObjectMethodSignatureForSelector:aSelector];
+   return [self.sblBehavior mockObjectMethodSignatureForSelector:aSelector];
 }
 
 - (BOOL)respondsToSelector:(SEL)selector {

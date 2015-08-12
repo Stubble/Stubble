@@ -6,6 +6,7 @@
 @interface SBLMockObject : NSProxy
 
 + (instancetype)sblMockForClass:(Class)class;
++ (instancetype)sblDynamicMockForClass:(Class)class;
 + (instancetype)sblMockForProtocol:(Protocol *)protocol;
 
 @property (nonatomic, readonly) SBLStubbedInvocation *sblCurrentStubbedInvocation;

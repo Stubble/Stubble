@@ -3,7 +3,7 @@
 
 @interface SBLProtocolMockObjectBehavior : NSObject<SBLMockObjectBehavior>
 
-- (id)init UNAVAILABLE_ATTRIBUTE;
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithProtocol:(Protocol *)aProtocol;
 
 @end

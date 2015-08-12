@@ -4,7 +4,7 @@
 #import "SBLErrors.h"
 #import "SBLMockObject.h"
 
-#define SBLWhen(methodCall...) ({ [SBLTransactionManager.currentTransactionManager prepareForWhen]; (void)methodCall; [SBLTransactionManager.currentTransactionManager performWhen]; })
+#define SBLWhen(methodCall...) ({ [SBLTransactionManager.currentTransactionManager prepareForWhenWithReturnType:[NSString stringWithUTF8String:@encode(typeof(methodCall))]]; (void)methodCall; [SBLTransactionManager.currentTransactionManager performWhen]; })
 
 #define SBLVerify(methodCall...) (SBLVerifyTimes(SBLAtLeastOnce(), methodCall))
 #define SBLVerifyNever(args...) (SBLVerifyTimes(SBLNever(), args))
@@ -41,5 +41,6 @@
     if (strcmp(typeEncoding, "#") == 0) { mock = [SBLMockObject sblMockForClass:(id)classOrProtocol]; } \
     else if (strcmp(typeEncoding, "@") == 0) { mock = [SBLMockObject sblMockForProtocol:(id)classOrProtocol]; } \
     (id)mock; })
+#define SBLDynamicMock(classOnly) ((id)[SBLMockObject sblDynamicMockForClass:classOnly])
 
 #define SBLOrderToken() ({ [SBLTransactionManager.currentTransactionManager createOrderToken]; })
