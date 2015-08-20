@@ -36,6 +36,7 @@
 		4DF0042F185AB833003171E5 /* SBLStubbleCoreThreadingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0042E185AB833003171E5 /* SBLStubbleCoreThreadingTest.m */; };
 		4DF00432185ACB53003171E5 /* SBLInvocationRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF00431185ACB53003171E5 /* SBLInvocationRecord.m */; };
 		4DF00435185AD2AC003171E5 /* SBLMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF00434185AD2AC003171E5 /* SBLMatcher.m */; };
+		5A0FDA6B1B8674B700BEC939 /* SBLCoreDataParent+SBL.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0FDA6A1B8674B700BEC939 /* SBLCoreDataParent+SBL.m */; };
 		5A5472EC1877290A004A4A04 /* SBLMockObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A5472EA1877290A004A4A04 /* SBLMockObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5A5472ED1877290A004A4A04 /* SBLMockObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5472EB1877290A004A4A04 /* SBLMockObject.m */; };
 		5A7F2CAE18A96E44000B5AAD /* SBLInvocationArgument.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A7F2CAC18A96E44000B5AAD /* SBLInvocationArgument.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -138,6 +139,8 @@
 		4DF00431185ACB53003171E5 /* SBLInvocationRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLInvocationRecord.m; sourceTree = "<group>"; };
 		4DF00433185AD2AC003171E5 /* SBLMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLMatcher.h; sourceTree = "<group>"; };
 		4DF00434185AD2AC003171E5 /* SBLMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLMatcher.m; sourceTree = "<group>"; };
+		5A0FDA691B8674B700BEC939 /* SBLCoreDataParent+SBL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SBLCoreDataParent+SBL.h"; sourceTree = "<group>"; };
+		5A0FDA6A1B8674B700BEC939 /* SBLCoreDataParent+SBL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SBLCoreDataParent+SBL.m"; sourceTree = "<group>"; };
 		5A5472EA1877290A004A4A04 /* SBLMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLMockObject.h; sourceTree = "<group>"; };
 		5A5472EB1877290A004A4A04 /* SBLMockObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLMockObject.m; sourceTree = "<group>"; };
 		5A7F2CAC18A96E44000B5AAD /* SBLInvocationArgument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLInvocationArgument.h; sourceTree = "<group>"; };
@@ -293,6 +296,8 @@
 				5ADC13181B7BD8D600CB9AC9 /* SBLCoreDataChild.m */,
 				5ADC13191B7BD8D600CB9AC9 /* SBLCoreDataParent.h */,
 				5ADC131A1B7BD8D600CB9AC9 /* SBLCoreDataParent.m */,
+				5A0FDA691B8674B700BEC939 /* SBLCoreDataParent+SBL.h */,
+				5A0FDA6A1B8674B700BEC939 /* SBLCoreDataParent+SBL.m */,
 				5ADC131B1B7BD8D600CB9AC9 /* SBLCoreDataTest.m */,
 				5ADC131C1B7BD8D600CB9AC9 /* SBLDynamicMockTest.m */,
 				5ADC131D1B7BD8D600CB9AC9 /* SBLTestingDynamicObject.h */,
@@ -522,6 +527,7 @@
 				74678C441857D5E900BD75E3 /* SBLTestingClass.m in Sources */,
 				5ADC13211B7BD8D600CB9AC9 /* SBLCoreDataChild.m in Sources */,
 				4DF0042F185AB833003171E5 /* SBLStubbleCoreThreadingTest.m in Sources */,
+				5A0FDA6B1B8674B700BEC939 /* SBLCoreDataParent+SBL.m in Sources */,
 				4D0E754F185BBD3B00C681BE /* SBLMatcherTest.m in Sources */,
 				5ADC13261B7BD8D600CB9AC9 /* SBLTestsModel.xcdatamodeld in Sources */,
 				5A9837B118A98A42001E2501 /* SBLTestingBlockCreator.m in Sources */,
