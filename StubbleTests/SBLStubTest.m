@@ -241,6 +241,24 @@
 	XCTAssertEqualObjects([mock protocolMethodWithInteger:3], @"1");
 }
 
+- (void)testWhenClassIsStubbedThenCorrectMockObjectDescriptionIsReturned {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+    SBLMockObject *mockedObject = (SBLMockObject *)mock;
+
+    NSString *expectedDescription = @"Mocking class SBLTestingClass";
+    
+    XCTAssertEqualObjects([mockedObject debugDescription], expectedDescription);
+}
+
+- (void)testWhenProtocolIsStubbedThenCorrectMockObjectDescriptionIsReturned {
+    id<SBLTestingProtocol> mock = mock(@protocol(SBLTestingProtocol));
+    SBLMockObject *mockedProtocol = (SBLMockObject *)mock;
+    
+    NSString *expectedDescription = @"Mocking protocol SBLTestingProtocol";
+    
+    XCTAssertEqualObjects([mockedProtocol debugDescription], expectedDescription);
+}
+
 - (void)testWhenIntegerNumberIsReturnedFromStubMethodThatReturnsADoubleThenTheCorrectValueIsReturned {
     SBLTestingClass *mock = mock(SBLTestingClass.class);
 

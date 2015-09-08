@@ -6,5 +6,6 @@
 - (BOOL)mockObjectRespondsToSelector:(SEL)aSelector;
 - (BOOL)mockObjectIsKindOfClass:(Class)aClass;
 - (BOOL)mockObjectConformsToProtocol:(Protocol *)aProtocol;
+- (NSString *)mockObjectDebugDescription;
 
 @end

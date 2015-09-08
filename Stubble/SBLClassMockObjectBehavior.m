@@ -92,6 +92,12 @@
     return [self.mockedClass conformsToProtocol:aProtocol];
 }
 
+- (NSString *)mockObjectDebugDescription {
+    const char * classNameCString = class_getName(self.mockedClass);
+    NSString *className = [[NSString alloc] initWithUTF8String:classNameCString];
+    return [NSString stringWithFormat:@"Mocking class %@", className];
+}
+
 - (NSString *)valueForCode:(NSString *)codeLetter fromAttributes:(NSArray *)attributes {
 	NSString *value = nil;
 	for (NSString *attribute in attributes) {

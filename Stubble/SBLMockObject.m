@@ -156,6 +156,10 @@
     return [[SBLVerificationResult alloc] initWithSuccess:correctCallCount && correctOrder failureDescription:failureMessage];
 }
 
+- (NSString *)debugDescription {
+    return [self.sblBehavior mockObjectDebugDescription];
+}
+
 - (NSString *)sblCallCountFailureMessageForInvocationCount:(NSInteger)invocationCount mismatchedMethodCalls:(NSArray *)mismatchedMethodCalls formattedExpectedTimes:(NSString *)formattedTimes {
     NSString *failureMessage;
     if (mismatchedMethodCalls.count) {
