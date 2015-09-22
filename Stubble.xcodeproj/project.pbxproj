@@ -6,21 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		75EAF7551873818600C1FB5F /* Framework */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 75EAF7561873818600C1FB5F /* Build configuration list for PBXAggregateTarget "Framework" */;
-			buildPhases = (
-				75EAF75B187382D000C1FB5F /* ShellScript */,
-			);
-			dependencies = (
-				75EAF75A187381D600C1FB5F /* PBXTargetDependency */,
-			);
-			name = Framework;
-			productName = Framework;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		4D092D5E18A9A89100D90322 /* SBLTransactionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D092D5C18A9A89100D90322 /* SBLTransactionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D092D5F18A9A89100D90322 /* SBLTransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D092D5D18A9A89100D90322 /* SBLTransactionManager.m */; };
@@ -155,13 +140,6 @@
 			remoteInfo = Stubble;
 		};
 		74F93DB218525FA100214852 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 74F93D9418525FA100214852 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 74F93D9B18525FA100214852;
-			remoteInfo = Stubble;
-		};
-		75EAF759187381D600C1FB5F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 74F93D9418525FA100214852 /* Project object */;
 			proxyType = 1;
@@ -638,7 +616,6 @@
 			targets = (
 				74F93D9B18525FA100214852 /* StaticStubble */,
 				74F93DAB18525FA100214852 /* StaticStubbleTests */,
-				75EAF7551873818600C1FB5F /* Framework */,
 				4DABD83E1BB1EE11006CAC82 /* Stubble */,
 				4DABD8471BB1EE11006CAC82 /* StubbleTests */,
 			);
@@ -669,22 +646,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		75EAF75B187382D000C1FB5F /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -e\nSTATIC_LIB_HEADER_DIR=include/Stubble ${PROJECT_DIR}/${PROJECT_NAME}/Scripts/framework-builder";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4DABD83A1BB1EE11006CAC82 /* Sources */ = {
@@ -798,11 +759,6 @@
 			target = 74F93D9B18525FA100214852 /* StaticStubble */;
 			targetProxy = 74F93DB218525FA100214852 /* PBXContainerItemProxy */;
 		};
-		75EAF75A187381D600C1FB5F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 74F93D9B18525FA100214852 /* StaticStubble */;
-			targetProxy = 75EAF759187381D600C1FB5F /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -835,7 +791,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = Stubble/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.stubble.Stubble;
@@ -866,7 +822,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = Stubble/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.stubble.Stubble;
@@ -1070,20 +1026,6 @@
 			};
 			name = Release;
 		};
-		75EAF7571873818600C1FB5F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		75EAF7581873818600C1FB5F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1126,15 +1068,6 @@
 			buildConfigurations = (
 				74F93DC318525FA100214852 /* Debug */,
 				74F93DC418525FA100214852 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		75EAF7561873818600C1FB5F /* Build configuration list for PBXAggregateTarget "Framework" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				75EAF7571873818600C1FB5F /* Debug */,
-				75EAF7581873818600C1FB5F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
