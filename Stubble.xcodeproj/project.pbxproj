@@ -71,6 +71,7 @@
 		4DABD88D1BB1EEBE006CAC82 /* SBLKeyValueCodingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE0E3BF1B274A5B00A583DD /* SBLKeyValueCodingTest.m */; };
 		4DABD88E1BB1EEC8006CAC82 /* SBLTestsModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC131F1B7BD8D600CB9AC9 /* SBLTestsModel.xcdatamodeld */; };
 		4DABD8901BB1F134006CAC82 /* Stubble.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DABD88F1BB1F134006CAC82 /* Stubble.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD8911BB2069C006CAC82 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F93D9F18525FA100214852 /* Foundation.framework */; };
 		4DD1ACB6187462B300A5FEC4 /* SBLVerificationHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DD1ACB4187462B300A5FEC4 /* SBLVerificationHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DD1ACB7187462B300A5FEC4 /* SBLVerificationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD1ACB5187462B300A5FEC4 /* SBLVerificationHandler.m */; };
 		4DD1ACBA1874691300A5FEC4 /* SBLVerificationResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DD1ACB81874691300A5FEC4 /* SBLVerificationResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -248,6 +249,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DABD8911BB2069C006CAC82 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
