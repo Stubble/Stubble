@@ -1,5 +1,3 @@
-#import <UIKit/UIKit.h>
-
 //! Project version number for Stubble.
 FOUNDATION_EXPORT double StubbleVersionNumber;
 
