@@ -85,7 +85,7 @@
 
 - (void)testWhenObjectValuesAreSetThenTheyCanBeVerified {
 	NSString *string1a = [[NSString alloc] initWithUTF8String:"ABC"];
-	NSString *string1b = [[NSString alloc] initWithUTF8String:"ABC"];
+	NSString *string1b = [@"A" stringByAppendingString:@"BC"];
 	NSString *string2 = [[NSString alloc] initWithUTF8String:"XYZ"];
 	XCTAssertNotEqual(string1a, string1b);
 	SBLCoreDataParent *mock = mock(SBLCoreDataParent.class);
