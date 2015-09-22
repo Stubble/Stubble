@@ -1,6 +1,6 @@
 language: objective-c
 xcode_project: Stubble.xcodeproj
-xcode_scheme: Stubble
+xcode_scheme: StaticStubble
 xcode_sdk: iphonesimulator
 before_install:
   - brew update
