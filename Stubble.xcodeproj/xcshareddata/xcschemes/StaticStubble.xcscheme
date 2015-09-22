@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4DABD83E1BB1EE11006CAC82"
-               BuildableName = "Stubble.framework"
-               BlueprintName = "Stubble"
+               BlueprintIdentifier = "74F93D9B18525FA100214852"
+               BuildableName = "libStaticStubble.a"
+               BlueprintName = "StaticStubble"
                ReferencedContainer = "container:Stubble.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,22 +32,13 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4DABD8471BB1EE11006CAC82"
-               BuildableName = "StubbleTests.xctest"
-               BlueprintName = "StubbleTests"
+               BlueprintIdentifier = "74F93DAB18525FA100214852"
+               BuildableName = "StaticStubbleTests.xctest"
+               BlueprintName = "StaticStubbleTests"
                ReferencedContainer = "container:Stubble.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4DABD83E1BB1EE11006CAC82"
-            BuildableName = "Stubble.framework"
-            BlueprintName = "Stubble"
-            ReferencedContainer = "container:Stubble.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -64,9 +55,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4DABD83E1BB1EE11006CAC82"
-            BuildableName = "Stubble.framework"
-            BlueprintName = "Stubble"
+            BlueprintIdentifier = "74F93D9B18525FA100214852"
+            BuildableName = "libStaticStubble.a"
+            BlueprintName = "StaticStubble"
             ReferencedContainer = "container:Stubble.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -79,15 +70,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4DABD83E1BB1EE11006CAC82"
-            BuildableName = "Stubble.framework"
-            BlueprintName = "Stubble"
-            ReferencedContainer = "container:Stubble.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

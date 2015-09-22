@@ -1,5 +1,5 @@
 #import <XCTest/XCTest.h>
-#import "Stubble.h"
+#import <Stubble/Stubble.h>
 #import "SBLTestingDynamicObject.h"
 #import "SBLVerificationResult.h"
 #import "SBLErrors.h"

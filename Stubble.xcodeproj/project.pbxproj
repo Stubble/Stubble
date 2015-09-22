@@ -27,6 +27,65 @@
 		4D0E754F185BBD3B00C681BE /* SBLMatcherTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0E754E185BBD3B00C681BE /* SBLMatcherTest.m */; };
 		4D80408E186403BE001DE9FE /* SBLClassMockObjectBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D80408D186403BE001DE9FE /* SBLClassMockObjectBehavior.m */; };
 		4D804091186404F6001DE9FE /* SBLProtocolMockObjectBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D804090186404F6001DE9FE /* SBLProtocolMockObjectBehavior.m */; };
+		4DABD8491BB1EE11006CAC82 /* Stubble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DABD83F1BB1EE11006CAC82 /* Stubble.framework */; settings = {ASSET_TAGS = (); }; };
+		4DABD8561BB1EE5B006CAC82 /* SBLInvocationRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF00431185ACB53003171E5 /* SBLInvocationRecord.m */; };
+		4DABD8571BB1EE5B006CAC82 /* SBLMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF00434185AD2AC003171E5 /* SBLMatcher.m */; };
+		4DABD8581BB1EE5B006CAC82 /* SBLStubbedInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C082B67BDB77399B202D /* SBLStubbedInvocation.m */; };
+		4DABD8591BB1EE5B006CAC82 /* SBLTimesMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD431560AC3BD461C4B3D1 /* SBLTimesMatcher.m */; };
+		4DABD85A1BB1EE5B006CAC82 /* SBLInvocationArgument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7F2CAD18A96E44000B5AAD /* SBLInvocationArgument.m */; };
+		4DABD85B1BB1EE5B006CAC82 /* SBLArgumentMatcherResult.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD49C9A0A7E574CC16048B /* SBLArgumentMatcherResult.m */; };
+		4DABD85C1BB1EE5B006CAC82 /* SBLValueLoggingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD48CCFBD6BC48364A7801 /* SBLValueLoggingHelper.m */; };
+		4DABD85D1BB1EE5B006CAC82 /* SBLInvocationMatchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD432360F5D4B73F8A79B6 /* SBLInvocationMatchResult.m */; };
+		4DABD85E1BB1EE5B006CAC82 /* SBLClassMockObjectBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D80408D186403BE001DE9FE /* SBLClassMockObjectBehavior.m */; };
+		4DABD85F1BB1EE5B006CAC82 /* SBLHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DE7829A18A1CD7E002C0470 /* SBLHelpers.m */; };
+		4DABD8601BB1EE5B006CAC82 /* SBLMockObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5472EB1877290A004A4A04 /* SBLMockObject.m */; };
+		4DABD8611BB1EE5B006CAC82 /* SBLProtocolMockObjectBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D804090186404F6001DE9FE /* SBLProtocolMockObjectBehavior.m */; };
+		4DABD8621BB1EE5B006CAC82 /* SBLTransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D092D5D18A9A89100D90322 /* SBLTransactionManager.m */; };
+		4DABD8631BB1EE5B006CAC82 /* SBLVerificationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD1ACB5187462B300A5FEC4 /* SBLVerificationHandler.m */; };
+		4DABD8641BB1EE5B006CAC82 /* SBLVerificationResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD1ACB91874691300A5FEC4 /* SBLVerificationResult.m */; };
+		4DABD8651BB1EE5B006CAC82 /* SBLOrderToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C3841B4835E6033E428E /* SBLOrderToken.m */; };
+		4DABD8661BB1EE5B006CAC82 /* SBLOrderTokenInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313CD4BA249E7970CFBDFA9 /* SBLOrderTokenInternal.m */; };
+		4DABD8671BB1EE5B006CAC82 /* SBLCallOrderTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313CCDA33E9736B77088358 /* SBLCallOrderTracker.m */; };
+		4DABD8681BB1EE91006CAC82 /* SBLInvocationRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF00430185ACB53003171E5 /* SBLInvocationRecord.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD8691BB1EE91006CAC82 /* SBLMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF00433185AD2AC003171E5 /* SBLMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD86A1BB1EE91006CAC82 /* SBLStubbedInvocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6313CD2DFCBE3162EB6EE10B /* SBLStubbedInvocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD86B1BB1EE91006CAC82 /* SBLTimesMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD46DFB029A6FC17A48B0D /* SBLTimesMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD86C1BB1EE91006CAC82 /* SBLInvocationArgument.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A7F2CAC18A96E44000B5AAD /* SBLInvocationArgument.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD86D1BB1EE91006CAC82 /* SBLArgumentMatcherResult.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4BBB523D1485AC4AD7D9 /* SBLArgumentMatcherResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD86E1BB1EE91006CAC82 /* SBLValueLoggingHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4ECB9CA6481AFFAF849E /* SBLValueLoggingHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD86F1BB1EE91006CAC82 /* SBLInvocationMatchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4F9F2BB34D38DB5317A6 /* SBLInvocationMatchResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD8701BB1EE91006CAC82 /* SBLClassMockObjectBehavior.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D80408C186403BE001DE9FE /* SBLClassMockObjectBehavior.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD8711BB1EE91006CAC82 /* SBLErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D0E7550185D09B200C681BE /* SBLErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD8721BB1EE91006CAC82 /* SBLHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DE7829918A1CD7E002C0470 /* SBLHelpers.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD8731BB1EE91006CAC82 /* SBLMock.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ABCBF8418A965D0001E2306 /* SBLMock.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD8741BB1EE91006CAC82 /* SBLMockCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ABCBF8518A965D0001E2306 /* SBLMockCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD8751BB1EE91006CAC82 /* SBLMockObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A5472EA1877290A004A4A04 /* SBLMockObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD8761BB1EE91006CAC82 /* SBLMockObjectBehavior.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D80408B186402DB001DE9FE /* SBLMockObjectBehavior.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD8771BB1EE91006CAC82 /* SBLProtocolMockObjectBehavior.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D80408F186404F6001DE9FE /* SBLProtocolMockObjectBehavior.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD8781BB1EE92006CAC82 /* SBLTransactionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D092D5C18A9A89100D90322 /* SBLTransactionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD8791BB1EE92006CAC82 /* SBLVerificationHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DD1ACB4187462B300A5FEC4 /* SBLVerificationHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD87A1BB1EE92006CAC82 /* SBLVerificationResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DD1ACB81874691300A5FEC4 /* SBLVerificationResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD87B1BB1EE92006CAC82 /* SBLOrderToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 6313C90A6E6740E141DB8DFA /* SBLOrderToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD87C1BB1EE92006CAC82 /* SBLOrderTokenInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 6313CE59D05F7B3DC22E014D /* SBLOrderTokenInternal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD87D1BB1EE92006CAC82 /* SBLCallOrderTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 6313C8BDED7E64AD0503ABD4 /* SBLCallOrderTracker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DABD87E1BB1EEBE006CAC82 /* SBLCoreDataChild.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC13181B7BD8D600CB9AC9 /* SBLCoreDataChild.m */; };
+		4DABD87F1BB1EEBE006CAC82 /* SBLCoreDataParent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC131A1B7BD8D600CB9AC9 /* SBLCoreDataParent.m */; };
+		4DABD8801BB1EEBE006CAC82 /* SBLCoreDataParent+SBL.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0FDA6A1B8674B700BEC939 /* SBLCoreDataParent+SBL.m */; };
+		4DABD8811BB1EEBE006CAC82 /* SBLCoreDataTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC131B1B7BD8D600CB9AC9 /* SBLCoreDataTest.m */; };
+		4DABD8821BB1EEBE006CAC82 /* SBLDynamicMockTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC131C1B7BD8D600CB9AC9 /* SBLDynamicMockTest.m */; };
+		4DABD8831BB1EEBE006CAC82 /* SBLTestingDynamicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC131E1B7BD8D600CB9AC9 /* SBLTestingDynamicObject.m */; };
+		4DABD8841BB1EEBE006CAC82 /* SBLVerifyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 74678C401857D5AD00BD75E3 /* SBLVerifyTest.m */; };
+		4DABD8851BB1EEBE006CAC82 /* SBLStubTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 74F93DBB18525FA100214852 /* SBLStubTest.m */; };
+		4DABD8861BB1EEBE006CAC82 /* SBLMatcherTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0E754E185BBD3B00C681BE /* SBLMatcherTest.m */; };
+		4DABD8871BB1EEBE006CAC82 /* SBLStubbleCoreThreadingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0042E185AB833003171E5 /* SBLStubbleCoreThreadingTest.m */; };
+		4DABD8881BB1EEBE006CAC82 /* SBLTestingClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 74678C431857D5E900BD75E3 /* SBLTestingClass.m */; };
+		4DABD8891BB1EEBE006CAC82 /* SBLExceptionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD4746845E28C0CBF4683E /* SBLExceptionTest.m */; };
+		4DABD88A1BB1EEBE006CAC82 /* SBLTestingBlockCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9837B018A98A42001E2501 /* SBLTestingBlockCreator.m */; };
+		4DABD88B1BB1EEBE006CAC82 /* SBLValueLoggingHelperTest.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD4916AAC6AAA9584FDB1A /* SBLValueLoggingHelperTest.m */; };
+		4DABD88C1BB1EEBE006CAC82 /* SBLVerifyOrderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6313C161E0D825D0BFE24D74 /* SBLVerifyOrderTest.m */; };
+		4DABD88D1BB1EEBE006CAC82 /* SBLKeyValueCodingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE0E3BF1B274A5B00A583DD /* SBLKeyValueCodingTest.m */; };
+		4DABD88E1BB1EEC8006CAC82 /* SBLTestsModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5ADC131F1B7BD8D600CB9AC9 /* SBLTestsModel.xcdatamodeld */; };
+		4DABD8901BB1F134006CAC82 /* Stubble.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DABD88F1BB1F134006CAC82 /* Stubble.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DD1ACB6187462B300A5FEC4 /* SBLVerificationHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DD1ACB4187462B300A5FEC4 /* SBLVerificationHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DD1ACB7187462B300A5FEC4 /* SBLVerificationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD1ACB5187462B300A5FEC4 /* SBLVerificationHandler.m */; };
 		4DD1ACBA1874691300A5FEC4 /* SBLVerificationResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DD1ACB81874691300A5FEC4 /* SBLVerificationResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -73,10 +132,9 @@
 		74F93DAE18525FA100214852 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F93DAD18525FA100214852 /* XCTest.framework */; };
 		74F93DAF18525FA100214852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F93D9F18525FA100214852 /* Foundation.framework */; };
 		74F93DB118525FA100214852 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F93DB018525FA100214852 /* UIKit.framework */; };
-		74F93DB418525FA100214852 /* libStubble.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F93D9C18525FA100214852 /* libStubble.a */; };
+		74F93DB418525FA100214852 /* libStaticStubble.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F93D9C18525FA100214852 /* libStaticStubble.a */; };
 		74F93DBA18525FA100214852 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74F93DB818525FA100214852 /* InfoPlist.strings */; };
 		74F93DBC18525FA100214852 /* SBLStubTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 74F93DBB18525FA100214852 /* SBLStubTest.m */; };
-		75EAF7541873808E00C1FB5F /* Stubble.h in Headers */ = {isa = PBXBuildFile; fileRef = 75EAF7531873808E00C1FB5F /* Stubble.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AAFD41575C3906917DB3B296 /* SBLInvocationMatchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4F9F2BB34D38DB5317A6 /* SBLInvocationMatchResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AAFD456B9E434F788AD7FA4A /* SBLValueLoggingHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = AAFD4ECB9CA6481AFFAF849E /* SBLValueLoggingHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AAFD457357101BF8EFFA38A7 /* SBLArgumentMatcherResult.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFD49C9A0A7E574CC16048B /* SBLArgumentMatcherResult.m */; };
@@ -89,6 +147,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4DABD84A1BB1EE11006CAC82 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 74F93D9418525FA100214852 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DABD83E1BB1EE11006CAC82;
+			remoteInfo = Stubble;
+		};
 		74F93DB218525FA100214852 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 74F93D9418525FA100214852 /* Project object */;
@@ -128,6 +193,12 @@
 		4D80408D186403BE001DE9FE /* SBLClassMockObjectBehavior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLClassMockObjectBehavior.m; sourceTree = "<group>"; };
 		4D80408F186404F6001DE9FE /* SBLProtocolMockObjectBehavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLProtocolMockObjectBehavior.h; sourceTree = "<group>"; };
 		4D804090186404F6001DE9FE /* SBLProtocolMockObjectBehavior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLProtocolMockObjectBehavior.m; sourceTree = "<group>"; };
+		4DABD83F1BB1EE11006CAC82 /* Stubble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Stubble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DABD8431BB1EE11006CAC82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4DABD8481BB1EE11006CAC82 /* StubbleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StubbleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DABD84D1BB1EE12006CAC82 /* StubbleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StubbleTests.m; sourceTree = "<group>"; };
+		4DABD84F1BB1EE12006CAC82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4DABD88F1BB1F134006CAC82 /* Stubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stubble.h; sourceTree = "<group>"; };
 		4DD1ACB4187462B300A5FEC4 /* SBLVerificationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLVerificationHandler.h; sourceTree = "<group>"; };
 		4DD1ACB5187462B300A5FEC4 /* SBLVerificationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLVerificationHandler.m; sourceTree = "<group>"; };
 		4DD1ACB81874691300A5FEC4 /* SBLVerificationResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLVerificationResult.h; sourceTree = "<group>"; };
@@ -172,16 +243,15 @@
 		74678C401857D5AD00BD75E3 /* SBLVerifyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLVerifyTest.m; sourceTree = "<group>"; };
 		74678C421857D5E900BD75E3 /* SBLTestingClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLTestingClass.h; sourceTree = "<group>"; };
 		74678C431857D5E900BD75E3 /* SBLTestingClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLTestingClass.m; sourceTree = "<group>"; };
-		74F93D9C18525FA100214852 /* libStubble.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStubble.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		74F93D9C18525FA100214852 /* libStaticStubble.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStaticStubble.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		74F93D9F18525FA100214852 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		74F93DA318525FA100214852 /* Stubble-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Stubble-Prefix.pch"; sourceTree = "<group>"; };
-		74F93DAC18525FA100214852 /* StubbleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StubbleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		74F93DAC18525FA100214852 /* StaticStubbleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StaticStubbleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		74F93DAD18525FA100214852 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		74F93DB018525FA100214852 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		74F93DB718525FA100214852 /* StubbleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StubbleTests-Info.plist"; sourceTree = "<group>"; };
 		74F93DB918525FA100214852 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		74F93DBB18525FA100214852 /* SBLStubTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBLStubTest.m; sourceTree = "<group>"; };
-		75EAF7531873808E00C1FB5F /* Stubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stubble.h; sourceTree = "<group>"; };
 		75EAF75C1873845D00C1FB5F /* framework-builder */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; name = "framework-builder"; path = "Scripts/framework-builder"; sourceTree = "<group>"; };
 		AAFD431560AC3BD461C4B3D1 /* SBLTimesMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLTimesMatcher.m; sourceTree = "<group>"; };
 		AAFD432360F5D4B73F8A79B6 /* SBLInvocationMatchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLInvocationMatchResult.m; sourceTree = "<group>"; };
@@ -196,6 +266,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4DABD83B1BB1EE11006CAC82 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4DABD8451BB1EE11006CAC82 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DABD8491BB1EE11006CAC82 /* Stubble.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		74F93D9918525FA100214852 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -211,13 +296,30 @@
 				74F93DAE18525FA100214852 /* XCTest.framework in Frameworks */,
 				74F93DB118525FA100214852 /* UIKit.framework in Frameworks */,
 				74F93DAF18525FA100214852 /* Foundation.framework in Frameworks */,
-				74F93DB418525FA100214852 /* libStubble.a in Frameworks */,
+				74F93DB418525FA100214852 /* libStaticStubble.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4DABD8401BB1EE11006CAC82 /* Stubble */ = {
+			isa = PBXGroup;
+			children = (
+				4DABD8431BB1EE11006CAC82 /* Info.plist */,
+			);
+			path = Stubble;
+			sourceTree = "<group>";
+		};
+		4DABD84C1BB1EE12006CAC82 /* StubbleTests */ = {
+			isa = PBXGroup;
+			children = (
+				4DABD84D1BB1EE12006CAC82 /* StubbleTests.m */,
+				4DABD84F1BB1EE12006CAC82 /* Info.plist */,
+			);
+			path = StubbleTests;
+			sourceTree = "<group>";
+		};
 		5ABCBF8818A96C3B001E2306 /* Invocation Matching */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +349,8 @@
 				5ADC13271B7BDE8600CB9AC9 /* Stubble.podspec */,
 				74F93DA118525FA100214852 /* Stubble */,
 				74F93DB518525FA100214852 /* StubbleTests */,
+				4DABD8401BB1EE11006CAC82 /* Stubble */,
+				4DABD84C1BB1EE12006CAC82 /* StubbleTests */,
 				74F93D9E18525FA100214852 /* Frameworks */,
 				74F93D9D18525FA100214852 /* Products */,
 			);
@@ -255,8 +359,10 @@
 		74F93D9D18525FA100214852 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				74F93D9C18525FA100214852 /* libStubble.a */,
-				74F93DAC18525FA100214852 /* StubbleTests.xctest */,
+				74F93D9C18525FA100214852 /* libStaticStubble.a */,
+				74F93DAC18525FA100214852 /* StaticStubbleTests.xctest */,
+				4DABD83F1BB1EE11006CAC82 /* Stubble.framework */,
+				4DABD8481BB1EE11006CAC82 /* StubbleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -352,7 +458,7 @@
 				4DD1ACB5187462B300A5FEC4 /* SBLVerificationHandler.m */,
 				4DD1ACB81874691300A5FEC4 /* SBLVerificationResult.h */,
 				4DD1ACB91874691300A5FEC4 /* SBLVerificationResult.m */,
-				75EAF7531873808E00C1FB5F /* Stubble.h */,
+				4DABD88F1BB1F134006CAC82 /* Stubble.h */,
 				6313C3841B4835E6033E428E /* SBLOrderToken.m */,
 				6313C90A6E6740E141DB8DFA /* SBLOrderToken.h */,
 				6313CD4BA249E7970CFBDFA9 /* SBLOrderTokenInternal.m */,
@@ -366,11 +472,40 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		4DABD83C1BB1EE11006CAC82 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DABD8681BB1EE91006CAC82 /* SBLInvocationRecord.h in Headers */,
+				4DABD8691BB1EE91006CAC82 /* SBLMatcher.h in Headers */,
+				4DABD86A1BB1EE91006CAC82 /* SBLStubbedInvocation.h in Headers */,
+				4DABD86B1BB1EE91006CAC82 /* SBLTimesMatcher.h in Headers */,
+				4DABD86C1BB1EE91006CAC82 /* SBLInvocationArgument.h in Headers */,
+				4DABD86D1BB1EE91006CAC82 /* SBLArgumentMatcherResult.h in Headers */,
+				4DABD86E1BB1EE91006CAC82 /* SBLValueLoggingHelper.h in Headers */,
+				4DABD86F1BB1EE91006CAC82 /* SBLInvocationMatchResult.h in Headers */,
+				4DABD8701BB1EE91006CAC82 /* SBLClassMockObjectBehavior.h in Headers */,
+				4DABD8711BB1EE91006CAC82 /* SBLErrors.h in Headers */,
+				4DABD8721BB1EE91006CAC82 /* SBLHelpers.h in Headers */,
+				4DABD8731BB1EE91006CAC82 /* SBLMock.h in Headers */,
+				4DABD8741BB1EE91006CAC82 /* SBLMockCore.h in Headers */,
+				4DABD8751BB1EE91006CAC82 /* SBLMockObject.h in Headers */,
+				4DABD8761BB1EE91006CAC82 /* SBLMockObjectBehavior.h in Headers */,
+				4DABD8771BB1EE91006CAC82 /* SBLProtocolMockObjectBehavior.h in Headers */,
+				4DABD8781BB1EE92006CAC82 /* SBLTransactionManager.h in Headers */,
+				4DABD8791BB1EE92006CAC82 /* SBLVerificationHandler.h in Headers */,
+				4DABD87A1BB1EE92006CAC82 /* SBLVerificationResult.h in Headers */,
+				4DABD87B1BB1EE92006CAC82 /* SBLOrderToken.h in Headers */,
+				4DABD8901BB1F134006CAC82 /* Stubble.h in Headers */,
+				4DABD87C1BB1EE92006CAC82 /* SBLOrderTokenInternal.h in Headers */,
+				4DABD87D1BB1EE92006CAC82 /* SBLCallOrderTracker.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5AA4A96F18689FEA0033BAE0 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75EAF7541873808E00C1FB5F /* Stubble.h in Headers */,
 				5AA4A97418689FFB0033BAE0 /* SBLStubbedInvocation.h in Headers */,
 				5AA4A97518689FFB0033BAE0 /* SBLInvocationRecord.h in Headers */,
 				5AA4A97618689FFB0033BAE0 /* SBLMatcher.h in Headers */,
@@ -399,9 +534,45 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		74F93D9B18525FA100214852 /* Stubble */ = {
+		4DABD83E1BB1EE11006CAC82 /* Stubble */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 74F93DBF18525FA100214852 /* Build configuration list for PBXNativeTarget "Stubble" */;
+			buildConfigurationList = 4DABD8501BB1EE12006CAC82 /* Build configuration list for PBXNativeTarget "Stubble" */;
+			buildPhases = (
+				4DABD83A1BB1EE11006CAC82 /* Sources */,
+				4DABD83B1BB1EE11006CAC82 /* Frameworks */,
+				4DABD83C1BB1EE11006CAC82 /* Headers */,
+				4DABD83D1BB1EE11006CAC82 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Stubble;
+			productName = Stubble;
+			productReference = 4DABD83F1BB1EE11006CAC82 /* Stubble.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		4DABD8471BB1EE11006CAC82 /* StubbleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4DABD8531BB1EE12006CAC82 /* Build configuration list for PBXNativeTarget "StubbleTests" */;
+			buildPhases = (
+				4DABD8441BB1EE11006CAC82 /* Sources */,
+				4DABD8451BB1EE11006CAC82 /* Frameworks */,
+				4DABD8461BB1EE11006CAC82 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4DABD84B1BB1EE11006CAC82 /* PBXTargetDependency */,
+			);
+			name = StubbleTests;
+			productName = StubbleTests;
+			productReference = 4DABD8481BB1EE11006CAC82 /* StubbleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		74F93D9B18525FA100214852 /* StaticStubble */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74F93DBF18525FA100214852 /* Build configuration list for PBXNativeTarget "StaticStubble" */;
 			buildPhases = (
 				74F93D9818525FA100214852 /* Sources */,
 				74F93D9918525FA100214852 /* Frameworks */,
@@ -412,14 +583,14 @@
 			);
 			dependencies = (
 			);
-			name = Stubble;
+			name = StaticStubble;
 			productName = Stubble;
-			productReference = 74F93D9C18525FA100214852 /* libStubble.a */;
+			productReference = 74F93D9C18525FA100214852 /* libStaticStubble.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		74F93DAB18525FA100214852 /* StubbleTests */ = {
+		74F93DAB18525FA100214852 /* StaticStubbleTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 74F93DC218525FA100214852 /* Build configuration list for PBXNativeTarget "StubbleTests" */;
+			buildConfigurationList = 74F93DC218525FA100214852 /* Build configuration list for PBXNativeTarget "StaticStubbleTests" */;
 			buildPhases = (
 				74F93DA818525FA100214852 /* Sources */,
 				74F93DA918525FA100214852 /* Frameworks */,
@@ -430,9 +601,9 @@
 			dependencies = (
 				74F93DB318525FA100214852 /* PBXTargetDependency */,
 			);
-			name = StubbleTests;
+			name = StaticStubbleTests;
 			productName = StubbleTests;
-			productReference = 74F93DAC18525FA100214852 /* StubbleTests.xctest */;
+			productReference = 74F93DAC18525FA100214852 /* StaticStubbleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -442,8 +613,16 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = SBL;
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Stubble;
+				TargetAttributes = {
+					4DABD83E1BB1EE11006CAC82 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+					4DABD8471BB1EE11006CAC82 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+				};
 			};
 			buildConfigurationList = 74F93D9718525FA100214852 /* Build configuration list for PBXProject "Stubble" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -457,14 +636,30 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				74F93D9B18525FA100214852 /* Stubble */,
-				74F93DAB18525FA100214852 /* StubbleTests */,
+				74F93D9B18525FA100214852 /* StaticStubble */,
+				74F93DAB18525FA100214852 /* StaticStubbleTests */,
 				75EAF7551873818600C1FB5F /* Framework */,
+				4DABD83E1BB1EE11006CAC82 /* Stubble */,
+				4DABD8471BB1EE11006CAC82 /* StubbleTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4DABD83D1BB1EE11006CAC82 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4DABD8461BB1EE11006CAC82 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		74F93DAA18525FA100214852 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -492,6 +687,55 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4DABD83A1BB1EE11006CAC82 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DABD8561BB1EE5B006CAC82 /* SBLInvocationRecord.m in Sources */,
+				4DABD8571BB1EE5B006CAC82 /* SBLMatcher.m in Sources */,
+				4DABD8581BB1EE5B006CAC82 /* SBLStubbedInvocation.m in Sources */,
+				4DABD8591BB1EE5B006CAC82 /* SBLTimesMatcher.m in Sources */,
+				4DABD85A1BB1EE5B006CAC82 /* SBLInvocationArgument.m in Sources */,
+				4DABD85B1BB1EE5B006CAC82 /* SBLArgumentMatcherResult.m in Sources */,
+				4DABD85C1BB1EE5B006CAC82 /* SBLValueLoggingHelper.m in Sources */,
+				4DABD85D1BB1EE5B006CAC82 /* SBLInvocationMatchResult.m in Sources */,
+				4DABD85E1BB1EE5B006CAC82 /* SBLClassMockObjectBehavior.m in Sources */,
+				4DABD85F1BB1EE5B006CAC82 /* SBLHelpers.m in Sources */,
+				4DABD8601BB1EE5B006CAC82 /* SBLMockObject.m in Sources */,
+				4DABD8611BB1EE5B006CAC82 /* SBLProtocolMockObjectBehavior.m in Sources */,
+				4DABD8621BB1EE5B006CAC82 /* SBLTransactionManager.m in Sources */,
+				4DABD8631BB1EE5B006CAC82 /* SBLVerificationHandler.m in Sources */,
+				4DABD8641BB1EE5B006CAC82 /* SBLVerificationResult.m in Sources */,
+				4DABD8651BB1EE5B006CAC82 /* SBLOrderToken.m in Sources */,
+				4DABD8661BB1EE5B006CAC82 /* SBLOrderTokenInternal.m in Sources */,
+				4DABD8671BB1EE5B006CAC82 /* SBLCallOrderTracker.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4DABD8441BB1EE11006CAC82 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DABD88E1BB1EEC8006CAC82 /* SBLTestsModel.xcdatamodeld in Sources */,
+				4DABD87E1BB1EEBE006CAC82 /* SBLCoreDataChild.m in Sources */,
+				4DABD87F1BB1EEBE006CAC82 /* SBLCoreDataParent.m in Sources */,
+				4DABD8801BB1EEBE006CAC82 /* SBLCoreDataParent+SBL.m in Sources */,
+				4DABD8811BB1EEBE006CAC82 /* SBLCoreDataTest.m in Sources */,
+				4DABD8821BB1EEBE006CAC82 /* SBLDynamicMockTest.m in Sources */,
+				4DABD8831BB1EEBE006CAC82 /* SBLTestingDynamicObject.m in Sources */,
+				4DABD8841BB1EEBE006CAC82 /* SBLVerifyTest.m in Sources */,
+				4DABD8851BB1EEBE006CAC82 /* SBLStubTest.m in Sources */,
+				4DABD8861BB1EEBE006CAC82 /* SBLMatcherTest.m in Sources */,
+				4DABD8871BB1EEBE006CAC82 /* SBLStubbleCoreThreadingTest.m in Sources */,
+				4DABD8881BB1EEBE006CAC82 /* SBLTestingClass.m in Sources */,
+				4DABD8891BB1EEBE006CAC82 /* SBLExceptionTest.m in Sources */,
+				4DABD88A1BB1EEBE006CAC82 /* SBLTestingBlockCreator.m in Sources */,
+				4DABD88B1BB1EEBE006CAC82 /* SBLValueLoggingHelperTest.m in Sources */,
+				4DABD88C1BB1EEBE006CAC82 /* SBLVerifyOrderTest.m in Sources */,
+				4DABD88D1BB1EEBE006CAC82 /* SBLKeyValueCodingTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		74F93D9818525FA100214852 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -544,14 +788,19 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4DABD84B1BB1EE11006CAC82 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4DABD83E1BB1EE11006CAC82 /* Stubble */;
+			targetProxy = 4DABD84A1BB1EE11006CAC82 /* PBXContainerItemProxy */;
+		};
 		74F93DB318525FA100214852 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 74F93D9B18525FA100214852 /* Stubble */;
+			target = 74F93D9B18525FA100214852 /* StaticStubble */;
 			targetProxy = 74F93DB218525FA100214852 /* PBXContainerItemProxy */;
 		};
 		75EAF75A187381D600C1FB5F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 74F93D9B18525FA100214852 /* Stubble */;
+			target = 74F93D9B18525FA100214852 /* StaticStubble */;
 			targetProxy = 75EAF759187381D600C1FB5F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -568,6 +817,118 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4DABD8511BB1EE12006CAC82 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Stubble/Stubble-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = Stubble/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.stubble.Stubble;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		4DABD8521BB1EE12006CAC82 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Stubble/Stubble-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = Stubble/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.stubble.Stubble;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		4DABD8541BB1EE12006CAC82 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Stubble/Stubble-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = StubbleTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.stubble.StubbleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4DABD8551BB1EE12006CAC82 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Stubble/Stubble-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = StubbleTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.stubble.StubbleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		74F93DBD18525FA100214852 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -585,6 +946,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -683,6 +1045,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "StubbleTests/StubbleTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stubble.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -699,6 +1062,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Stubble/Stubble-Prefix.pch";
 				INFOPLIST_FILE = "StubbleTests/StubbleTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stubble.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -721,6 +1085,22 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4DABD8501BB1EE12006CAC82 /* Build configuration list for PBXNativeTarget "Stubble" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DABD8511BB1EE12006CAC82 /* Debug */,
+				4DABD8521BB1EE12006CAC82 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		4DABD8531BB1EE12006CAC82 /* Build configuration list for PBXNativeTarget "StubbleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DABD8541BB1EE12006CAC82 /* Debug */,
+				4DABD8551BB1EE12006CAC82 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		74F93D9718525FA100214852 /* Build configuration list for PBXProject "Stubble" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -730,7 +1110,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		74F93DBF18525FA100214852 /* Build configuration list for PBXNativeTarget "Stubble" */ = {
+		74F93DBF18525FA100214852 /* Build configuration list for PBXNativeTarget "StaticStubble" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				74F93DC018525FA100214852 /* Debug */,
@@ -739,7 +1119,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		74F93DC218525FA100214852 /* Build configuration list for PBXNativeTarget "StubbleTests" */ = {
+		74F93DC218525FA100214852 /* Build configuration list for PBXNativeTarget "StaticStubbleTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				74F93DC318525FA100214852 /* Debug */,
