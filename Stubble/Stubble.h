@@ -1,3 +1,5 @@
+#import <Foundation/Foundation.h>
+
 //! Project version number for Stubble.
 FOUNDATION_EXPORT double StubbleVersionNumber;
 
