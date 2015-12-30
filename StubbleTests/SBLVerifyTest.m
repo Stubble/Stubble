@@ -97,6 +97,26 @@
     XCTAssertNil(result.failureDescription);
 }
 
+- (void)testWhenVerifyingNilObjectThatMatchesThenResultIsSuccessful {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    [mock methodWithObject:nil];
+
+    SBLVerificationResult *result = SBLVerifyImpl(atLeast(1), nil, [mock methodWithObject:nil]);
+
+    XCTAssertTrue(result.successful);
+}
+
+- (void)testWhenVerifyingNullBlockThatMatchesThenResultIsSuccessful {
+    SBLTestingClass *mock = mock(SBLTestingClass.class);
+
+    [mock methodWithBlock:NULL];
+
+    SBLVerificationResult *result = SBLVerifyImpl(times(1), nil, [mock methodWithBlock:NULL]);
+
+    XCTAssertTrue(result.successful);
+}
+
 #pragma mark - Verify Times Tests
 
 - (void)testWhenVerifyingExactlyZeroTimes_WhenNotCalled_ThenResultIsSuccessful {
