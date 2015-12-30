@@ -41,4 +41,10 @@
     return protocol_conformsToProtocol(self.mockedProtocol, aProtocol);
 }
 
+- (NSString *)mockObjectDebugDescription {
+    const char * protocolNameCString = protocol_getName(self.mockedProtocol);
+    NSString *protocolName = [[NSString alloc] initWithUTF8String:protocolNameCString];
+    return [NSString stringWithFormat:@"Mocking protocol %@", protocolName];
+}
+
 @end
