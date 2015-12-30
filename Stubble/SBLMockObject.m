@@ -84,11 +84,6 @@
 			matchingWhen = ongoingWhen; // Hey, that's a big assumption!
 			allowUnboxing = NO;
 			break;
-//			SBLInvocationMatchResult *invocationMatchResult = [ongoingWhen matchResultForInvocation:invocationRecord];
-//			if (invocationMatchResult.invocationMatches) {
-//				matchingWhen = ongoingWhen;
-//				break;
-//			}
 		}
 
 	}
@@ -97,7 +92,8 @@
 	[matchingWhen performActionBlocksWithInvocation:invocation allowingUnboxing:allowUnboxing];
 
     // Invoke Invocation
-    [invocation invokeWithTarget:nil];
+	invocation.target = nil;
+    [invocation invoke];
 }
 
 - (void)sblResetMock {
