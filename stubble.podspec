@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = "stubble"
-  s.version               = "1.0.1"
+  s.version               = "1.0.2"
   s.summary               = "An iOS mocking framework in the spirit of Mockito."
   s.homepage              = "https://github.com/Stubble/stubble"
   s.license               = { :type => 'MIT license', :file => 'license.txt' }
