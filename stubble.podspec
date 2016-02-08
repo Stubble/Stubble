@@ -3,6 +3,7 @@ Pod::Spec.new do |s|
   s.version               = "1.0.2"
   s.summary               = "An iOS mocking framework in the spirit of Mockito."
   s.homepage              = "https://github.com/Stubble/stubble"
+  s.documentation_url     = "http://stubble.github.io"
   s.license               = { :type => 'MIT license', :file => 'license.txt' }
   s.authors               = 'JARinteractive', 'micahhainline', 'thejonhall', 'johnhainline'
   s.platform              = :ios
